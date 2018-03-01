@@ -16,6 +16,15 @@ class PostController extends Controller
     }
 
 
+    public function actionGetLatest(){
+
+        if(!$posts = $this->posts->getLatest()){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        return $posts;
+    }
+
+
     public function actionGet( $id ){
 
         if(!$post = $this->posts->get( $id )){
@@ -23,6 +32,9 @@ class PostController extends Controller
         }
         return $post;
     }
+
+
+
 
 
 }

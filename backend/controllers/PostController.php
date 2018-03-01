@@ -17,6 +17,15 @@ class PostController extends Controller
 
 
     /*
+     * Post: List
+     */
+    public function actionIndex(){
+        $model = $this->posts->getLatest();
+        var_dump($model);
+    }
+
+
+    /*
      * Post: View
      */
     public function actionView($id){

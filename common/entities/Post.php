@@ -1,6 +1,5 @@
 <?php
 namespace common\entities;
-use Yii;
 use \yii\db\ActiveRecord;
 
 class Post extends ActiveRecord
@@ -13,6 +12,8 @@ class Post extends ActiveRecord
     public function rules()
     {
         return [
+            [['Description'], 'string'],
+            [['UserId'], 'integer'],
             [['Title'], 'string', 'max' => 255],
         ];
     }
@@ -22,6 +23,20 @@ class Post extends ActiveRecord
         return [
             'Id' => 'ID',
             'Title' => 'Title',
+            'Description' => 'Description',
+            'UserId' => 'User ID',
         ];
     }
+
+    /**
+     * RELATIONS
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser(){
+        return $this->hasOne( User::className(), ['Id' => 'UserId'] );
+    }
+
+
+
+
 }
