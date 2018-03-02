@@ -1,53 +1,47 @@
 <?php
 namespace backend\controllers;
 use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use yii\web\Response;
+use common\forms\LoginForm as Login;
+use common\forms\Signup;
 
-/**
- * Site controller
- */
-class SiteController extends Controller
+class SiteController extends AdminBaseController
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['login', 'logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
                         'allow' => true,
+                        'actions' => ['login', 'signup'],
+                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
                         'allow' => true,
+                        'actions' => ['logout'],
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }
@@ -63,32 +57,48 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
+     * Login
      * @return string
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (!Yii::$app->getUser()->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $model = new Login();
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
     }
 
+
+    /**
+     * Signup new user
+     * @return string
+     */
+    public function actionSignup()
+    {
+        $model = new Signup();
+        if ($model->load(Yii::$app->getRequest()->post())) {
+            if ($user = $model->signup()) {
+                return $this->goHome();
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Logout action.
      *
-     * @return string
+     * @return Response
      */
     public function actionLogout()
     {

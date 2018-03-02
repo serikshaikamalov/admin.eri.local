@@ -3,24 +3,41 @@ namespace common\entities;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-class PostSearch extends Post
+/**
+ * staffTypeSearch represents the model behind the search form of `app\models\staffType`.
+ */
+class staffTypeSearch extends staffType
 {
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['Id', 'UserId'], 'integer'],
-            [['Title', 'Description'], 'safe'],
+            [['Id', 'StatusId', 'LanguageId'], 'integer'],
+            [['Title'], 'safe'],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function scenarios()
     {
+        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-    
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
     public function search($params)
     {
-        $query = Post::find();
+        $query = staffType::getFullStaffTypeList();
 
         // add conditions that should always apply here
 
@@ -39,11 +56,11 @@ class PostSearch extends Post
         // grid filtering conditions
         $query->andFilterWhere([
             'Id' => $this->Id,
-            'UserId' => $this->UserId,
+            'StatusId' => $this->StatusId,
+            'LanguageId' => $this->LanguageId,
         ]);
 
-        $query->andFilterWhere(['like', 'Title', $this->Title])
-            ->andFilterWhere(['like', 'Description', $this->Description]);
+        $query->andFilterWhere(['like', 'Title', $this->Title]);
 
         return $dataProvider;
     }

@@ -11,15 +11,46 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'imagemanager' => [
+            'class' => 'noam148\imagemanager\Module',
+            //set accces rules ()
+            'canUploadImage' => true,
+            'canRemoveImage' => function(){
+                return true;
+            },
+            'deleteOriginalAfterEdit' => false, // false: keep original image after edit. true: delete original image after edit
+            // Set if blameable behavior is used, if it is, callable function can also be used
+            'setBlameableBehavior' => false,
+            //add css files (to use in media manage selector iframe)
+            'cssFiles' => [
+                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css',
+            ],
+        ],
+        'rbac' => [
+            'class' => 'mdm\admin\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    /* 'userClassName' => 'app\models\User', */
+                    'idField' => 'id',
+                    'usernameField' => 'username'
+                ],
+            ],
+            'layout' => 'left-menu',
+            'mainLayout' => '@backend/views/layouts/main.php',
+        ],
+    ],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-backend',
+            'baseUrl' => '',
+            'cookieValidationKey' => 'Serik',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityClass' => 'common\entities\User',
+            'loginUrl' => ['site/login'],
+//            'enableAutoLogin' => true,
+//            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -37,14 +68,41 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        'imagemanager' => [
+            'class' => 'noam148\imagemanager\components\ImageManagerGetPath',
+            //set media path (outside the web folder is possible)
+            'mediaPath' => 'assets/media',
+            //path relative web folder to store the cache images
+            'cachePath' => 'assets/images',
+            //use filename (seo friendly) for resized images else use a hash
+            'useFilename' => true,
+            //show full url (for example in case of a API)
+            'absoluteUrl' => false,
+            'databaseComponent' => 'db' // The used database component by the image manager, this defaults to the Yii::$app->db component
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '' => 'site/index',
+
+                '<_c:[\w\-]+>' => '<_c>/index',
+                '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
+                '<_c:[\w\-]+>/<_a:[\w-]+>' => '<_c>/<_a>',
+                '<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => '<_c>/<_a>',
             ],
         ],
-        */
     ],
-    'params' => $params,
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'api/*',
+            'site/login',
+            'site/signup'
+        ]
+    ],
+    'params' => $params
 ];

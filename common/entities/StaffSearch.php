@@ -3,13 +3,13 @@ namespace common\entities;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-class PostSearch extends Post
+class StaffSearch extends Staff
 {
     public function rules()
     {
         return [
-            [['Id', 'UserId'], 'integer'],
-            [['Title', 'Description'], 'safe'],
+            [['Id', 'StatusId', 'ImageId'], 'integer'],
+            [['FullName', 'PositionId', 'ResearchGroupId', 'ShortBiography'], 'safe'],
         ];
     }
 
@@ -17,13 +17,12 @@ class PostSearch extends Post
     {
         return Model::scenarios();
     }
-    
+
     public function search($params)
     {
-        $query = Post::find();
-
-        // add conditions that should always apply here
-
+        $query = Staff::find();
+                    //->with('staffPosition');
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -31,19 +30,16 @@ class PostSearch extends Post
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'Id' => $this->Id,
-            'UserId' => $this->UserId,
+            'StatusId' => $this->StatusId,
         ]);
 
-        $query->andFilterWhere(['like', 'Title', $this->Title])
-            ->andFilterWhere(['like', 'Description', $this->Description]);
+        $query->andFilterWhere(['like', 'FullName', $this->FullName]);
 
         return $dataProvider;
     }

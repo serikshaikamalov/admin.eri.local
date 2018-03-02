@@ -3,13 +3,13 @@ namespace common\entities;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-class PostSearch extends Post
+class EventCategorySearch extends EventCategory
 {
     public function rules()
     {
         return [
-            [['Id', 'UserId'], 'integer'],
-            [['Title', 'Description'], 'safe'],
+            [['Id', 'StatusId', 'ParentId', 'LanguageId'], 'integer'],
+            [['Title'], 'safe'],
         ];
     }
 
@@ -17,10 +17,19 @@ class PostSearch extends Post
     {
         return Model::scenarios();
     }
-    
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
     public function search($params)
     {
-        $query = Post::find();
+        $query = EventCategory::find()
+                    ->with('language')
+                    ->with('status');
 
         // add conditions that should always apply here
 
@@ -31,19 +40,18 @@ class PostSearch extends Post
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'Id' => $this->Id,
-            'UserId' => $this->UserId,
+            'StatusId' => $this->StatusId,
+            'ParentId' => $this->ParentId,
+            'LanguageId' => $this->LanguageId,
         ]);
 
-        $query->andFilterWhere(['like', 'Title', $this->Title])
-            ->andFilterWhere(['like', 'Description', $this->Description]);
+        $query->andFilterWhere(['like', 'Title', $this->Title]);
 
         return $dataProvider;
     }

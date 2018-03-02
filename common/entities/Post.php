@@ -2,6 +2,9 @@
 namespace common\entities;
 use \yii\db\ActiveRecord;
 
+/*
+ * @param Id
+ */
 class Post extends ActiveRecord
 {
     public static function tableName()
