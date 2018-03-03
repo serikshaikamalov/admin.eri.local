@@ -14,9 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Menu -->
     <div class="col-md-3">
         <div class="list-group">
-            <a href="/web/admin/staff" class="list-group-item list-group-item-action active">Staff List</a>
-            <a href="/web/admin/staff-type" class="list-group-item list-group-item-action">Staff Types</a>
-            <a href="/web/admin/staff-position" class="list-group-item list-group-item-action">Staff Positions</a>
+            <a href="/staff" class="list-group-item list-group-item-action active">Staff List</a>
+            <a href="/staff-type" class="list-group-item list-group-item-action">Staff Types</a>
+            <a href="/staff-position" class="list-group-item list-group-item-action">Staff Positions</a>
         </div>
     </div>
 

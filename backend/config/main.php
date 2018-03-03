@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'ERI: Admin Panel',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -88,6 +89,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+
+                '<module:imagemanager>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
 
                 '<_c:[\w\-]+>' => '<_c>/index',
                 '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',

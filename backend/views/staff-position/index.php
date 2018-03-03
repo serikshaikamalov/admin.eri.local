@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Menu -->
     <div class="col-md-3">
         <div class="list-group">
-            <a href="/web/admin/staff" class="list-group-item list-group-item-action">Staff List</a>
-            <a href="/web/admin/staff-type" class="list-group-item list-group-item-action">Staff Types</a>
-            <a href="/web/admin/staff-position" class="list-group-item list-group-item-action active">Staff Positions</a>
+            <a href="/staff" class="list-group-item list-group-item-action">Staff List</a>
+            <a href="/staff-type" class="list-group-item list-group-item-action">Staff Types</a>
+            <a href="/staff-position" class="list-group-item list-group-item-action active">Staff Positions</a>
         </div>
     </div>
 
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function($item){
                             return $item->status->Title;
                         },
-                        'filter' => \app\models\Status::getStatusList()
+                        'filter' => \common\entities\Status::getStatusList()
                     ],
                     [
                         'attribute' => 'LanguageId',
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function($item){
                             return $item->language->Title;
                         },
-                        'filter' => \app\models\Language::getLanguageList()
+                        'filter' => \common\entities\Language::getLanguageList()
                     ],
 
                     ['class' => 'yii\grid\ActionColumn'],

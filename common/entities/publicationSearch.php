@@ -1,13 +1,16 @@
 <?php
 
 namespace common\entities;
+
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\entities\publication;
 
 /**
- * StaffPositionSearch represents the model behind the search form of `app\models\StaffPosition`.
+ * publicationSearch represents the model behind the search form of `common\entities\publication`.
  */
-class StaffPositionSearch extends StaffPosition
+class publicationSearch extends publication
 {
     /**
      * @inheritdoc
@@ -15,8 +18,8 @@ class StaffPositionSearch extends StaffPosition
     public function rules()
     {
         return [
-            [['Id', 'StatusId', 'LanguageId'], 'integer'],
-            [['Title'], 'safe'],
+            [['Id', 'PublicationCategoryId', 'StaffId', 'CreatedDate', 'CreatedBy', 'ViewsCount', 'StatusId', 'LanguageId', 'FileId'], 'integer'],
+            [['Title', 'IsFeatured', 'ImageId', 'Description', 'ShortDescription'], 'safe'],
         ];
     }
 
@@ -38,7 +41,7 @@ class StaffPositionSearch extends StaffPosition
      */
     public function search($params)
     {
-        $query = StaffPosition::getFullStaffPositionList();
+        $query = publication::find();
 
         // add conditions that should always apply here
 
@@ -57,11 +60,21 @@ class StaffPositionSearch extends StaffPosition
         // grid filtering conditions
         $query->andFilterWhere([
             'Id' => $this->Id,
+            'PublicationCategoryId' => $this->PublicationCategoryId,
+            'StaffId' => $this->StaffId,
+            'CreatedDate' => $this->CreatedDate,
+            'CreatedBy' => $this->CreatedBy,
+            'ViewsCount' => $this->ViewsCount,
             'StatusId' => $this->StatusId,
             'LanguageId' => $this->LanguageId,
+            'FileId' => $this->FileId,
         ]);
 
-        $query->andFilterWhere(['like', 'Title', $this->Title]);
+        $query->andFilterWhere(['like', 'Title', $this->Title])
+            ->andFilterWhere(['like', 'IsFeatured', $this->IsFeatured])
+            ->andFilterWhere(['like', 'ImageId', $this->ImageId])
+            ->andFilterWhere(['like', 'Description', $this->Description])
+            ->andFilterWhere(['like', 'ShortDescription', $this->ShortDescription]);
 
         return $dataProvider;
     }

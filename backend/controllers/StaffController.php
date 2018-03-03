@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\repositories\StaffRepository;
 use Yii;
 use common\entities\Staff;
 use common\entities\StaffSearch;
@@ -14,6 +15,17 @@ use yii\web\NotFoundHttpException;
 
 class StaffController extends AdminBaseController
 {
+    public $staffs;
+
+
+    public function __construct(string $id, $module, StaffRepository $staffs, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+
+        $this->staffs = $staffs;
+    }
+
+
     /**
      * Staff: List
      */
@@ -33,7 +45,7 @@ class StaffController extends AdminBaseController
      */
     public function actionView($id)
     {
-        $model = Staff::getStaff( $id );
+        $model = $this->staffs->get($id);
 
         // viewModel
         $vm = new StaffViewModel();
