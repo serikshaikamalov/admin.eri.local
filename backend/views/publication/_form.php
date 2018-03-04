@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'StaffId')->textInput() ?>
 
-    <?= $form->field($model, 'CreatedDate')->textInput() ?>
-
-    <?= $form->field($model, 'CreatedBy')->textInput() ?>
+<!--    --><?//= $form->field($model, 'CreatedDate')->textInput() ?>
+<!---->
+<!--    --><?//= $form->field($model, 'CreatedBy')->textInput() ?>
 
     <?= $form->field($model, 'IsFeatured')->textInput() ?>
 

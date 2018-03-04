@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\entities\publicationSearch */
+/* @var $searchModel common\entities\PublicationCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Publications';
+$this->title = 'Publication Categories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,21 +16,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Menu -->
     <div class="col-md-3">
         <div class="list-group">
-            <a href="/publication" class="list-group-item list-group-item-action active">Publications</a>
-            <a href="/publication-category" class="list-group-item list-group-item-action">Publication Categories</a>
+            <a href="/publication" class="list-group-item list-group-item-action">Publications</a>
+            <a href="/publication-category" class="list-group-item list-group-item-action active">Publication Categories</a>
             <a href="/publication-tag" class="list-group-item list-group-item-action">Publication Tags</a>
         </div>
     </div>
 
     <!-- List -->
     <div class="col-md-9">
-        <div class="publication-index">
+        <div class="publication-category-index">
 
             <h1><?= Html::encode($this->title) ?></h1>
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
             <p>
-                <?= Html::a('Create Publication', ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Create Publication Category', ['create'], ['class' => 'btn btn-success']) ?>
             </p>
 
             <?= GridView::widget([
@@ -41,18 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'Id',
                     'Title',
-                    'PublicationCategoryId',
-                    'StaffId',
-                    'CreatedDate',
-                    //'CreatedBy',
-                    //'IsFeatured',
-                    //'ImageId',
-                    //'Description:ntext',
-                    //'ShortDescription:ntext',
-                    //'ViewsCount',
-                    //'StatusId',
-                    //'LanguageId',
-                    //'FileId',
+                    'ParentId',
+                    'LanguageId',
+                    'StatusId',
 
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
@@ -60,4 +51,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
