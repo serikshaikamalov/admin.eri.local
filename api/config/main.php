@@ -13,7 +13,8 @@ return [
     'controllerNamespace' => 'api\controllers',
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-api',
+            'baseUrl' => '',
+            //'csrfParam' => '_csrf-api',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -36,14 +37,29 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        'imagemanager' => [
+            'class' => 'noam148\imagemanager\components\ImageManagerGetPath',
+            //set media path (outside the web folder is possible)
+            'mediaPath' =>  '../../backend/web/assets/media',
+            //path relative web folder to store the cache images
+            'cachePath' => '../../backend/web/assets/images',
+            //use filename (seo friendly) for resized images else use a hash
+            'useFilename' => true,
+            //show full url (for example in case of a API)
+            'absoluteUrl' => false,
+            'databaseComponent' => 'db' // The used database component by the image manager, this defaults to the Yii::$app->db component
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+
+                '<_c:[\w\-]+>' => '<_c>/index',
+                '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
+                '<_c:[\w\-]+>/<_a:[\w-]+>' => '<_c>/<_a>',
+                //'<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => '<_c>/<_a>',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

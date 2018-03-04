@@ -1,6 +1,7 @@
 <?php
 namespace common\entities;
 use \yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property integer $Id
@@ -24,7 +25,7 @@ class Staff extends ActiveRecord
     {
         return [
             [['StatusId', 'ImageId', 'StaffPositionId', 'ResearchGroupId', 'ResearchGroupId', 'LanguageId', 'StaffPositionId', 'StaffTypeId'], 'integer'],
-            [['ShortBiography'], 'string'],
+            [['ShortBiography', 'FullBiography'], 'string'],
             [['FullName'], 'string', 'max' => 200],
         ];
     }
@@ -39,6 +40,7 @@ class Staff extends ActiveRecord
             'ResearchGroupId' => 'Research Group',
             'StaffTypeId' => 'Staff Type',
             'ShortBiography' => 'Short Biography',
+            'FullBiography' => 'Full Biography',
             'ImageId' => 'Image',
             'LanguageId' => 'Language',
         ];
@@ -81,10 +83,14 @@ class Staff extends ActiveRecord
     }
 
     public function getStaffType(){
-        return $this->hasOne( StaffPosition::className(), ['Id' => 'StaffTypeId'] );
+        return $this->hasOne( StaffType::className(), ['Id' => 'StaffTypeId'] );
     }
 
     public function getStaffPosition(){
         return $this->hasOne( StaffPosition::className(), ['Id' => 'StaffPositionId'] );
+    }
+
+    public function getResearchGroup(){
+        return $this->hasOne( ResearchGroup::className(), ['Id' => 'ResearchGroupId'] );
     }
 }

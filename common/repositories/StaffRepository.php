@@ -11,12 +11,24 @@ class StaffRepository
     /*
      * @return Event
      */
-    public function get($Id): Staff{
+    public function get($Id): Staff {
 
-        if(!$event = Staff::findOne($Id)){
+        $staff = Staff::find()
+            ->with('language')
+            ->with('status')
+            ->with('staffType')
+            ->with('staffPosition')
+            ->with('researchGroup')
+            ->where([
+                'StatusId' => Staff::STATUS_PUBLISHED,
+                'Id' => $Id
+            ])
+            ->one();
+
+        if(!$staff){
             throw new \DomainException('Id not found!');
         }
-        return $event;
+        return $staff;
     }
 
 
@@ -31,10 +43,19 @@ class StaffRepository
     /*
      * @return Event[]
      */
-    public function getAll(): DataProviderInterface
+    public function getAll( int $languageId ): array
     {
-        $query = Staff::find();
-        return $this->getProvider($query);
+        return Staff::find()
+            ->with('language')
+            ->with('status')
+            ->with('staffType')
+            ->with('staffPosition')
+            ->with('researchGroup')
+            ->where([
+                'StatusId' => Staff::STATUS_PUBLISHED,
+                'LanguageId' => $languageId
+            ]  )
+            ->all();
     }
 
 

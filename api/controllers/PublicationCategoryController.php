@@ -2,10 +2,9 @@
 namespace api\controllers;
 use app\viewmodels\PublicationCategoryVM;
 use common\repositories\PublicationCategoryRepository;
-use \yii\rest\Controller;
 
 
-class PublicationCategoryController extends Controller
+class PublicationCategoryController extends ApiBaseController
 {
     public $repo;
 

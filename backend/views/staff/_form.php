@@ -17,6 +17,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($vm->model, 'ShortBiography')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($vm->model, 'FullBiography')->textarea(['rows' => 6]) ?>
+
     <? echo $form->field($vm->model, 'StaffTypeId')->dropDownList($vm->staffTypes) ?>
 
     <? echo $form->field($vm->model, 'StaffPositionId')->dropDownList($vm->staffPositions) ?>
