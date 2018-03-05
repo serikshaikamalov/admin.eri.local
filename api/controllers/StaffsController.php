@@ -39,7 +39,7 @@ class StaffsController extends ApiBaseController
                 $staffVM->StaffPositionId = $staff->StaffPositionId;
 
                 // Dictionaries
-                $staffVM->ImageSrc = IMAGE_SERVER . '/web/assets/media/' . Yii::$app->imagemanager->getImageByUrl($staff->ImageId, 400, 400,'inset');;
+                $staffVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($staff->ImageId, 400, 400,'inset');;
                 $staffVM->Language = $staff->language ? $staff->language : null;
                 $staffVM->StaffType = $staff->staffType ? $staff->staffType : null;
                 $staffVM->StaffPosition = $staff->staffPosition ? $staff->staffPosition : null;

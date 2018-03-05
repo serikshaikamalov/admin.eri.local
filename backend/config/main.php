@@ -6,6 +6,10 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+//var_dump( '/../static/media/images'); die();
+//var_dump(Yii::getAlias('@static')); die();
+
+
 return [
     'id' => 'app-backend',
     'name' => 'ERI: Admin Panel',
@@ -72,9 +76,9 @@ return [
         'imagemanager' => [
             'class' => 'noam148\imagemanager\components\ImageManagerGetPath',
             //set media path (outside the web folder is possible)
-            'mediaPath' => 'assets/media',
+            'mediaPath' =>  Yii::getAlias('@static') . '/media/images',
             //path relative web folder to store the cache images
-            'cachePath' => 'assets/images',
+            'cachePath' =>  '/cache',
             //use filename (seo friendly) for resized images else use a hash
             'useFilename' => true,
             //show full url (for example in case of a API)
