@@ -7,7 +7,7 @@ use \yii\db\ActiveRecord;
  * @property string $Title
  * @property string $Description
  * @property string $Link
- * @property int $IsActive
+ * @property int $StatusId
  * @property int $LanguageId
  * @property int $ImageId
  * @property int $CreatedBy
@@ -25,11 +25,10 @@ class DailyMonitor extends ActiveRecord
         return [
             [['Title', 'LanguageId'], 'required'],
             [['Description'], 'string'],
-            [['LanguageId', 'ImageId', 'CreatedBy'], 'integer'],
+            [['LanguageId', 'ImageId', 'CreatedBy', 'StatusId'], 'integer'],
             [['CreatedDate'], 'safe'],
             [['Title'], 'string', 'max' => 50],
             [['Link'], 'string', 'max' => 250],
-            [['IsActive'], 'string', 'max' => 4],
         ];
     }
     
@@ -40,7 +39,7 @@ class DailyMonitor extends ActiveRecord
             'Title' => 'Title',
             'Description' => 'Description',
             'Link' => 'Link',
-            'IsActive' => 'Published',
+            'StatusId' => 'Status',
             'LanguageId' => 'Language',
             'ImageId' => 'Image',
             'CreatedBy' => 'Author',
@@ -58,7 +57,7 @@ class DailyMonitor extends ActiveRecord
 
 
     public function getStatus(){
-        return $this->hasOne( Status::className(), ['Id' => 'IsActive'] );
+        return $this->hasOne( Status::className(), ['Id' => 'StatusId'] );
     }
 
     public function getUser(){

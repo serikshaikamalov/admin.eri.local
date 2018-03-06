@@ -10,6 +10,10 @@ use yii\helpers\ArrayHelper;
  */
 class Status extends ActiveRecord
 {
+    const STATUS_PUBLISHED = 1;
+    const STATUS_UNPUBLISHED = 0;
+
+
     public static function tableName()
     {
         return 'status';
