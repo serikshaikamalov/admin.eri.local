@@ -9,7 +9,7 @@ use common\entities\Status;
 /**
  * @property Int $Id
  * @property string $Title
- * @property
+ * @property string $ShortDescription
  * */
 class PublicationVM
 {
