@@ -7,6 +7,17 @@ use yii\db\ActiveQuery;
 
 class StaffRepository
 {
+//    public $pageNumber;
+//    public $limit;
+//    public $offset;
+//    public $totalCount;
+//
+//    public function __construct( $pageNumber, $limit, $offset, $totalCount )
+//    {
+//        $this->pageNumber = 1;
+//        $this->limit = 10;
+//        $this->offset = $this->limit * ($this->pageNumber - 1);
+//    }
 
     /*
      * @return Event
@@ -43,7 +54,7 @@ class StaffRepository
     /*
      * @return Event[]
      */
-    public function getAll( int $languageId ): array
+    public function getAll( int $languageId, int $offset, int $limit ): array
     {
         return Staff::find()
             ->with('language')
@@ -55,6 +66,8 @@ class StaffRepository
                 'StatusId' => Staff::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
             ]  )
+            ->offset($offset)
+            ->limit($limit)
             ->all();
     }
 

@@ -1,5 +1,6 @@
 <?php
 namespace api\controllers;
+use api\viewmodels\StaffListVM;
 use api\viewmodels\StaffVM;
 use common\repositories\StaffRepository;
 use Yii;
@@ -8,20 +9,37 @@ class StaffsController extends ApiBaseController
 {
     public $defaultAction = 'index';
     public $repo;
+    public $pageNumber;
+    public $limit;
+    public $offset;
+    public $totalCount;
 
-    public function  __construct(string $id, $module, StaffRepository $repo, array $config = [])
+    public function  __construct(string $id,
+                                 $module,
+                                 StaffRepository $repo,
+                                 array $config = []
+                                 )
     {
         parent::__construct($id, $module, $config);
         $this->repo = $repo;
+        $this->pageNumber = 1;
+        $this->limit = 10;
+        $this->offset = 10;
+        $this->totalCount = $repo->count();
     }
 
     /*
      * @returns:  List of staffs
      */
-    public function actionIndex( int $languageId = 1 )
+    public function actionIndex( int $languageId = 1, int $pageNumber = 1 )
     {
-        $staffVMList = array();
-        $staffs = $this->repo->getAll( $languageId );
+        $this->pageNumber = $pageNumber;
+        $this->offset = $this->limit * ($this->pageNumber - 1);
+
+        $staffVMList = new StaffListVM();
+        $staffVMList->page = $this->pageNumber;
+        $staffVMList->totalCount = $this->totalCount;
+        $staffs = $this->repo->getAll( $languageId, $this->offset, $this->limit );
 
         if( count($staffs) > 0 ){
             foreach ($staffs as $staff){
@@ -45,7 +63,7 @@ class StaffsController extends ApiBaseController
                 $staffVM->StaffPosition = $staff->staffPosition ? $staff->staffPosition : null;
                 $staffVM->Status = $staff->status ? $staff->status : null;
                 $staffVM->ResearchGroup = $staff->researchGroup ? $staff->researchGroup : null;
-                $staffVMList[] = $staffVM;
+                $staffVMList->items[] = $staffVM;
             }
         }
 
