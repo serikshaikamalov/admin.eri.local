@@ -62,6 +62,7 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->Staff = $publication->staff ? $publication->staff : null;
                 $publicationVM->Language = $publication->language ? $publication->language : null;
                 $publicationVM->Status = $publication->status ? $publication->status : null;
+                $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
                 //$publicationVM->ResearchGroup = $publication->researchGroup ? $publication->researchGroup : null;
                 $publicationVMList->PublicationList[] = $publicationVM;
             }
@@ -94,7 +95,8 @@ class PublicationsController extends ApiBaseController
             $publicationVM->Staff = $publication->staff ? $publication->staff : null;
             $publicationVM->Language = $publication->language ? $publication->language : null;
             $publicationVM->Status = $publication->status ? $publication->status : null;
-            $publicationVM->ResearchGroup = $publication->researchGroup ? $publication->researchGroup : null;
+            //$publicationVM->ResearchGroup = $publication->researchGroup ? $publication->researchGroup : null;
+            $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
         }
         return $publicationVM;
     }

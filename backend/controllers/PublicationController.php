@@ -1,5 +1,9 @@
 <?php
 namespace backend\controllers;
+use common\entities\Language;
+use common\entities\PublicationCategory;
+use common\entities\Staff;
+use common\entities\Status;
 use common\viewmodels\PublicationFormViewModel;
 use Yii;
 use common\entities\publication;
@@ -40,6 +44,11 @@ class PublicationController extends AdminBaseController
     {
         $vm = new PublicationFormViewModel();
         $vm->model = new Publication();
+
+        $vm->statuses = Status::getStatusList();
+        $vm->languages = Language::getLanguageList();
+        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
+        $vm->staffList = Staff::getStaffList();
 
         // POST
         if ($vm->model->load(Yii::$app->request->post())) {

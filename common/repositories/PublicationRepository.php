@@ -14,6 +14,7 @@ class PublicationRepository
             ->with('language')
             ->with('status')
             ->with('publicationCategory')
+            ->with('staff')
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'Id' => $Id

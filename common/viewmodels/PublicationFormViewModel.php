@@ -7,4 +7,5 @@ class PublicationFormViewModel
     public $publicationCategoryList;
     public $languages;
     public $statuses;
+    public $staffList;
 }

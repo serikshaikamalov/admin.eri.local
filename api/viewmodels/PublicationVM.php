@@ -33,5 +33,6 @@ class PublicationVM
     public $Staff;
     public $Language;
     public $Status;
+    public $PublicationCategory;
 
 }
