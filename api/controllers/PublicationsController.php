@@ -57,6 +57,7 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->StaffId = $publication->StaffId;
                 $publicationVM->LanguageId = $publication->LanguageId;
                 $publicationVM->StatusId = $publication->StatusId;
+                $publicationVM->CreatedDate = $publication->CreatedDate;
 
                 // Dictionaries
                 $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');;
@@ -90,6 +91,7 @@ class PublicationsController extends ApiBaseController
             $publicationVM->StaffId = $publication->StaffId;
             $publicationVM->LanguageId = $publication->LanguageId;
             $publicationVM->StatusId = $publication->StatusId;
+            $publicationVM->CreatedDate = $publication->CreatedDate;
 
             // Dictionaries
             $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');;
