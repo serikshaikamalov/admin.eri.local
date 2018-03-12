@@ -20,6 +20,10 @@ use \yii\db\ActiveRecord;
  * @property int $StatusId
  * @property int $LanguageId
  * @property int $FileId
+ *
+ * @property Staff $Staff
+ * @property Status $Status
+ * @property Language $Language
  */
 class Publication extends ActiveRecord
 {
@@ -56,5 +60,26 @@ class Publication extends ActiveRecord
             'LanguageId' => 'Language ID',
             'FileId' => 'File ID',
         ];
+    }
+
+
+    /**
+     * RELATIONS
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLanguage(){
+        return $this->hasOne( Language::className(), ['Id' => 'LanguageId'] );
+    }
+
+    public function getStatus(){
+        return $this->hasOne( Status::className(), ['Id' => 'StatusId'] );
+    }
+
+    public function getStaff(){
+        return $this->hasOne( Staff::className(), ['Id' => 'StaffId'] );
+    }
+
+    public function getPublicationCategory(){
+        return $this->hasOne( PublicationCategory::className(), ['Id' => 'PublicationCategoryId'] );
     }
 }

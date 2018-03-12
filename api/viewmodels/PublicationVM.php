@@ -21,11 +21,17 @@ class PublicationVM
     public $StaffId;
     public $PublicationCategoryId;
     public $StatusId;
+    public $LanguageId;
+    public $CreatedDate;
+    public $ViewsCount;
+    public $FileId;
 
 
     // Dictionaries
     public $ResearchGroup;
     public $ImageSrc;
+    public $Staff;
     public $Language;
     public $Status;
+
 }

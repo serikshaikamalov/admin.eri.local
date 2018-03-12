@@ -25,7 +25,7 @@ class StaffsController extends ApiBaseController
         $this->pageNumber = 1;
         $this->limit = 10;
         $this->offset = 10;
-        $this->totalCount = $repo->count();
+
     }
 
     /*
@@ -35,6 +35,7 @@ class StaffsController extends ApiBaseController
     {
         $this->pageNumber = $pageNumber;
         $this->offset = $this->limit * ($this->pageNumber - 1);
+        $this->totalCount = $this->repo->count( $languageId );
 
         $staffVMList = new StaffListVM();
         $staffVMList->page = $this->pageNumber;

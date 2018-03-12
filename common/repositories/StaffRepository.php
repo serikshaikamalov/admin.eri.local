@@ -46,8 +46,13 @@ class StaffRepository
     /*
      * @return Event count
      */
-    public function count(): int{
-        return Staff::find()->count();
+    public function count(int $languageId): int{
+        return Staff::find()
+            ->where([
+                'StatusId' => Staff::STATUS_PUBLISHED,
+                'LanguageId' => $languageId
+            ]  )
+            ->count();
     }
 
 
