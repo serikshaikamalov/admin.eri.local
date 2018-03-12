@@ -67,14 +67,22 @@ class PublicationController extends AdminBaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $vm = new PublicationFormViewModel();
+        $vm->model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->Id]);
+        $vm->statuses = Status::getStatusList();
+        $vm->languages = Language::getLanguageList();
+        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
+        $vm->staffList = Staff::getStaffList();
+
+        if ($vm->model->load(Yii::$app->request->post()))
+        {
+            $vm->model->save();
+            return $this->redirect(['view', 'id' => $vm->model->Id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'vm' => $vm,
         ]);
     }
 

@@ -6,6 +6,7 @@ use api\viewmodels\StaffListVM;
 use api\viewmodels\StaffVM;
 use common\repositories\PublicationRepository;
 use common\repositories\StaffRepository;
+use phpDocumentor\Reflection\Types\Nullable;
 use Yii;
 
 class PublicationsController extends ApiBaseController
@@ -33,16 +34,16 @@ class PublicationsController extends ApiBaseController
     /*
      * @returns:  List of staffs
      */
-    public function actionIndex( int $languageId = 1, int $pageNumber = 1 )
+    public function actionIndex( int $languageId = 1, int $pageNumber = 1, int $publicationCategoryId = 0 )
     {
         $this->pageNumber = $pageNumber;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
         $publicationVMList = new PublicationListVM();
         $publicationVMList->PageNumber = $this->pageNumber;
-        $publicationVMList->TotalCount = $this->repo->count();
+        $publicationVMList->TotalCount = $this->repo->count( $languageId, $publicationCategoryId );
 
-        $publications = $this->repo->getAll( $languageId, $this->offset, $this->limit );
+        $publications = $this->repo->getAll( $languageId, $this->offset, $this->limit, $publicationCategoryId );
 
         if( count($publications) > 0 ){
             foreach ($publications as $publication){

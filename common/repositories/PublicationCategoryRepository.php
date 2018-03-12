@@ -5,8 +5,8 @@ use common\forms\PublicationCategoryForm;
 
 class PublicationCategoryRepository
 {
-
-    /*
+    /**
+     * @param int $id - Publication's Category Id
      * @return PublicationCategory
      */
     public function get($id): PublicationCategory
@@ -18,20 +18,30 @@ class PublicationCategoryRepository
     }
 
 
-    public function getFull( $id ){
+    /**
+     * @param int $languageId
+     * @return array ActiveRecord[]
+     */
+    public function getAll( int $languageId ){
+        if( !$languageId ){
+            throw new \DomainException('Tag is not found.');
+        }
 
-        $pc = PublicationCategory::find()
-            ->where(['Id' => $id ])
-            ->with('language')
-            ->with('status')
-            ->one();
+        $all = PublicationCategory::find()
+            ->where([
+                'LanguageId' => $languageId,
+                'ParentId' => 0
+            ])
+            ->all();
 
-        return $pc;
+        return $all;
     }
 
-    /*
-    * @return PublicationCategory
-    */
+
+    /**
+     * @param int $ParentId
+     * @return array
+     */
     public function getChildren( int $ParentId ): array
     {
         $all = PublicationCategory::find()
@@ -41,21 +51,9 @@ class PublicationCategoryRepository
     }
 
 
-
-    /*
+    /**
+     * @param PublicationCategoryForm $form
      * @return PublicationCategory
-     */
-    public function getAll(): array
-    {
-        if (!$all = PublicationCategory::find()->all()) {
-            throw new \DomainException('Tag is not found.');
-        }
-        return $all;
-    }
-
-
-    /*
-     * Save
      */
     public function save(PublicationCategoryForm $form): PublicationCategory
     {
@@ -75,8 +73,10 @@ class PublicationCategoryRepository
     }
 
 
-    /*
-     * Edit
+    /**
+     * @param int $Id
+     * @param $form
+     * @return PublicationCategory
      */
     public function edit( int $Id, $form): PublicationCategory
     {
@@ -97,9 +97,11 @@ class PublicationCategoryRepository
     }
 
 
-
-    /*
-     * Delete
+    /**
+     * @param PublicationCategory $publicationCategory
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function delete(PublicationCategory $publicationCategory): void
     {

@@ -47,18 +47,18 @@ class Publication extends ActiveRecord
         return [
             'Id' => 'ID',
             'Title' => 'Title',
-            'PublicationCategoryId' => 'Publication Category ID',
-            'StaffId' => 'Staff ID',
+            'PublicationCategoryId' => 'Publication Category',
+            'StaffId' => 'Staff',
             'CreatedDate' => 'Created Date',
             'CreatedBy' => 'Created By',
-            'IsFeatured' => 'Is Featured',
+            'IsFeatured' => 'Featured',
             'ImageId' => 'Image ID',
             'Description' => 'Description',
             'ShortDescription' => 'Short Description',
-            'ViewsCount' => 'Views Count',
-            'StatusId' => 'Status ID',
-            'LanguageId' => 'Language ID',
-            'FileId' => 'File ID',
+            'ViewsCount' => 'Hit',
+            'StatusId' => 'Status',
+            'LanguageId' => 'Language',
+            'FileId' => 'File',
         ];
     }
 

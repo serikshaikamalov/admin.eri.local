@@ -31,17 +31,29 @@ class PublicationRepository
     /*
      * @return Publication's Count
      */
-    public function count(): int{
-        return Publication::find()->count();
+    public function count( int $languageId, int $publicationCategoryId = 0 ): int{
+        $query =  Publication::find()
+            ->where([
+                'StatusId' => Status::STATUS_PUBLISHED,
+                'LanguageId' => $languageId
+            ]);
+
+        if( $publicationCategoryId != 0 ){
+            $query->andWhere([
+                'PublicationCategoryId' => $publicationCategoryId
+            ]);
+        }
+
+        return $query->count();
     }
 
 
     /*
      * @return latest Publications[]
      */
-    public function getAll( int $languageId, int $offset, int $limit ): array
+    public function getAll( int $languageId, int $offset, int $limit, int $publicationCategoryId = 0 ): array
     {
-        return Publication::find()
+        $query = Publication::find()
             ->with('language')
             ->with('status')
             ->with('publicationCategory')
@@ -52,7 +64,15 @@ class PublicationRepository
             ]  )
             ->offset($offset)
             ->limit($limit)
-            ->orderBy(['Id' => SORT_DESC])
-            ->all();
+            ->orderBy(['Id' => SORT_DESC]);
+
+            if( $publicationCategoryId != 0 ){
+                $query->andWhere([
+                    'PublicationCategoryId' => $publicationCategoryId
+                ]);
+            }
+
+
+            return $query->all();
     }
 }
