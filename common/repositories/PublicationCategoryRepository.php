@@ -20,9 +20,10 @@ class PublicationCategoryRepository
 
     /**
      * @param int $languageId
+     * @param int $publicationTypeId - Тип категории
      * @return array ActiveRecord[]
      */
-    public function getAll( int $languageId ){
+    public function getAll( int $languageId, int $publicationTypeId ): array {
         if( !$languageId ){
             throw new \DomainException('Tag is not found.');
         }
@@ -30,7 +31,8 @@ class PublicationCategoryRepository
         $all = PublicationCategory::find()
             ->where([
                 'LanguageId' => $languageId,
-                'ParentId' => 0
+                'ParentId' => 0,
+                'PublicationTypeId' => $publicationTypeId
             ])
             ->all();
 

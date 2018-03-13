@@ -21,23 +21,30 @@ class PublicationCategoriesController extends ApiBaseController
         $this->offset = 10;
     }
 
-
-    public function actionIndex(int $languageId = 1){
-
+    /**
+     * @param int $languageId
+     * @param int $publicationTypeId
+     * @return array PublicationCategoryVM[] - Список категории публикации
+     */
+    public function actionIndex(int $languageId = 1,
+                                int $publicationTypeId = 1){
         $result = array();
 
         if( $languageId )
         {
-            $all = $this->repo->getAll( $languageId );
+            $all = $this->repo->getAll( $languageId, $publicationTypeId );
 
             if( count($all) > 0 ){
+
                 foreach ( $all as $one){
 
                     $publicationCategoryVM = new PublicationCategoryVM();
                     $publicationCategoryVM->Id = $one->Id;
                     $publicationCategoryVM->Title = $one->Title;
+                    $publicationCategoryVM->Link = $one->Link;
                     $publicationCategoryVM->LanguageId = $one->LanguageId;
                     $publicationCategoryVM->StatusId = $one->StatusId;
+                    $publicationCategoryVM->ParentId = $one->ParentId;
 
                     // Children
                     $children = $this->repo->getChildren( $one->Id );
@@ -48,7 +55,6 @@ class PublicationCategoriesController extends ApiBaseController
                 }
             }
         }
-
         return $result;
     }
 }

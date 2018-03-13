@@ -5,7 +5,8 @@ use common\entities\Status;
 
 class PublicationRepository
 {
-    /*
+    /**
+     * @param int $Id - Publication Id
      * @return Publication
      */
     public function get($Id): Publication {
@@ -28,14 +29,24 @@ class PublicationRepository
     }
 
 
-    /*
-     * @return Publication's Count
+    /**
+     * @param int $languageId
+     * @param int $publicationTypeId
+     * @param int $publicationCategoryId
+     * @param int $staffId
+     *
+     * @return int Publication's total count
      */
-    public function count( int $languageId, int $publicationCategoryId = 0 ): int{
+    public function count( int $languageId,
+                           int $publicationTypeId = 1,
+                           int $publicationCategoryId = 0,
+                           int $staffId = 0
+                         ): int{
         $query =  Publication::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'LanguageId' => $languageId
+                'LanguageId' => $languageId,
+                'PublicationTypeId' => $publicationTypeId
             ]);
 
         if( $publicationCategoryId != 0 ){
@@ -44,14 +55,33 @@ class PublicationRepository
             ]);
         }
 
+        if( $staffId != 0 ){
+            $query->andWhere([
+                'StaffId' => $staffId
+            ]);
+        }
+
         return $query->count();
     }
 
 
-    /*
-     * @return latest Publications[]
+    /**
+     * @param int $publicationTypeId
+     * @param int $languageId
+     * @param int $offset
+     * @param int $limit
+     * @param array $publicationCategoryIds[]
+     * @param int $staffId
+     *
+     * @return array Publications[]
      */
-    public function getAll( int $languageId, int $offset, int $limit, int $publicationCategoryId = 0 ): array
+    public function getAll( int $publicationTypeId = 1,
+                            int $languageId,
+                            int $offset,
+                            int $limit,
+                            array $publicationCategoryIds = [],
+                            int $staffId = 0
+                          ): array
     {
         $query = Publication::find()
             ->with('language')
@@ -60,19 +90,35 @@ class PublicationRepository
             ->with('staff')
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'LanguageId' => $languageId
+                'LanguageId' => $languageId,
             ]  )
             ->offset($offset)
             ->limit($limit)
             ->orderBy(['Id' => SORT_DESC]);
 
-            if( $publicationCategoryId != 0 ){
+            if( count($publicationCategoryIds) > 0 ){
                 $query->andWhere([
-                    'PublicationCategoryId' => $publicationCategoryId
+                    'PublicationCategoryId' => $publicationCategoryIds
                 ]);
             }
 
+            if( $publicationTypeId ){
+                $query->andWhere([
+                    'PublicationTypeId' => $publicationTypeId
+                ]);
+            }
+
+            if( $staffId != 0 ){
+                $query->andWhere([
+                    'StaffId' => $staffId
+                ]);
+            }
+
+            //var_dump($query->prepare(\Yii::$app->db->queryBuilder)->createCommand()->rawSql); die();
 
             return $query->all();
     }
+
+
+
 }
