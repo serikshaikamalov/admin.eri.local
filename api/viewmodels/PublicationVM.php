@@ -17,7 +17,7 @@ use common\entities\Status;
  * @property int $StatusId
  * @property int $LanguageId
  * @property string $CreatedDate
- * @property int $ViewsCount
+ * @property int $Hits
  * @property int $FileId
  *
  * @property ResearchGroup $ResearchGroup
@@ -40,7 +40,7 @@ class PublicationVM
     public $StatusId;
     public $LanguageId;
     public $CreatedDate;
-    public $ViewsCount;
+    public $Hits;
     public $FileId;
 
     // Dictionaries

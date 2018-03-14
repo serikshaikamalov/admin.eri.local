@@ -10,7 +10,7 @@ class ApiBaseController extends Controller {
     {
         return [
             // '*',                        // star allows all domains
-            'http://localhost:4200'
+            ALLOWED_DOMAIN
         ];
     }
 

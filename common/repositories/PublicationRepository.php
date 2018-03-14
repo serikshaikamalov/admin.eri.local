@@ -7,6 +7,7 @@ class PublicationRepository
 {
     /**
      * @param int $Id - Publication Id
+     *
      * @return Publication
      */
     public function get($Id): Publication {
@@ -72,6 +73,7 @@ class PublicationRepository
      * @param int $limit
      * @param array $publicationCategoryIds[]
      * @param int $staffId
+     * @param string $orderBy
      *
      * @return array Publications[]
      */
@@ -80,7 +82,8 @@ class PublicationRepository
                             int $offset,
                             int $limit,
                             array $publicationCategoryIds = [],
-                            int $staffId = 0
+                            int $staffId = 0,
+                            string $orderBy = 'Id'
                           ): array
     {
         $query = Publication::find()
@@ -93,8 +96,7 @@ class PublicationRepository
                 'LanguageId' => $languageId,
             ]  )
             ->offset($offset)
-            ->limit($limit)
-            ->orderBy(['Id' => SORT_DESC]);
+            ->limit($limit);
 
             if( count($publicationCategoryIds) > 0 ){
                 $query->andWhere([
@@ -114,11 +116,38 @@ class PublicationRepository
                 ]);
             }
 
+            // ORDER BY
+            switch( $orderBy ){
+                default:
+                case 'Id':
+                    $query->orderBy(['Id' => SORT_DESC]);
+                    break;
+                case 'Hits':
+                    $query->orderBy(['Hits' => SORT_DESC]);
+                    break;
+            }
+
             //var_dump($query->prepare(\Yii::$app->db->queryBuilder)->createCommand()->rawSql); die();
 
             return $query->all();
     }
 
 
+    /**
+     * Update Publication's Hits
+     * @param int $publicationId
+     *
+     * @return bool
+     */
+    public function updateHits( int $publicationId)
+    {
+        $IsSaved = false;
+        $one = Publication::findOne( $publicationId );
+        if( $one ){
+            $one->Hits = ($one->Hits > 0) ? $one->Hits + 1 : 1;
+            $IsSaved = $one->save();
+        }
+        return $IsSaved;
+    }
 
 }

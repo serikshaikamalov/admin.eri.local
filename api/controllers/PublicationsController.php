@@ -42,6 +42,8 @@ class PublicationsController extends ApiBaseController
      * @param int $pageNumber
      * @param int $publicationCategoryId
      * @param int $staffId
+     * @param int $limit
+     * @param string $orderBy
      *
      * @return PublicationListVM
      */
@@ -50,10 +52,14 @@ class PublicationsController extends ApiBaseController
                                  int $languageId = 1,
                                  int $pageNumber = 1,
                                  int $publicationCategoryId = 0,
-                                 int $staffId = 0
+                                 int $staffId = 0,
+                                 int $limit = 10,
+                                 string $orderBy = 'Id'
                                 ): PublicationListVM
     {
+
         $this->pageNumber = $pageNumber;
+        $this->limit = $limit;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
         $publicationVMList = new PublicationListVM();
@@ -72,12 +78,14 @@ class PublicationsController extends ApiBaseController
             $ChildCategoryIds[] = $publicationCategoryId;
         }
 
+        // GET PUBLICATIONS FROM DB
         $publications = $this->repo->getAll( $publicationTypeId,
                                              $languageId,
                                              $this->offset,
                                              $this->limit,
                                              $ChildCategoryIds,
-                                             $staffId
+                                             $staffId,
+                                             $orderBy
                                             );
 
         if( count($publications) > 0 ){
@@ -92,8 +100,10 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->StaffId = $publication->StaffId;
                 $publicationVM->LanguageId = $publication->LanguageId;
                 $publicationVM->StatusId = $publication->StatusId;
-                $publicationVM->CreatedDate = $publication->CreatedDate;
+                //$publicationVM->CreatedDate =  $publication->CreatedDate;
+                $publicationVM->CreatedDate =  date('F j, Y', strtotime($publication->CreatedDate) );
                 $publicationVM->PublicationCategoryId = $publication->PublicationCategoryId;
+                $publicationVM->Hits = $publication->Hits;
 
                 // Dictionaries
                 $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');;
@@ -128,6 +138,7 @@ class PublicationsController extends ApiBaseController
             $publicationVM->LanguageId = $publication->LanguageId;
             $publicationVM->StatusId = $publication->StatusId;
             $publicationVM->CreatedDate = $publication->CreatedDate;
+            $publicationVM->Hits = $publication->Hits;
 
             // Dictionaries
             $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');;
@@ -136,6 +147,10 @@ class PublicationsController extends ApiBaseController
             $publicationVM->Status = $publication->status ? $publication->status : null;
             //$publicationVM->ResearchGroup = $publication->researchGroup ? $publication->researchGroup : null;
             $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
+
+
+            // Update Hits
+            $this->repo->updateHits($publication->Id);
         }
         return $publicationVM;
     }

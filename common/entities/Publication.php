@@ -16,7 +16,7 @@ use \yii\db\ActiveRecord;
  * @property string $ImageId
  * @property string $Description
  * @property string $ShortDescription
- * @property int $ViewsCount
+ * @property int $Hits
  * @property int $StatusId
  * @property int $LanguageId
  * @property int $FileId
@@ -35,10 +35,9 @@ class Publication extends ActiveRecord
     public function rules()
     {
         return [
-            [['PublicationCategoryId', 'StaffId', 'CreatedDate', 'CreatedBy', 'ViewsCount', 'StatusId', 'LanguageId', 'FileId', 'ImageId'], 'integer'],
-            [['Description', 'ShortDescription'], 'string'],
+            [['PublicationCategoryId', 'StaffId', 'CreatedBy', 'Hits', 'StatusId', 'LanguageId', 'FileId', 'ImageId', 'IsFeatured'], 'integer'],
+            [['Description', 'ShortDescription', 'CreatedDate'], 'string'],
             [['Title'], 'string', 'max' => 250],
-            [['IsFeatured'], 'string', 'max' => 4],
         ];
     }
 
@@ -55,7 +54,7 @@ class Publication extends ActiveRecord
             'ImageId' => 'Image ID',
             'Description' => 'Description',
             'ShortDescription' => 'Short Description',
-            'ViewsCount' => 'Hit',
+            'Hits' => 'Hits',
             'StatusId' => 'Status',
             'LanguageId' => 'Language',
             'FileId' => 'File',
