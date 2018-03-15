@@ -1,12 +1,20 @@
 <?php
+namespace api\viewmodels;
 
-namespace app\modules\api\models;
-
+/**
+ * @property int $Id
+ * @property string $Title
+ * @property int $IsActive
+ * @property int $ParentId
+ * @property int $LanguageId
+ * @property array $Children
+ */
 class EventCategoryVM
 {
     public $Id;
     public $Title;
     public $IsActive;
-    public $LangId;
-    public $children;
+    public $ParentId;
+    public $LanguageId;
+    public $Children;
 }

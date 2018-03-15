@@ -141,7 +141,7 @@ class PublicationsController extends ApiBaseController
             $publicationVM->Hits = $publication->Hits;
 
             // Dictionaries
-            $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');;
+            $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');
             $publicationVM->Staff = $publication->staff ? $publication->staff : null;
             $publicationVM->Language = $publication->language ? $publication->language : null;
             $publicationVM->Status = $publication->status ? $publication->status : null;

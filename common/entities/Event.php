@@ -5,15 +5,14 @@ use \yii\db\ActiveRecord;
 /**
  * @property int $Id
  * @property string $Title
- * @property string $StartDay
- * @property string $StartTime
- * @property string $Description
+ * @property string $StartDate
+ * @property string $ShortDescription
+ * @property string $FullDescription
  * @property int $EventCategoryId
- * @property int $LangId
+ * @property int $LanguageId
  * @property string $SpeakerFullName
  * @property int $CreatedBy
  * @property string $CreatedDate
- * @property string $UpdatedDate
  * @property int $StatusId
  * @property string $Address
  * @property int $ImageId
@@ -21,6 +20,9 @@ use \yii\db\ActiveRecord;
  */
 class Event extends ActiveRecord
 {
+    const UPCOMING_EVENT = 1;
+    const PAST_EVENT = 2;
+
     public static function tableName()
     {
         return 'event';
@@ -29,10 +31,9 @@ class Event extends ActiveRecord
     public function rules()
     {
         return [
-            [['Title', 'StartDay', 'StartTime', 'LangId', 'EventCategoryId'], 'required'],
-            [['StartDay', 'StartTime', 'CreatedDate', 'UpdatedDate'], 'safe'],
-            [['Description', 'Address', 'Link'], 'string'],
-            [['EventCategoryId', 'LangId', 'CreatedBy', 'StatusId', 'ImageId'], 'integer'],
+            [['Title', 'StartDate', 'LanguageId', 'EventCategoryId'], 'required'],
+            [['Description', 'Address', 'Link', 'StartDate'], 'string'],
+            [['EventCategoryId', 'LanguageId', 'CreatedBy', 'StatusId', 'ImageId'], 'integer'],
             [['Title', 'SpeakerFullName'], 'string', 'max' => 255],
         ];
     }
@@ -42,16 +43,15 @@ class Event extends ActiveRecord
         return [
             'Id' => 'ID',
             'Title' => 'Title',
-            'StartDay' => 'Start Day',
-            'StartTime' => 'Start Time',
-            'Description' => 'Description',
-            'EventCategoryId' => 'Event Category ID',
-            'LangId' => 'Lang ID',
+            'StartDate' => 'Start Date',
+            'ShortDescription' => 'Short Description',
+            'FullDescription' => 'Full Description',
+            'EventCategoryId' => 'Event Category',
+            'LanguageId' => 'Language',
             'SpeakerFullName' => 'Speaker Full Name',
-            'CreatedBy' => 'Created By',
+            'CreatedBy' => 'Author',
             'CreatedDate' => 'Created Date',
-            'UpdatedDate' => 'Updated Date',
-            'StatusId' => 'Publish',
+            'StatusId' => 'Status',
             'Address' => 'Address',
             'ImageId' => 'Image',
             'Link' => 'Link',
@@ -64,7 +64,7 @@ class Event extends ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getLanguage(){
-        return $this->hasOne( Language::className(), ['Id' => 'LangId'] );
+        return $this->hasOne( Language::className(), ['Id' => 'LanguageId'] );
     }
 
     public function getStatus(){
