@@ -37,6 +37,7 @@ class EventCategoriesController extends ApiBaseController
                     $oneVM->Title = $one->Title;
                     $oneVM->LanguageId = $one->LanguageId;
                     $oneVM->ParentId = $one->ParentId;
+                    $oneVM->Url = $one->Url;
 
                     // Children
                     $children = $this->repo->getChildren( $one->Id );

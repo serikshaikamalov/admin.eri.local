@@ -8,6 +8,7 @@ namespace api\viewmodels;
  * @property int $ParentId
  * @property int $LanguageId
  * @property array $Children
+ * @property string $Url
  */
 class EventCategoryVM
 {
@@ -17,4 +18,5 @@ class EventCategoryVM
     public $ParentId;
     public $LanguageId;
     public $Children;
+    public $Url;
 }
