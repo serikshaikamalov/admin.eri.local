@@ -1,6 +1,7 @@
 <?php
 namespace common\repositories;
 use common\entities\StaffType;
+<<<<<<< HEAD
 
 class StaffTypeRepository
 {
@@ -33,5 +34,22 @@ class StaffTypeRepository
             ->all();
 
         return $all;
+=======
+use common\entities\Status;
+
+class StaffTypeRepository
+{
+    /*
+     * @return StaffType[]
+     */
+    public function getAll( int $languageId): array
+    {
+        return StaffType::find()
+            ->where([
+                'StatusId' => Status::STATUS_PUBLISHED,
+                'LanguageId' => $languageId
+            ]  )
+            ->all();
+>>>>>>> c268d3b051d605dea6475cec9895757ee3c2a28e
     }
 }
