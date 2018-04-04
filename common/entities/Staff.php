@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $StatusId
  * @property string $FullName
  * @property string $StaffPositionId
- * @property string $ResearchGroupId
+ * @property int $PublicationMainTagId
  * @property string $ShortBiography
  */
 class Staff extends ActiveRecord
@@ -24,7 +24,7 @@ class Staff extends ActiveRecord
     public function rules()
     {
         return [
-            [['StatusId', 'ImageId', 'StaffPositionId', 'ResearchGroupId', 'ResearchGroupId', 'LanguageId', 'StaffPositionId', 'StaffTypeId'], 'integer'],
+            [['StatusId', 'ImageId', 'StaffPositionId', 'PublicationMainTagId', 'LanguageId', 'StaffPositionId', 'StaffTypeId'], 'integer'],
             [['ShortBiography', 'FullBiography'], 'string'],
             [['FullName'], 'string', 'max' => 200],
         ];
@@ -37,7 +37,7 @@ class Staff extends ActiveRecord
             'StatusId' => 'Status',
             'FullName' => 'Full Name',
             'StaffPositionId' => 'Position',
-            'ResearchGroupId' => 'Research Group',
+            'PublicationMainTagId' => 'Research Group',
             'StaffTypeId' => 'Staff Type',
             'ShortBiography' => 'Short Biography',
             'FullBiography' => 'Full Biography',
@@ -56,12 +56,12 @@ class Staff extends ActiveRecord
             ->with('staffType')
             ->with('staffPosition')
             ->with('status')
-            ->where(['Id' => $Id, 'StatusId' => Staff::STATUS_PUBLISHED]  )
+            ->where(['Id' => $Id, 'StatusId' => Status::STATUS_PUBLISHED]  )
             ->one();
         return $staff;
     }
 
-    /*
+    /**
      * @return Staff[]
      */
     public static function getStaffList(){
@@ -90,7 +90,7 @@ class Staff extends ActiveRecord
         return $this->hasOne( StaffPosition::className(), ['Id' => 'StaffPositionId'] );
     }
 
-    public function getResearchGroup(){
-        return $this->hasOne( ResearchGroup::className(), ['Id' => 'ResearchGroupId'] );
+    public function getPublicationMainTag(){
+        return $this->hasOne( PublicationMainTag::className(), ['Id' => 'PublicationMainTagId'] );
     }
 }

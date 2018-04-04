@@ -1,6 +1,7 @@
 <?php
 namespace common\repositories;
 use common\entities\Staff;
+use common\entities\Status;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\db\ActiveQuery;
@@ -29,9 +30,9 @@ class StaffRepository
             ->with('status')
             ->with('staffType')
             ->with('staffPosition')
-            ->with('researchGroup')
+            ->with('publicationMainTag')
             ->where([
-                'StatusId' => Staff::STATUS_PUBLISHED,
+                'StatusId' => Status::STATUS_PUBLISHED,
                 'Id' => $Id
             ])
             ->one();
@@ -49,7 +50,7 @@ class StaffRepository
     public function count(int $languageId): int{
         return Staff::find()
             ->where([
-                'StatusId' => Staff::STATUS_PUBLISHED,
+                'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
             ]  )
             ->count();
@@ -66,9 +67,9 @@ class StaffRepository
             ->with('status')
             ->with('staffType')
             ->with('staffPosition')
-            ->with('researchGroup')
+            ->with('publicationMainTag')
             ->where([
-                'StatusId' => Staff::STATUS_PUBLISHED,
+                'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
             ]  )
             ->offset($offset)

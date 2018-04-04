@@ -50,7 +50,7 @@ class StaffsController extends ApiBaseController
                 $staffVM->FullName = $staff->FullName;
                 $staffVM->ShortBiography = $staff->ShortBiography;
                 $staffVM->FullBiography = $staff->FullBiography;
-                $staffVM->ResearchGroupId = $staff->ResearchGroupId;
+                $staffVM->PublicationMainTagId = $staff->PublicationMainTagId;
                 $staffVM->ImageId = $staff->ImageId;
                 $staffVM->LanguageId = $staff->LanguageId;
                 $staffVM->StatusId = $staff->StatusId;
@@ -63,7 +63,7 @@ class StaffsController extends ApiBaseController
                 $staffVM->StaffType = $staff->staffType ? $staff->staffType : null;
                 $staffVM->StaffPosition = $staff->staffPosition ? $staff->staffPosition : null;
                 $staffVM->Status = $staff->status ? $staff->status : null;
-                $staffVM->ResearchGroup = $staff->researchGroup ? $staff->researchGroup : null;
+                $staffVM->PublicationMainTag = $staff->publicationMainTag ? $staff->publicationMainTag : null;
                 $staffVMList->items[] = $staffVM;
             }
         }
@@ -85,7 +85,7 @@ class StaffsController extends ApiBaseController
             $staffVM->FullName = $staff->FullName;
             $staffVM->ShortBiography = $staff->ShortBiography;
             $staffVM->FullBiography = $staff->FullBiography;
-            $staffVM->ResearchGroupId = $staff->ResearchGroupId;
+            $staffVM->PublicationMainTagId = $staff->PublicationMainTagId;
             $staffVM->ImageId = $staff->ImageId;
             $staffVM->LanguageId = $staff->LanguageId;
             $staffVM->StatusId = $staff->StatusId;
@@ -98,7 +98,7 @@ class StaffsController extends ApiBaseController
             $staffVM->StaffType = $staff->staffType ? $staff->staffType : null;
             $staffVM->StaffPosition = $staff->staffPosition ? $staff->staffPosition : null;
             $staffVM->Status = $staff->status ? $staff->status : null;
-            $staffVM->ResearchGroup = $staff->researchGroup ? $staff->researchGroup : null;
+            $staffVM->PublicationMainTag = $staff->publicationMainTag ? $staff->publicationMainTag : null;
         }
         return $staffVM;
     }
