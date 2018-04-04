@@ -1,9 +1,10 @@
 <?php
 namespace api\viewmodels;
-use common\entities\Language;
+
 use common\entities\PublicationCategory;
-use common\entities\ResearchGroup;
+use common\entities\PublicationMainTag;
 use common\entities\Staff;
+use common\entities\Language;
 use common\entities\Status;
 
 /**
@@ -19,13 +20,14 @@ use common\entities\Status;
  * @property string $CreatedDate
  * @property int $Hits
  * @property int $FileId
+ * @property int $PublicationMainTagId
  *
- * @property ResearchGroup $ResearchGroup
  * @property string $ImageSrc
  * @property Staff $Staff
  * @property Language $Language
  * @property Status $Status
  * @property PublicationCategory $PublicationCategory
+ * @property PublicationMainTag $PublicationMainTag
  *
  * */
 class PublicationVM
@@ -42,6 +44,7 @@ class PublicationVM
     public $CreatedDate;
     public $Hits;
     public $FileId;
+    public $PublicationMainTagId;
 
     // Dictionaries
     public $ResearchGroup;
@@ -50,4 +53,5 @@ class PublicationVM
     public $Language;
     public $Status;
     public $PublicationCategory;
+    public $PublicationMainTag;
 }

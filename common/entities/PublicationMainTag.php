@@ -2,17 +2,17 @@
 namespace common\entities;
 use yii\db\ActiveRecord;
 
-class ResearchGroup extends ActiveRecord
+class PublicationMainTag extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'researchGroup';
+        return 'publicationMainTag';
     }
 
     public function rules()
     {
         return [
-            [['ParentID', 'LanguageId', 'StatusId'], 'integer'],
+            [['ParentId', 'LanguageId', 'StatusId'], 'integer'],
             [['Title'], 'string', 'max' => 50],
         ];
     }

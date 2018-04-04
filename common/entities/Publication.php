@@ -1,6 +1,5 @@
 <?php
 namespace common\entities;
-use Yii;
 use \yii\db\ActiveRecord;
 
 /**
@@ -20,10 +19,12 @@ use \yii\db\ActiveRecord;
  * @property int $StatusId
  * @property int $LanguageId
  * @property int $FileId
+ * @property int $PublicationMainTagId
  *
  * @property Staff $Staff
  * @property Status $Status
  * @property Language $Language
+ * @property PublicationMainTag $PublicationMainTag
  */
 class Publication extends ActiveRecord
 {
@@ -35,7 +36,7 @@ class Publication extends ActiveRecord
     public function rules()
     {
         return [
-            [['PublicationCategoryId', 'StaffId', 'CreatedBy', 'Hits', 'StatusId', 'LanguageId', 'FileId', 'ImageId', 'IsFeatured'], 'integer'],
+            [['PublicationCategoryId', 'StaffId', 'CreatedBy', 'Hits', 'StatusId', 'LanguageId', 'FileId', 'ImageId', 'IsFeatured', 'PublicationMainTagId'], 'integer'],
             [['Description', 'ShortDescription', 'CreatedDate'], 'string'],
             [['Title'], 'string', 'max' => 250],
         ];
@@ -58,6 +59,7 @@ class Publication extends ActiveRecord
             'StatusId' => 'Status',
             'LanguageId' => 'Language',
             'FileId' => 'File',
+            'PublicationMainTagId' => 'Main Tag'
         ];
     }
 
@@ -80,5 +82,9 @@ class Publication extends ActiveRecord
 
     public function getPublicationCategory(){
         return $this->hasOne( PublicationCategory::className(), ['Id' => 'PublicationCategoryId'] );
+    }
+
+    public function getPublicationMainTag(){
+        return $this->hasOne( PublicationMainTag::className(), ['Id' => 'PublicationMainTagId'] );
     }
 }

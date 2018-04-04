@@ -1,6 +1,7 @@
 <?php
 namespace api\controllers;
-use common\repositories\ResearchGroupRepository;
+use common\entities\PublicationMainTag;
+use common\repositories\PublicationMainTagRepository;
 use api\viewmodels\ResearchGroupVM;
 
 class ResearchGroupsController extends ApiBaseController
@@ -10,7 +11,7 @@ class ResearchGroupsController extends ApiBaseController
 
     public function  __construct(string $id,
                                  $module,
-                                 ResearchGroupRepository $repo,
+                                 PublicationMainTagRepository $repo,
                                  array $config = []
                                  )
     {
@@ -18,8 +19,10 @@ class ResearchGroupsController extends ApiBaseController
         $this->repo = $repo;
     }
 
-    /*
-     * @returns:  ResearchGroup[]
+
+    /**
+     * @param int $languageId
+     * @return  PublicationMainTag[]
      */
     public function actionIndex( int $languageId = 1 )
     {

@@ -6,6 +6,7 @@ use api\viewmodels\StaffListVM;
 use api\viewmodels\StaffVM;
 use common\repositories\PublicationCategoryRepository;
 use common\repositories\PublicationRepository;
+use common\repositories\PublicationMainTagRepository;
 use common\repositories\StaffRepository;
 use phpDocumentor\Reflection\Types\Nullable;
 use Yii;
@@ -14,23 +15,28 @@ use yii\helpers\ArrayHelper;
 class PublicationsController extends ApiBaseController
 {
     public $defaultAction = 'index';
-    public $repo;
-    public $repoPublicationCategory;
     public $pageNumber;
     public $limit;
     public $offset;
     public $totalCount;
 
+    // REPOSITORIES
+    public $repo;
+    public $repoPublicationCategory;
+    public $repoResearchGroup;
+
     public function  __construct(string $id,
                                  $module,
                                  PublicationRepository $repo,
                                  PublicationCategoryRepository $repoPublicationCategory,
+                                 PublicationMainTagRepository $researchGroupRepository,
                                  array $config = []
                                  )
     {
         parent::__construct($id, $module, $config);
         $this->repo = $repo;
         $this->repoPublicationCategory = $repoPublicationCategory;
+        $this->repoResearchGroup = $researchGroupRepository;
         $this->pageNumber = 1;
         $this->limit = 10;
         $this->offset = 10;
@@ -44,6 +50,7 @@ class PublicationsController extends ApiBaseController
      * @param int $staffId
      * @param int $limit
      * @param string $orderBy
+     * @param int $publicationMainTagId
      *
      * @return PublicationListVM
      */
@@ -54,7 +61,8 @@ class PublicationsController extends ApiBaseController
                                  int $publicationCategoryId = 0,
                                  int $staffId = 0,
                                  int $limit = 10,
-                                 string $orderBy = 'Id'
+                                 string $orderBy = 'Id',
+                                 int $publicationMainTagId = 0
                                 ): PublicationListVM
     {
 
@@ -78,6 +86,14 @@ class PublicationsController extends ApiBaseController
             $ChildCategoryIds[] = $publicationCategoryId;
         }
 
+        // Get publication main tags
+        $childMainTagIds = [];
+        if( $publicationMainTagId != 0 ){
+            $childMainTagIds = $this->repoResearchGroup->getChildren($publicationMainTagId);
+            $childMainTagIds = ArrayHelper::getColumn($childMainTagIds, 'Id');
+            $childMainTagIds[] = $publicationMainTagId;
+        }
+
         // GET PUBLICATIONS FROM DB
         $publications = $this->repo->getAll( $publicationTypeId,
                                              $languageId,
@@ -85,7 +101,8 @@ class PublicationsController extends ApiBaseController
                                              $this->limit,
                                              $ChildCategoryIds,
                                              $staffId,
-                                             $orderBy
+                                             $orderBy,
+                                             $childMainTagIds
                                             );
 
         if( count($publications) > 0 ){
@@ -100,10 +117,10 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->StaffId = $publication->StaffId;
                 $publicationVM->LanguageId = $publication->LanguageId;
                 $publicationVM->StatusId = $publication->StatusId;
-                //$publicationVM->CreatedDate =  $publication->CreatedDate;
                 $publicationVM->CreatedDate =  date('F j, Y', strtotime($publication->CreatedDate) );
                 $publicationVM->PublicationCategoryId = $publication->PublicationCategoryId;
                 $publicationVM->Hits = $publication->Hits;
+                $publicationVM->PublicationMainTagId = $publication->PublicationMainTagId;
 
                 // Dictionaries
                 $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');;
@@ -111,7 +128,7 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->Language = $publication->language ? $publication->language : null;
                 $publicationVM->Status = $publication->status ? $publication->status : null;
                 $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
-                //$publicationVM->ResearchGroup = $publication->researchGroup ? $publication->researchGroup : null;
+                $publicationVM->PublicationMainTag = $publication->publicationMainTag ? $publication->publicationMainTag : null;
                 $publicationVMList->PublicationList[] = $publicationVM;
             }
         }

@@ -74,6 +74,7 @@ class PublicationRepository
      * @param array $publicationCategoryIds[]
      * @param int $staffId
      * @param string $orderBy
+     * @param array $mainTagIds
      *
      * @return array Publications[]
      */
@@ -83,13 +84,15 @@ class PublicationRepository
                             int $limit,
                             array $publicationCategoryIds = [],
                             int $staffId = 0,
-                            string $orderBy = 'Id'
+                            string $orderBy = 'Id',
+                            array $mainTagIds = []
                           ): array
     {
         $query = Publication::find()
             ->with('language')
             ->with('status')
             ->with('publicationCategory')
+            ->with('publicationMainTag')
             ->with('staff')
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
@@ -98,21 +101,31 @@ class PublicationRepository
             ->offset($offset)
             ->limit($limit);
 
+            // Filter By Publication CategoryIds
             if( count($publicationCategoryIds) > 0 ){
                 $query->andWhere([
                     'PublicationCategoryId' => $publicationCategoryIds
                 ]);
             }
 
+            // Filter By Publication TypeId
             if( $publicationTypeId ){
                 $query->andWhere([
                     'PublicationTypeId' => $publicationTypeId
                 ]);
             }
 
+            // Filter By Publication StaffId
             if( $staffId != 0 ){
                 $query->andWhere([
                     'StaffId' => $staffId
+                ]);
+            }
+
+            // Filter By Publication MainTagIds
+            if( count($mainTagIds) > 0 ){
+                $query->andWhere([
+                    'PublicationMainTagId' => $mainTagIds
                 ]);
             }
 
