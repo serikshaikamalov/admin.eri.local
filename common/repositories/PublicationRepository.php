@@ -33,15 +33,17 @@ class PublicationRepository
     /**
      * @param int $languageId
      * @param int $publicationTypeId
-     * @param int $publicationCategoryId
+     * @param array $publicationCategoryIds
      * @param int $staffId
+     * @param array $mainTagIds
      *
-     * @return int Publication's total count
+     * @return int Publication[] length
      */
     public function count( int $languageId,
                            int $publicationTypeId = 1,
-                           int $publicationCategoryId = 0,
-                           int $staffId = 0
+                           array $publicationCategoryIds = [],
+                           int $staffId = 0,
+                           array $mainTagIds = []
                          ): int{
         $query =  Publication::find()
             ->where([
@@ -50,9 +52,17 @@ class PublicationRepository
                 'PublicationTypeId' => $publicationTypeId
             ]);
 
-        if( $publicationCategoryId != 0 ){
+        // Filter
+        if( count($publicationCategoryIds) > 0 ){
             $query->andWhere([
-                'PublicationCategoryId' => $publicationCategoryId
+                'PublicationCategoryId' => $publicationCategoryIds
+            ]);
+        }
+
+        // Filter By Publication MainTagIds
+        if( count($mainTagIds) > 0 ){
+            $query->andWhere([
+                'PublicationMainTagId' => $mainTagIds
             ]);
         }
 

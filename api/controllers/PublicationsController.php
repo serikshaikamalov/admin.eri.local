@@ -72,11 +72,7 @@ class PublicationsController extends ApiBaseController
 
         $publicationVMList = new PublicationListVM();
         $publicationVMList->PageNumber = $this->pageNumber;
-        $publicationVMList->TotalCount = $this->repo->count( $languageId,
-                                                             $publicationTypeId,
-                                                             $publicationCategoryId,
-                                                             $staffId
-                                                            );
+
 
         // Get publication categories
         $ChildCategoryIds = [];
@@ -93,6 +89,15 @@ class PublicationsController extends ApiBaseController
             $childMainTagIds = ArrayHelper::getColumn($childMainTagIds, 'Id');
             $childMainTagIds[] = $publicationMainTagId;
         }
+
+        $publicationVMList->TotalCount = $this->repo->count( $languageId,
+                                                             $publicationTypeId,
+                                                             $ChildCategoryIds,
+                                                             $staffId,
+                                                             $childMainTagIds
+                                                            );
+
+
 
         // GET PUBLICATIONS FROM DB
         $publications = $this->repo->getAll( $publicationTypeId,
