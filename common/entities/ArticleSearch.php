@@ -3,7 +3,7 @@ namespace common\entities;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-class PostSearch extends Post
+class ArticleSearch extends Article
 {
     public function rules()
     {
@@ -20,7 +20,7 @@ class PostSearch extends Post
     
     public function search($params)
     {
-        $query = Post::find();
+        $query = Article::find();
 
         // add conditions that should always apply here
 

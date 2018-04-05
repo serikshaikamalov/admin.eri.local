@@ -28,19 +28,32 @@ class StaffsController extends ApiBaseController
 
     }
 
-    /*
-     * @returns:  List of staffs
+    /**
+     * @param int $languageId
+     * @param int $pageNumber
+     * @param int $publicationMainTagId
+     * @return StaffListVM
      */
-    public function actionIndex( int $languageId = 1, int $pageNumber = 1 )
+    public function actionIndex( int $languageId = 1,
+                                 int $pageNumber = 1,
+                                 int $publicationMainTagId = 0 ): StaffListVM
     {
         $this->pageNumber = $pageNumber;
         $this->offset = $this->limit * ($this->pageNumber - 1);
-        $this->totalCount = $this->repo->count( $languageId );
+
+        // Total Count
+        $this->totalCount = $this->repo->count( $languageId,
+                                                $publicationMainTagId );
 
         $staffVMList = new StaffListVM();
         $staffVMList->page = $this->pageNumber;
         $staffVMList->totalCount = $this->totalCount;
-        $staffs = $this->repo->getAll( $languageId, $this->offset, $this->limit );
+
+        // Repo
+        $staffs = $this->repo->getAll( $languageId,
+                                       $this->offset,
+                                       $this->limit,
+                                       $publicationMainTagId );
 
         if( count($staffs) > 0 ){
             foreach ($staffs as $staff){

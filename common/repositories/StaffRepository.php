@@ -44,25 +44,45 @@ class StaffRepository
     }
 
 
-    /*
-     * @return Event count
+    /**
+     * @param int $languageId
+     * @param int $publicationMainTagId
+     *
+     * @return int Staff[] - count
      */
-    public function count(int $languageId): int{
-        return Staff::find()
+    public function count(int $languageId, int $publicationMainTagId = 0): int{
+        $query = Staff::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
-            ]  )
-            ->count();
+            ]  );
+
+
+        // Filter
+        if( $publicationMainTagId != 0 ){
+            $query->andWhere([
+                'PublicationMainTagId' => $publicationMainTagId
+            ]);
+        }
+
+        return $query->count();
     }
 
 
-    /*
-     * @return Event[]
+    /**
+     * @param int $languageId
+     * @param int $offset
+     * @param int $limit
+     * @param int $publicationMainTagId
+     *
+     * @return array
      */
-    public function getAll( int $languageId, int $offset, int $limit ): array
+    public function getAll( int $languageId,
+                            int $offset,
+                            int $limit,
+                            int $publicationMainTagId = 0 ): array
     {
-        return Staff::find()
+         $query = Staff::find()
             ->with('language')
             ->with('status')
             ->with('staffType')
@@ -73,8 +93,17 @@ class StaffRepository
                 'LanguageId' => $languageId
             ]  )
             ->offset($offset)
-            ->limit($limit)
-            ->all();
+            ->limit($limit);
+
+
+         if( $publicationMainTagId != 0 ){
+            $query->andWhere([
+                'PublicationMainTagId' => $publicationMainTagId
+            ]);
+        }
+
+
+         return $query->all();
     }
 
 
