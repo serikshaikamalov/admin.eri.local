@@ -1,8 +1,8 @@
 <?php
 namespace backend\controllers;
 use Yii;
-use common\entities\Post;
-use common\entities\PostSearch;
+use common\entities\Article;
+use common\entities\ArticleSearch;
 use yii\web\NotFoundHttpException;
 
 class PostController extends AdminBaseController
@@ -13,7 +13,7 @@ class PostController extends AdminBaseController
      */
     public function actionIndex()
     {
-        $searchModel = new PostSearch();
+        $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -38,7 +38,7 @@ class PostController extends AdminBaseController
      */
     public function actionCreate()
     {
-        $model = new Post();
+        $model = new Article();
 
         if ($model->load(Yii::$app->request->post())) {
             $model->UserId = Yii::$app->user->id;
@@ -85,7 +85,7 @@ class PostController extends AdminBaseController
      */
     protected function findModel($id)
     {
-        if (($model = Post::findOne($id)) !== null) {
+        if (($model = Article::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

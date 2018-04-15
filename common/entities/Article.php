@@ -2,14 +2,20 @@
 namespace common\entities;
 use \yii\db\ActiveRecord;
 
-/*
- * @param Id
+/**
+ * @@property int $Id
+ * @@property string $Title
+ * @@property string $Description
+ * @@property string $UserId
+ * @@property int $LanguageId
+ * @@property string $Link
  */
-class Post extends ActiveRecord
+
+class Article extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'post';
+        return 'article';
     }
 
     public function rules()

@@ -29,31 +29,55 @@ class StaffsController extends ApiBaseController
     }
 
     /**
+<<<<<<< HEAD
      * @param $languageId
      * @param $pageNumber
      * @param $staffTypeId
+=======
+     * @param int $languageId
+     * @param int $pageNumber
+     * @param int $publicationMainTagId
+>>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
      * @return StaffListVM
      */
     public function actionIndex( int $languageId = 1,
                                  int $pageNumber = 1,
+<<<<<<< HEAD
                                  int $staffTypeId = 0 ): StaffListVM
+=======
+                                 int $publicationMainTagId = 0 ): StaffListVM
+>>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
     {
         $this->pageNumber = $pageNumber;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
+<<<<<<< HEAD
         // REPO
         $this->totalCount = $this->repo->count( $languageId,
                                                 $staffTypeId );
+=======
+        // Total Count
+        $this->totalCount = $this->repo->count( $languageId,
+                                                $publicationMainTagId );
+>>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
 
         $staffVMList = new StaffListVM();
         $staffVMList->page = $this->pageNumber;
         $staffVMList->totalCount = $this->totalCount;
 
+<<<<<<< HEAD
         // REPO
         $staffs = $this->repo->getAll( $languageId,
                                        $this->offset,
                                        $this->limit,
                                        $staffTypeId);
+=======
+        // Repo
+        $staffs = $this->repo->getAll( $languageId,
+                                       $this->offset,
+                                       $this->limit,
+                                       $publicationMainTagId );
+>>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
 
         if( count($staffs) > 0 ){
             foreach ($staffs as $staff){
