@@ -36,6 +36,7 @@ class PublicationRepository
      * @param array $publicationCategoryIds
      * @param int $staffId
      * @param array $mainTagIds
+     * @param string $date
      *
      * @return int Publication[] length
      */
@@ -43,8 +44,10 @@ class PublicationRepository
                            int $publicationTypeId = 1,
                            array $publicationCategoryIds = [],
                            int $staffId = 0,
-                           array $mainTagIds = []
+                           array $mainTagIds = [],
+                           string $date = ""
                          ): int{
+
         $query =  Publication::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
@@ -72,6 +75,24 @@ class PublicationRepository
             ]);
         }
 
+        // Filter By Date
+        if( $date && $date != "" && $date != null ){
+
+            $dateTime = new \DateTime(date('Y-m-d', strtotime($date)));
+
+            $year = $dateTime->format('Y');
+            $month = $dateTime->format('m');
+            $startDay = 1;
+            $endDay = $dateTime->format('t');
+
+            $startDate =  "{$year}-{$month}-{$startDay}";
+            $endDate =  "{$year}-{$month}-{$endDay}";
+
+            $query->andWhere([
+                'between','CreatedDate',$startDate, $endDate
+            ]);
+        }
+
         return $query->count();
     }
 
@@ -85,6 +106,7 @@ class PublicationRepository
      * @param int $staffId
      * @param string $orderBy
      * @param array $mainTagIds
+     * @param string $date
      *
      * @return array Publications[]
      */
@@ -95,7 +117,8 @@ class PublicationRepository
                             array $publicationCategoryIds = [],
                             int $staffId = 0,
                             string $orderBy = 'Id',
-                            array $mainTagIds = []
+                            array $mainTagIds = [],
+                            string $date = ""
                           ): array
     {
         $query = Publication::find()
@@ -139,6 +162,26 @@ class PublicationRepository
                 ]);
             }
 
+            // Filter By Date
+            if( $date && $date != "" && $date != null ){
+
+                 $dateTime = new \DateTime(date('Y-m-d', strtotime($date)));
+
+                $year = $dateTime->format('Y');
+                $month = $dateTime->format('m');
+                $startDay = 1;
+                $endDay = $dateTime->format('t');
+
+                $startDate =  "{$year}-{$month}-{$startDay}";
+                $endDate =  "{$year}-{$month}-{$endDay}";
+
+                $query->andWhere([
+                    'between','CreatedDate',$startDate, $endDate
+                ]);
+            }
+
+
+
             // ORDER BY
             switch( $orderBy ){
                 default:
@@ -148,6 +191,8 @@ class PublicationRepository
                 case 'Hits':
                     $query->orderBy(['Hits' => SORT_DESC]);
                     break;
+                case 'CreatedDate':
+                    $query->orderBy(['CreatedDate' => SORT_DESC]);
             }
 
             //var_dump($query->prepare(\Yii::$app->db->queryBuilder)->createCommand()->rawSql); die();

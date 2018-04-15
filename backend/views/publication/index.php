@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
             <p>
-                <?= Html::a('Create Publication', ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Create Publication', ['create?languageId=3'], ['class' => 'btn btn-success']) ?>
             </p>
 
             <?= GridView::widget([

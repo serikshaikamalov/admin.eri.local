@@ -5,23 +5,13 @@ use common\entities\Status;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 class StaffRepository
 {
-//    public $pageNumber;
-//    public $limit;
-//    public $offset;
-//    public $totalCount;
-//
-//    public function __construct( $pageNumber, $limit, $offset, $totalCount )
-//    {
-//        $this->pageNumber = 1;
-//        $this->limit = 10;
-//        $this->offset = $this->limit * ($this->pageNumber - 1);
-//    }
-
-    /*
-     * @return Event
+    /**
+     * @param int $Id
+     * @return Staff | null
      */
     public function get($Id): Staff {
 

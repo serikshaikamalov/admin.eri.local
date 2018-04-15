@@ -47,6 +47,7 @@ class Publication extends ActiveRecord
         return [
             'Id' => 'ID',
             'Title' => 'Title',
+            'PublicationTypeId' => 'Publication Type',
             'PublicationCategoryId' => 'Publication Category',
             'StaffId' => 'Staff',
             'CreatedDate' => 'Created Date',

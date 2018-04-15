@@ -23,12 +23,11 @@ use yii\widgets\ActiveForm;
 
     <? echo $form->field($vm->model, 'StaffPositionId')->dropDownList($vm->staffPositions) ?>
 
+    <!-- Main Tag -->
+    <? echo $form->field($vm->model, 'PublicationMainTagId')->dropDownList($vm->publicationMainTags) ?>
+
 
     <? echo $form->field($vm->model, 'LanguageId')->dropDownList($vm->languages) ?>
-
-    <? //echo $form->field($vm->model, 'ResearchGroupTitle')->textInput(['maxlength' => true]) ?>
-
-
 
 
     <?=

@@ -5,11 +5,22 @@ use yii\helpers\ArrayHelper;
 
 /**
  * @property integer $Id
- * @property integer $StatusId
  * @property string $FullName
- * @property string $StaffPositionId
- * @property int $PublicationMainTagId
  * @property string $ShortBiography
+ * @property string FullBiography
+ * @property int $PublicationMainTagId
+ * @property int $ImageId
+ * @property int $LanguageId
+ * @property integer $StatusId
+ * @property int $StaffTypeId
+ * @property string $StaffPositionId
+ *
+ * @property $staffPosition
+ * @property $staffType
+ * @property $language
+ * @property $image
+ * @property $publicationMainTag
+ * @property $status
  */
 class Staff extends ActiveRecord
 {
@@ -24,9 +35,31 @@ class Staff extends ActiveRecord
     public function rules()
     {
         return [
-            [['StatusId', 'ImageId', 'StaffPositionId', 'PublicationMainTagId', 'LanguageId', 'StaffPositionId', 'StaffTypeId'], 'integer'],
-            [['ShortBiography', 'FullBiography'], 'string'],
-            [['FullName'], 'string', 'max' => 200],
+            [
+                [
+                    'StatusId',
+                    'ImageId',
+                    'StaffPositionId',
+                    'PublicationMainTagId',
+                    'LanguageId',
+                    'StaffPositionId',
+                    'StaffTypeId'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'ShortBiography',
+                    'FullBiography'
+                ], 'string'
+            ],
+            [
+                [
+                    'FullName'
+                ],
+                'string',
+                'max' => 200
+            ],
         ];
     }
 
@@ -47,10 +80,11 @@ class Staff extends ActiveRecord
     }
 
 
-    /*
-     * @return Staff with relations
+    /**
+     * @param int $Id
+     * @return ActiveRecord | null
      */
-    public static function getStaff($Id){
+    public static function getStaff(int $Id): ActiveRecord {
         $staff = Staff::find()
             ->with('language')
             ->with('staffType')
@@ -62,10 +96,14 @@ class Staff extends ActiveRecord
     }
 
     /**
+     * @param int $languageId
      * @return Staff[]
      */
-    public static function getStaffList(){
-        $staffs = Staff::find()->all();
+    public static function getStaffList( int $languageId = 1){
+        $staffs = Staff::find()
+            ->where(['LanguageId' => $languageId])
+            ->orderBy(['FullName' => SORT_ASC])
+            ->all();
         return ArrayHelper::map($staffs, 'Id', 'FullName');
     }
 

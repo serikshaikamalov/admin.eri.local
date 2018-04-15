@@ -12,9 +12,25 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($vm->model, 'Title')->textInput(['maxlength' => true]) ?>
+    <!-- Title -->
+    <?
+        echo $form->field($vm->model, 'Title')->textInput(['maxlength' => true])
+    ?>
 
-    <?= $form->field($vm->model, 'PublicationCategoryId')->dropDownList($vm->publicationCategoryList) ?>
+    <!--  Publication Type -->
+    <?
+        echo $form->field($vm->model, 'PublicationTypeId')->dropDownList($vm->publicationTypeList);
+    ?>
+
+    <!--  Publication Main Tag -->
+    <?
+    echo $form->field($vm->model, 'PublicationMainTagId')->dropDownList($vm->publicationMainTagList);
+    ?>
+
+    <!--  Publication Category -->
+    <?
+        echo $form->field($vm->model, 'PublicationCategoryId')->dropDownList($vm->publicationCategoryList)
+    ?>
 
     <?= $form->field($vm->model, 'StaffId')->dropDownList($vm->staffList) ?>
 
@@ -29,6 +45,17 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
 
+    <!-- Short Description -->
+    <?
+    echo $form->field($vm->model, 'ShortDescription')->widget(\dosamigos\ckeditor\CKEditor::className(), [
+        'options' => ['rows' => 200],
+        'clientOptions' => [
+            'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['/imagemanager/manager', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
+            'height' => 200
+        ]
+    ]);
+    ?>
+
     <?
         echo $form->field($vm->model, 'Description')->widget(\dosamigos\ckeditor\CKEditor::className(), [
         'options' => ['rows' => 200],
@@ -39,15 +66,7 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
 
-    <?
-    echo $form->field($vm->model, 'ShortDescription')->widget(\dosamigos\ckeditor\CKEditor::className(), [
-        'options' => ['rows' => 200],
-        'clientOptions' => [
-            'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['/imagemanager/manager', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
-            'height' => 200
-        ]
-    ]);
-    ?>
+
 
     <?= $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
 

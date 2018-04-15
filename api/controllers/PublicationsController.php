@@ -51,6 +51,7 @@ class PublicationsController extends ApiBaseController
      * @param int $limit
      * @param string $orderBy
      * @param int $publicationMainTagId
+     * @param string $date - Format: 2018-02-01
      *
      * @return PublicationListVM
      */
@@ -62,10 +63,10 @@ class PublicationsController extends ApiBaseController
                                  int $staffId = 0,
                                  int $limit = 10,
                                  string $orderBy = 'Id',
-                                 int $publicationMainTagId = 0
+                                 int $publicationMainTagId = 0,
+                                 string $date = ""
                                 ): PublicationListVM
     {
-
         $this->pageNumber = $pageNumber;
         $this->limit = $limit;
         $this->offset = $this->limit * ($this->pageNumber - 1);
@@ -94,9 +95,9 @@ class PublicationsController extends ApiBaseController
                                                              $publicationTypeId,
                                                              $ChildCategoryIds,
                                                              $staffId,
-                                                             $childMainTagIds
+                                                             $childMainTagIds,
+                                                             $date
                                                             );
-
 
 
         // GET PUBLICATIONS FROM DB
@@ -107,7 +108,8 @@ class PublicationsController extends ApiBaseController
                                              $ChildCategoryIds,
                                              $staffId,
                                              $orderBy,
-                                             $childMainTagIds
+                                             $childMainTagIds,
+                                             $date
                                             );
 
         if( count($publications) > 0 ){
@@ -122,7 +124,7 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->StaffId = $publication->StaffId;
                 $publicationVM->LanguageId = $publication->LanguageId;
                 $publicationVM->StatusId = $publication->StatusId;
-                $publicationVM->CreatedDate =  date('F j, Y', strtotime($publication->CreatedDate) );
+                $publicationVM->CreatedDate =  date('d.m.Y', strtotime($publication->CreatedDate) );
                 $publicationVM->PublicationCategoryId = $publication->PublicationCategoryId;
                 $publicationVM->Hits = $publication->Hits;
                 $publicationVM->PublicationMainTagId = $publication->PublicationMainTagId;
@@ -159,15 +161,17 @@ class PublicationsController extends ApiBaseController
             $publicationVM->StaffId = $publication->StaffId;
             $publicationVM->LanguageId = $publication->LanguageId;
             $publicationVM->StatusId = $publication->StatusId;
-            $publicationVM->CreatedDate = $publication->CreatedDate;
+            $publicationVM->CreatedDate = date('d.m.Y', strtotime($publication->CreatedDate) );
             $publicationVM->Hits = $publication->Hits;
+            $publicationVM->PublicationMainTagId = $publication->PublicationMainTagId;
+
 
             // Dictionaries
             $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');
             $publicationVM->Staff = $publication->staff ? $publication->staff : null;
             $publicationVM->Language = $publication->language ? $publication->language : null;
             $publicationVM->Status = $publication->status ? $publication->status : null;
-            //$publicationVM->ResearchGroup = $publication->researchGroup ? $publication->researchGroup : null;
+            $publicationVM->PublicationMainTag = $publication->publicationMainTag ? $publication->publicationMainTag : null;
             $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
 
 

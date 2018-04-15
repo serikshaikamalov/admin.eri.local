@@ -48,6 +48,9 @@ class PublicationCategoryRepository
     {
         $all = PublicationCategory::find()
             ->where(['ParentId' => $ParentId])
+            ->orderBy(
+                ['Title' => SORT_ASC ]
+            )
             ->all();
         return $all;
     }

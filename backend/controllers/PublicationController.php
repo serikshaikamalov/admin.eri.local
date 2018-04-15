@@ -2,6 +2,8 @@
 namespace backend\controllers;
 use common\entities\Language;
 use common\entities\PublicationCategory;
+use common\entities\PublicationMainTag;
+use common\entities\PublicationType;
 use common\entities\Staff;
 use common\entities\Status;
 use common\viewmodels\PublicationFormViewModel;
@@ -27,8 +29,11 @@ class PublicationController extends AdminBaseController
         ]);
     }
 
+
     /**
-     * Publication: View
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -45,18 +50,26 @@ class PublicationController extends AdminBaseController
         $vm = new PublicationFormViewModel();
         $vm->model = new Publication();
 
+        // For Test
+        $vm->model->StatusId = 1;
+        $vm->model->LanguageId = $this->languageId;
+
+        // Dictionaries
+        $vm->publicationTypeList = PublicationType::getPublicationTypeList();
+        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList( $this->languageId);
+        $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList( $this->languageId );
         $vm->statuses = Status::getStatusList();
         $vm->languages = Language::getLanguageList();
-        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
-        $vm->staffList = Staff::getStaffList();
+        $vm->staffList = Staff::getStaffList( $this->languageId );
+
 
         // POST
         if ($vm->model->load(Yii::$app->request->post())) {
-
             $vm->model->save();
-
-            return $this->redirect(['view', 'id' => $vm->model->Id]);
+            #return $this->redirect(['view', 'id' => $vm->model->Id]);
+            return $this->redirect(['create?languageId=4']);
         }
+
         return $this->render('create', [
             'vm' => $vm,
         ]);
@@ -70,11 +83,14 @@ class PublicationController extends AdminBaseController
         $vm = new PublicationFormViewModel();
         $vm->model = $this->findModel($id);
 
+        $vm->publicationTypeList = PublicationType::getPublicationTypeList();
+        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList( $this->languageId);
+        $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList( $this->languageId );
         $vm->statuses = Status::getStatusList();
         $vm->languages = Language::getLanguageList();
-        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
-        $vm->staffList = Staff::getStaffList();
+        $vm->staffList = Staff::getStaffList( $this->languageId );
 
+        // POST
         if ($vm->model->load(Yii::$app->request->post()))
         {
             $vm->model->save();

@@ -12,36 +12,23 @@ use yii\helpers\ArrayHelper;
  */
 class PublicationCategory extends ActiveRecord
 {
-
-//    public static function create(string $Title, int $ParentId, int $LanguageId, int $StatusId): self
-//    {
-//        $pc = new static();
-//        $pc->Title = $Title;
-//        $pc->ParentId = $ParentId;
-//        $pc->LanguageId = $LanguageId;
-//        $pc->StatusId = $StatusId;
-//        return $pc;
-//    }
-//
-//    public function edit($name, $slug): void
-//    {
-//        $this->name = $name;
-//        $this->slug = $slug;
-//    }
-
     public static function tableName()
     {
         return 'publicationCategory';
     }
 
-    /*
+    /**
+     * @param int $languageId
      * @return PublicationCategory[]
      */
-    public static function getPublicationCategoryList(){
-        $result = PublicationCategory::find()->all();
+    public static function getPublicationCategoryList( int $languageId = 1){
+
+        $result = PublicationCategory::find()
+            ->where(['LanguageId' => $languageId])
+            ->all();
+
         return ArrayHelper::map($result, 'Id', 'Title');
     }
-
 
     /*
      * RELATIONS
