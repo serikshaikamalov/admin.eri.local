@@ -67,7 +67,7 @@ class PublicationController extends AdminBaseController
         if ($vm->model->load(Yii::$app->request->post())) {
             $vm->model->save();
             #return $this->redirect(['view', 'id' => $vm->model->Id]);
-            return $this->redirect(['create?languageId=4']);
+            return $this->redirect(['create?languageId='.$this->languageId]);
         }
 
         return $this->render('create', [

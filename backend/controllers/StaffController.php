@@ -83,8 +83,8 @@ class StaffController extends AdminBaseController
         $vm->model = new Staff();
 
         # Static data (test)
-        $vm->model->LanguageId = 3;
-        $vm->model->StatusId = 1;
+        $vm->model->LanguageId = $this->languageId;
+        $vm->model->StatusId = Status::STATUS_PUBLISHED;
 
         $vm->statuses = Status::getStatusList();
         $vm->staffTypes = StaffType::getStaffTypeList( $this->languageId );
@@ -98,7 +98,7 @@ class StaffController extends AdminBaseController
                 $vm->model->save();
 
                 #return $this->redirect(['view', 'id' => $vm->model->Id]);
-                return $this->redirect(['create?languageId=3']);
+                return $this->redirect(['create?languageId='.$this->languageId]);
             }
         } else {
             return $this->render('create', [

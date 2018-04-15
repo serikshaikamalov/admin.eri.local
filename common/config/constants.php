@@ -13,6 +13,6 @@ if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
     defined('IMAGE_SERVER') or define('IMAGE_SERVER', 'http://static.eri.local');
     defined('ALLOWED_DOMAIN') or define('ALLOWED_DOMAIN', 'http://localhost:4200');
 }else{
-    defined('IMAGE_SERVER') or define('IMAGE_SERVER', 'http://static.gosmart.kz');
-    defined('ALLOWED_DOMAIN') or define('ALLOWED_DOMAIN', 'http://eri-new.gosmart.kz');
+    defined('IMAGE_SERVER') or define('IMAGE_SERVER', 'http://static.eurasian-research.org');
+    defined('ALLOWED_DOMAIN') or define('ALLOWED_DOMAIN', 'http://eurasian-research.org');
 }
