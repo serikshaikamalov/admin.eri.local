@@ -36,27 +36,18 @@ class StaffRepository
 
     /**
      * @param int $languageId
-<<<<<<< HEAD
      * @param int $staffTypeId
      * @return int
      */
     public function count(int $languageId,
                           int $staffTypeId = 0): int{
 
-=======
-     * @param int $publicationMainTagId
-     *
-     * @return int Staff[] - count
-     */
-    public function count(int $languageId, int $publicationMainTagId = 0): int{
->>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
         $query = Staff::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
             ]  );
 
-<<<<<<< HEAD
         // FILTER BY: StaffTypeId
         if( $staffTypeId != 0 ){
             $query->andWhere([
@@ -64,18 +55,7 @@ class StaffRepository
             ]);
         }
 
-            return $query->count();
-=======
-
-        // Filter
-        if( $publicationMainTagId != 0 ){
-            $query->andWhere([
-                'PublicationMainTagId' => $publicationMainTagId
-            ]);
-        }
-
         return $query->count();
->>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
     }
 
 
@@ -83,7 +63,6 @@ class StaffRepository
      * @param int $languageId
      * @param int $offset
      * @param int $limit
-<<<<<<< HEAD
      * @param int $staffTypeId
      * @return array
      */
@@ -93,18 +72,6 @@ class StaffRepository
                             int $staffTypeId = 0): array
     {
         $query = Staff::find()
-=======
-     * @param int $publicationMainTagId
-     *
-     * @return array
-     */
-    public function getAll( int $languageId,
-                            int $offset,
-                            int $limit,
-                            int $publicationMainTagId = 0 ): array
-    {
-         $query = Staff::find()
->>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
             ->with('language')
             ->with('status')
             ->with('staffType')
@@ -118,7 +85,6 @@ class StaffRepository
             ->limit($limit);
 
 
-<<<<<<< HEAD
         // FILTER BY: StaffTypeId
         if( $staffTypeId != 0 ){
             $query->andWhere([
@@ -127,16 +93,6 @@ class StaffRepository
         }
 
         return $query->all();
-=======
-         if( $publicationMainTagId != 0 ){
-            $query->andWhere([
-                'PublicationMainTagId' => $publicationMainTagId
-            ]);
-        }
-
-
-         return $query->all();
->>>>>>> 51ed0953adec147d7dfbbba2a664b3bb787cd004
     }
 
 
