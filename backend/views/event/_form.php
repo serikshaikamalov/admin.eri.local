@@ -18,21 +18,22 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($eventFormViewModel->model, 'Title')->textInput(['maxlength' => true]) ?>
 
     <!-- Start Day -->
-<!--    --><?//= $form->field($model, 'StartDay')->widget(\yii\jui\DatePicker::className(), [
-//            'clientOptions' => ['defaultDate' => '2018-01-01'],
-//            'dateFormat' => 'yyyy-MM-dd',
-//    ])
-//    ?>
+    <?= $form->field($eventFormViewModel->model, 'StartDate')->input('date') ?>
 
-    <!-- Start Day -->
-    <?= $form->field($eventFormViewModel->model, 'StartDay')->input('date') ?>
-
-    <!-- Start Time -->
-    <?= $form->field($eventFormViewModel->model, 'StartTime')->input('time'); ?>
-
-    <!-- Description -->
+    <!-- Short Description -->
     <?
-        echo $form->field($eventFormViewModel->model, 'Description')->widget(CKEditor::className(), [
+        echo $form->field($eventFormViewModel->model, 'ShortDescription')->widget(CKEditor::className(), [
+            'options' => ['rows' => 200],
+            'clientOptions' => [
+                'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['/imagemanager/manager', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
+                'height' => 300
+            ]
+        ]);
+    ?>
+
+    <!-- Full Description -->
+    <?
+        echo $form->field($eventFormViewModel->model, 'FullDescription')->widget(CKEditor::className(), [
             'options' => ['rows' => 200],
             'clientOptions' => [
                 'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['/imagemanager/manager', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
@@ -42,21 +43,24 @@ use yii\helpers\ArrayHelper;
     ?>
 
     <!-- Event Category -->
-    <? echo $form->field($eventFormViewModel->model, 'EventCategoryId')->dropDownList( ArrayHelper::map($eventFormViewModel->eventCategories,'Id','Title'), [ 'prompt' => 'Select Category' ] ) ?>
+    <? echo $form->field($eventFormViewModel->model, 'EventCategoryId')
+                            ->dropDownList( ArrayHelper::map($eventFormViewModel->eventCategories,'Id','Title'), [ 'prompt' => 'Select Category' ] ) ?>
 
     <!-- Languages -->
     <?
-        echo $form->field($eventFormViewModel->model, 'LangId')->dropDownList( ArrayHelper::map($eventFormViewModel->languages,'Id','Title'), ['prompt' => 'Select Language'] )
+        echo $form->field($eventFormViewModel->model, 'LanguageId')
+                            ->dropDownList( ArrayHelper::map($eventFormViewModel->languages,'Id','Title'), ['prompt' => 'Select Language'] )
     ?>
 
     <!-- Speaker -->
-    <?= $form->field($eventFormViewModel->model, 'SpeakerFullName')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($eventFormViewModel->model, 'SpeakerFullName')
+                            ->textInput(['maxlength' => true]) ?>
 
     <!-- Status -->
     <?
-        echo $form->field($eventFormViewModel->model, 'StatusId')->checkbox(ArrayHelper::map($eventFormViewModel->statuses,'Id','Title'));
+        echo $form->field($eventFormViewModel->model, 'StatusId')
+                            ->checkbox(ArrayHelper::map($eventFormViewModel->statuses,'Id','Title'));
     ?>
-
 
     <!-- Address -->
     <?= $form->field($eventFormViewModel->model, 'Address')->textInput() ?>

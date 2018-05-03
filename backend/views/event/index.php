@@ -37,8 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'Title',
-                    'StartTime',
-                    //'LangId',
+                    'StartDate',
                     [
                         'label' => 'Language',
                         'value' => function( $data ){
@@ -51,7 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $data->status->Title;
                         }
                     ],
-                    //'StatusId',
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>

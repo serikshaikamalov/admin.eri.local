@@ -66,10 +66,37 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+        
+        <!-- Languages -->
+        <ul>
+            <li>
+                <a href="/language-switcher/set-language?languageTag=en" >English</a>
+            </li>
+            <li>
+                <a href="/language-switcher/set-language?languageTag=tr">Turkish</a>
+            </li>
+            <li>
+                <a href="/language-switcher/set-language?languageTag=ru">Russian</a>
+            </li>
+            <li>
+                <a href="/language-switcher/set-language?languageTag=kz">Kazakh</a>
+            </li>
+        </ul>
+
+        <pre>
+            Language => <?php echo $_SESSION['languageTag']; ?>
+        </pre>
+        
+        
+        <!-- Breadcrumb -->
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        
+        <!-- Alert -->
         <?= Alert::widget() ?>
+
+        <!-- Content -->
         <?= $content ?>
     </div>
 </div>

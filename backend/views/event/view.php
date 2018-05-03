@@ -31,15 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'Id',
             'Title',
-            'StartDay',
-            'StartTime',
-            'Description:html',
+            'StartDate',
+            'ShortDescription:html',
+            'FullDescription:html',
             'SpeakerFullName',
             [
                 'label' => 'Category',
                 'value' => $eventViewModel->EventCategory->Title
             ],
-            //'EventCategoryId',
             'Address',
             'Image:image',
             'Link',
@@ -52,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $eventViewModel->CreatedBy->username
             ],
             'CreatedDate',
-            'UpdatedDate',
             [
                 'label' => 'Status',
                 'value' => $eventViewModel->Status->Title

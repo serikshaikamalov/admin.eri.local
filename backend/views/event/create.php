@@ -1,10 +1,8 @@
 <?php
-
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model app\models\Events */
+/* @var $model common\entities\Event */
 
 $this->title = 'Create Events';
 $this->params['breadcrumbs'][] = ['label' => 'Events', 'url' => ['index']];
@@ -17,5 +15,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'eventFormViewModel' => $eventFormViewModel
     ]) ?>
-
 </div>
