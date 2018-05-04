@@ -122,3 +122,9 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+
+.list-inline li.active a{
+    color: darkred;
+    font-weight: bold;;
+}

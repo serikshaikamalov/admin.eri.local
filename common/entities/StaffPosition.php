@@ -60,12 +60,15 @@ class StaffPosition extends ActiveRecord
         return $query;
     }
 
-    /*
+    /**
      * @return StaffPosition[]
      */
-    public static function getStaffPositionList( int $languageId = 1 ){
+    public static function getStaffPositionList(){
         $staffPositions = StaffPosition::find()
-            ->where(['LanguageId' => $languageId])
+            ->where(
+                [
+                    'LanguageId' => \Yii::$app->language
+                ])
             ->all();
         return ArrayHelper::map($staffPositions, 'Id', 'Title');
     }

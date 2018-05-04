@@ -38,7 +38,8 @@ class Status extends ActiveRecord
 
 
     public static function getStatusList(){
-        $statuses = Status::find()->all();
+        $statuses = Status::find()
+            ->all();
         return ArrayHelper::map($statuses, 'Id', 'Title');
     }
 

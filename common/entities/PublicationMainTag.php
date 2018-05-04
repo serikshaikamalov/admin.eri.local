@@ -62,7 +62,7 @@ class PublicationMainTag extends ActiveRecord
             ->where(
                 [
                     'ParentId' => 0,
-                    'LanguageId' => $languageId
+                    'LanguageId' => \Yii::$app->language
                 ]
             )
             ->all();

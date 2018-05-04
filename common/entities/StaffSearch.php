@@ -20,8 +20,13 @@ class StaffSearch extends Staff
 
     public function search($params)
     {
-        $query = Staff::find();
-                    //->with('staffPosition');
+        $query = Staff::find()
+                    ->where(
+                        [
+                            'languageId' => \Yii::$app->language
+                        ]
+                    );
+                    #->with('staffPosition');
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -13,6 +13,7 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => 'ERI: Admin Panel',
+    'language' => '1',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],

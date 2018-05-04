@@ -58,12 +58,15 @@ class StaffType extends ActiveRecord
     }
 
 
-    /*
+    /**
      * @return StaffType[]
      */
-    public static function getStaffTypeList( int $languageId ){
+    public static function getStaffTypeList(){
         $staffTypes = StaffType::find()
-            ->where(['LanguageId' => $languageId])
+            ->where(
+                [
+                    'LanguageId' => \Yii::$app->language
+                ])
             ->all();
         return ArrayHelper::map($staffTypes, 'Id', 'Title');
     }

@@ -32,6 +32,8 @@ class StaffController extends AdminBaseController
      */
     public function actionIndex()
     {
+        #print_r( Yii::$app->language ); die();
+
         $searchModel = new StaffSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
@@ -83,15 +85,16 @@ class StaffController extends AdminBaseController
         $vm->model = new Staff();
 
         # Static data (test)
-        $vm->model->LanguageId = $this->languageId;
+        $vm->model->LanguageId = Yii::$app->language;
         $vm->model->StatusId = Status::STATUS_PUBLISHED;
 
         $vm->statuses = Status::getStatusList();
-        $vm->staffTypes = StaffType::getStaffTypeList( $this->languageId );
+        $vm->staffTypes = StaffType::getStaffTypeList();
         $vm->languages = Language::getLanguageList();
-        $vm->staffPositions = StaffPosition::getStaffPositionList( $this->languageId );
-        $vm->publicationMainTags = PublicationMainTag::getPublicationMainTagParentList( $this->languageId );
+        $vm->staffPositions = StaffPosition::getStaffPositionList();
+        $vm->publicationMainTags = PublicationMainTag::getPublicationMainTagParentList();
 
+        // POST
         if ($vm->model->load(Yii::$app->request->post())) {
 
             if( $vm->model->validate() ){
@@ -114,12 +117,16 @@ class StaffController extends AdminBaseController
     {
         $vm = new StaffFormViewModel();
         $vm->model = $this->findModel($id);
+        $vm->model->LanguageId = Yii::$app->language;
+
+        // DICTIONARIES
         $vm->languages = Language::getLanguageList();
         $vm->statuses = Status::getStatusList();
         $vm->staffTypes = StaffType::getStaffTypeList();
         $vm->staffPositions = StaffPosition::getStaffPositionList();
         $vm->publicationMainTags = PublicationMainTag::getPublicationMainTagParentList();
 
+        // POST
         if ($vm->model->load(Yii::$app->request->post()) && $vm->model->save()) {
             return $this->redirect(['view', 'id' => $vm->model->Id]);
         } else {

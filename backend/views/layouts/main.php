@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use backend\assets\AppAsset;
 use mdm\admin\components\Helper;
+use yii\widgets\Menu;
 
 AppAsset::register($this);
 ?>
@@ -66,26 +67,42 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        
-        <!-- Languages -->
-        <ul>
-            <li>
-                <a href="/language-switcher/set-language?languageTag=en" >English</a>
-            </li>
-            <li>
-                <a href="/language-switcher/set-language?languageTag=tr">Turkish</a>
-            </li>
-            <li>
-                <a href="/language-switcher/set-language?languageTag=ru">Russian</a>
-            </li>
-            <li>
-                <a href="/language-switcher/set-language?languageTag=kz">Kazakh</a>
-            </li>
-        </ul>
 
-        <pre>
-            Language => <?php echo $_SESSION['languageTag']; ?>
-        </pre>
+            <?php
+                echo Menu::widget([
+                      'items' => [
+                            // not just as 'controller' even if default action is used.
+                            [
+                                'label' => 'English',
+                                'url' => ['/language-switcher/set-language?languageId=1'],
+                                'active'=> function() { return  Yii::$app->language == 1; },
+                            ],
+                            [
+                                'label' => 'Turkish',
+                                'url' => ['/language-switcher/set-language?languageId=2'],
+                                'active'=> function() { return  Yii::$app->language == 2; },
+                            ],
+                            [
+                                'label' => 'Russian',
+                                'url' => ['/language-switcher/set-language?languageId=3'],
+                                'active'=> function() { return  Yii::$app->language == 3; },
+                            ],
+                            [
+                                'label' => 'Kazakh',
+                                'url' => ['/language-switcher/set-language?languageId=4'],
+                                'active'=> function() { return  Yii::$app->language == 4; },
+                            ],
+
+
+                    ],
+                    'options' => array( 'class' => 'list-inline pull-right' )
+                ])
+
+
+
+
+            ?>
+
         
         
         <!-- Breadcrumb -->
