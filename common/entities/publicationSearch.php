@@ -41,7 +41,7 @@ class publicationSearch extends publication
 
     public function search($params)
     {
-        $query = publication::find();
+        $query = publication::find()->where(['LanguageId' => \Yii::$app->language] );
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

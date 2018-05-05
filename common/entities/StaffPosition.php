@@ -41,6 +41,10 @@ class StaffPosition extends ActiveRecord
     */
     public static function getFullStaffPositionList(){
         $query = StaffPosition::find()
+            ->where(
+                [
+                    'LanguageId' => \Yii::$app->language
+                ])
             ->with('status')
             ->with('language');
         return $query;

@@ -38,6 +38,7 @@ class PublicationType extends ActiveRecord
     public static function getPublicationTypeList(): array {
 
         $result = PublicationType::find()
+            #->where(['LanguageId' => \Yii::$app->language] )
             ->all();
 
         return ArrayHelper::map($result, 'Id', 'Title');

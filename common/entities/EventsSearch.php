@@ -43,6 +43,7 @@ class EventsSearch extends Event
     public function search($params)
     {
         $query = Event::find()
+            ->where(['LanguageId' => \Yii::$app->language] )
             ->with('language')
             ->with('status')
             ->with('eventCategory')

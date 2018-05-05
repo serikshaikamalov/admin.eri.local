@@ -52,6 +52,10 @@ class StaffType extends ActiveRecord
      */
     public static function getFullStaffTypeList(){
         $query = StaffType::find()
+                        ->where(
+                            [
+                                'LanguageId' => \Yii::$app->language
+                            ])
                         ->with('status')
                         ->with('language');
         return $query;

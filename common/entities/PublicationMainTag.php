@@ -46,12 +46,11 @@ class PublicationMainTag extends ActiveRecord
 
 
     /**
-     * @param $languageId
      * @return array
      */
-    public static function getPublicationMainTagList( int $languageId = 1): array {
+    public static function getPublicationMainTagList(): array {
         $result = PublicationMainTag::find()
-            ->where(['LanguageId' => $languageId])
+            ->where(['LanguageId' => \Yii::$app->language] )
             ->all();
         return ArrayHelper::map($result, 'Id', 'Title');
     }

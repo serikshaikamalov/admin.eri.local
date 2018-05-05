@@ -40,7 +40,7 @@ class PublicationTagSearch extends PublicationTag
      */
     public function search($params)
     {
-        $query = PublicationTag::find();
+        $query = PublicationTag::find()->where(['LanguageId' => \Yii::$app->language] );
 
         // add conditions that should always apply here
 

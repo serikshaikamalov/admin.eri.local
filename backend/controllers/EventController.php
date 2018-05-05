@@ -73,8 +73,11 @@ class EventController extends AdminBaseController
         $eventFormViewModel = new EventFormViewModel();
 
         $eventFormViewModel->model = new Event();
+        $eventFormViewModel->model->LanguageId = Yii::$app->language;
+
+        // Dictionaries
+        $eventFormViewModel->eventCategories = EventCategory::find()->where(['LanguageId' => \Yii::$app->language] )->all();
         $eventFormViewModel->languages = Language::find()->all();
-        $eventFormViewModel->eventCategories = EventCategory::find()->all();
         $eventFormViewModel->statuses = Status::find()->all();
 
         // Post
@@ -104,11 +107,12 @@ class EventController extends AdminBaseController
     {
         $eventFormViewModel = new EventFormViewModel();
         $eventFormViewModel->model = $this->findModel($id);
+        $eventFormViewModel->model->LanguageId = Yii::$app->language;
         $eventFormViewModel->model->StartDate = date('Y-m-d', strtotime($eventFormViewModel->model->StartDate));
 
         // Dictionaries
+        $eventFormViewModel->eventCategories = EventCategory::find()->where(['LanguageId' => \Yii::$app->language] )->all();
         $eventFormViewModel->languages = Language::find()->all();
-        $eventFormViewModel->eventCategories = EventCategory::find()->all();
         $eventFormViewModel->statuses = Status::find()->all();
 
         // POST

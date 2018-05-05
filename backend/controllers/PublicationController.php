@@ -14,7 +14,6 @@ use yii\web\NotFoundHttpException;
 
 class PublicationController extends AdminBaseController
 {
-
     /**
      * Publication: List
      */
@@ -52,15 +51,15 @@ class PublicationController extends AdminBaseController
 
         // For Test
         $vm->model->StatusId = 1;
-        $vm->model->LanguageId = $this->languageId;
+        $vm->model->LanguageId = Yii::$app->language;
 
         // Dictionaries
         $vm->publicationTypeList = PublicationType::getPublicationTypeList();
-        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList( $this->languageId);
-        $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList( $this->languageId );
+        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
+        $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList();
         $vm->statuses = Status::getStatusList();
         $vm->languages = Language::getLanguageList();
-        $vm->staffList = Staff::getStaffList( $this->languageId );
+        $vm->staffList = Staff::getStaffList();
 
 
         // POST
@@ -82,13 +81,15 @@ class PublicationController extends AdminBaseController
     {
         $vm = new PublicationFormViewModel();
         $vm->model = $this->findModel($id);
+        $vm->model->LanguageId = Yii::$app->language;
 
+        // DICTIONARIES
         $vm->publicationTypeList = PublicationType::getPublicationTypeList();
-        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList( $this->languageId);
-        $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList( $this->languageId );
+        $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
+        $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList();
         $vm->statuses = Status::getStatusList();
         $vm->languages = Language::getLanguageList();
-        $vm->staffList = Staff::getStaffList( $this->languageId );
+        $vm->staffList = Staff::getStaffList();
 
         // POST
         if ($vm->model->load(Yii::$app->request->post()))

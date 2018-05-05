@@ -60,11 +60,13 @@ class EventCategoryController extends AdminBaseController
         // ViewModel
         $vm = new EventCategoryFormViewModel();
         $vm->model = new EventCategory();
+
+        // DICTIONARIES
         $vm->statuses = Status::find()->all();
         $vm->statuses = ArrayHelper::map($vm->statuses, 'Id', 'Title');
         $vm->languages = Language::find()->all();
         $vm->languages = ArrayHelper::map($vm->languages, 'Id', 'Title');
-        $vm->parents = EventCategory::find()->all();
+        $vm->parents = EventCategory::find()->where(['LanguageId' => \Yii::$app->language] )->all();
         $vm->parents = ArrayHelper::map($vm->parents, 'Id', 'Title');
 
         // Post action

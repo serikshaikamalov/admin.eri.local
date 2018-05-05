@@ -18,13 +18,12 @@ class PublicationCategory extends ActiveRecord
     }
 
     /**
-     * @param int $languageId
      * @return PublicationCategory[]
      */
-    public static function getPublicationCategoryList( int $languageId = 1){
+    public static function getPublicationCategoryList(){
 
         $result = PublicationCategory::find()
-            ->where(['LanguageId' => $languageId])
+            ->where(['LanguageId' => \Yii::$app->language] )
             ->all();
 
         return ArrayHelper::map($result, 'Id', 'Title');

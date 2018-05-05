@@ -41,7 +41,7 @@ class PublicationCategorySearch extends PublicationCategory
      */
     public function search($params)
     {
-        $query = PublicationCategory::find();
+        $query = PublicationCategory::find()->where(['LanguageId' => \Yii::$app->language] );
 
         // add conditions that should always apply here
 

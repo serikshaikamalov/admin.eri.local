@@ -28,6 +28,7 @@ class EventCategorySearch extends EventCategory
     public function search($params)
     {
         $query = EventCategory::find()
+                    ->where(['LanguageId' => \Yii::$app->language] )
                     ->with('language')
                     ->with('status');
 

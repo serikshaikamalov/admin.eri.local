@@ -96,12 +96,11 @@ class Staff extends ActiveRecord
     }
 
     /**
-     * @param int $languageId
      * @return Staff[]
      */
-    public static function getStaffList( int $languageId = 1){
+    public static function getStaffList(){
         $staffs = Staff::find()
-            ->where(['LanguageId' => $languageId])
+            ->where(['LanguageId' => \Yii::$app->language] )
             ->orderBy(['FullName' => SORT_ASC])
             ->all();
         return ArrayHelper::map($staffs, 'Id', 'FullName');
