@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,12 +11,40 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Title')->textInput(['maxlength' => true]) ?>
+    <!-- Title -->
+    <?= $form->field($vm->model, 'Title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Description')->textarea(['rows' => 6]) ?>
+    <!-- Short Description -->
+    <?
+    echo $form->field($vm->model, 'ShortDescription')->widget(\dosamigos\ckeditor\CKEditor::className(), [
+        'options' => ['rows' => 100],
+        'clientOptions' => [
+            'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['/imagemanager/manager', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
+            'height' => 400
+        ]
+    ]);
+    ?>
 
+    <!-- Description -->
+    <?
+    echo $form->field($vm->model, 'Description')->widget(\dosamigos\ckeditor\CKEditor::className(), [
+        'options' => ['rows' => 200],
+        'clientOptions' => [
+            'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['/imagemanager/manager', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
+            'height' => 400
+        ]
+    ]);
+    ?>
+
+    <!-- Link -->
+    <?= $form->field($vm->model, 'Link')->textInput(['maxlength' => true]) ?>
+
+    <!-- Languages -->
+    <? echo $form->field($vm->model, 'LanguageId')->dropDownList($vm->languages) ?>
+
+    <!-- Button -->
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($vm->model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

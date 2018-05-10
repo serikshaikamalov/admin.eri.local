@@ -1,13 +1,15 @@
 <?php
 namespace backend\controllers;
+use common\entities\Language;
+use common\viewmodels\PostFormViewModel;
 use Yii;
 use common\entities\Article;
 use common\entities\ArticleSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 class PostController extends AdminBaseController
 {
-
     /**
      * Post: Delete
      */
@@ -38,16 +40,22 @@ class PostController extends AdminBaseController
      */
     public function actionCreate()
     {
-        $model = new Article();
+        $vm = new PostFormViewModel();
+        $vm->model = new Article();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->UserId = Yii::$app->user->id;
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->Id]);
+        // Dictionaries
+        $vm->languages = Language::getLanguageList();
+
+        // POST
+        if ($vm->model->load(Yii::$app->request->post())) {
+
+            $vm->model->UserId = Yii::$app->user->id;
+            if($vm->model->save()){
+                return $this->redirect(['view', 'id' => $vm->model->Id]);
             }
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'vm' => $vm,
             ]);
         }
     }
