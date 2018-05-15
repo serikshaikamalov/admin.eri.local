@@ -8,7 +8,7 @@ use common\entities\Staff;
 use common\entities\Status;
 use common\viewmodels\PublicationFormViewModel;
 use Yii;
-use common\entities\publication;
+use common\entities\Publication;
 use common\entities\publicationSearch;
 use yii\web\NotFoundHttpException;
 

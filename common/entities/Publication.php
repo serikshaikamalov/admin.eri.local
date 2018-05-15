@@ -36,9 +36,30 @@ class Publication extends ActiveRecord
     public function rules()
     {
         return [
-            [['PublicationCategoryId', 'StaffId', 'CreatedBy', 'Hits', 'StatusId', 'LanguageId', 'FileId', 'ImageId', 'IsFeatured', 'PublicationMainTagId'], 'integer'],
-            [['Description', 'ShortDescription', 'CreatedDate'], 'string'],
-            [['Title'], 'string', 'max' => 250],
+            [
+                [
+                    'PublicationCategoryId',
+                    'StaffId',
+                    'CreatedBy',
+                    'Hits',
+                    'StatusId',
+                    'LanguageId',
+                    'FileId',
+                    'ImageId',
+                    'IsFeatured',
+                    'PublicationMainTagId'
+                ], 'integer'],
+            [
+                [
+                    'Description',
+                    'ShortDescription',
+                    'CreatedDate'
+                ], 'string'],
+            [
+                [
+                    'Title'
+                ], 'string', 'max' => 250
+            ],
         ];
     }
 
@@ -70,22 +91,22 @@ class Publication extends ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getLanguage(){
-        return $this->hasOne( Language::className(), ['Id' => 'LanguageId'] );
+        return $this->hasOne( Language::class, ['Id' => 'LanguageId'] );
     }
 
     public function getStatus(){
-        return $this->hasOne( Status::className(), ['Id' => 'StatusId'] );
+        return $this->hasOne( Status::class, ['Id' => 'StatusId'] );
     }
 
     public function getStaff(){
-        return $this->hasOne( Staff::className(), ['Id' => 'StaffId'] );
+        return $this->hasOne( Staff::class, ['Id' => 'StaffId'] );
     }
 
     public function getPublicationCategory(){
-        return $this->hasOne( PublicationCategory::className(), ['Id' => 'PublicationCategoryId'] );
+        return $this->hasOne( PublicationCategory::class, ['Id' => 'PublicationCategoryId'] );
     }
 
     public function getPublicationMainTag(){
-        return $this->hasOne( PublicationMainTag::className(), ['Id' => 'PublicationMainTagId'] );
+        return $this->hasOne( PublicationMainTag::class, ['Id' => 'PublicationMainTagId'] );
     }
 }
