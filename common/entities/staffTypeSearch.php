@@ -6,7 +6,7 @@ use yii\data\ActiveDataProvider;
 /**
  * staffTypeSearch represents the model behind the search form of `app\models\staffType`.
  */
-class staffTypeSearch extends staffType
+class staffTypeSearch extends StaffType
 {
     /**
      * @inheritdoc
