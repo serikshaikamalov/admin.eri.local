@@ -41,7 +41,9 @@ AppAsset::register($this);
         ['label' => 'Статьи', 'url' => ['/post/']],
         ['label' => 'Events', 'url' => ['/event/']],
         ['label' => 'Daily Monitor', 'url' => ['/daily-monitor/']],
-        ['label' => 'Media Manager', 'url' => ['/imagemanager/manager']],
+        ['label' => 'Photo Manager', 'url' => ['/imagemanager/manager']],
+        ['label' => 'File Manager', 'url' => ['/filemanager/files']],
+        ['label' => 'Video Manager', 'url' => ['']],
     ];
 
     if( Yii::$app->user->isGuest ){

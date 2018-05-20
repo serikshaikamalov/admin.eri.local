@@ -8,6 +8,7 @@ use common\repositories\PublicationCategoryRepository;
 use common\repositories\PublicationRepository;
 use common\repositories\PublicationMainTagRepository;
 use common\repositories\StaffRepository;
+use dpodium\filemanager\components\FilemanagerHelper;
 use phpDocumentor\Reflection\Types\Nullable;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -177,6 +178,12 @@ class PublicationsController extends ApiBaseController
 
             // Update Hits
             $this->repo->updateHits($publication->Id);
+
+            // File
+            if( $publication->FileId ){
+                $file = FilemanagerHelper::getFile($publication->FileId, "file_identifier");
+                $publicationVM->FileId = FILE_SERVER . $file['img_src'];
+            }
         }
         return $publicationVM;
     }

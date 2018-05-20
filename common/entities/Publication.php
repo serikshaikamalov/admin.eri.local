@@ -36,9 +36,29 @@ class Publication extends ActiveRecord
     public function rules()
     {
         return [
-            [['PublicationCategoryId', 'StaffId', 'CreatedBy', 'Hits', 'StatusId', 'LanguageId', 'FileId', 'ImageId', 'IsFeatured', 'PublicationMainTagId'], 'integer'],
-            [['Description', 'ShortDescription', 'CreatedDate'], 'string'],
-            [['Title'], 'string', 'max' => 250],
+            [
+                [
+                    'PublicationCategoryId',
+                    'StaffId',
+                    'CreatedBy',
+                    'Hits',
+                    'StatusId',
+                    'LanguageId',
+                    'ImageId',
+                    'IsFeatured',
+                    'PublicationMainTagId'
+                ], 'integer'],
+            [
+                [
+                    'Description',
+                    'ShortDescription',
+                    'CreatedDate',
+                    'FileId',
+                ], 'string'],
+            [
+                [
+                    'Title'
+                ], 'string', 'max' => 250],
         ];
     }
 

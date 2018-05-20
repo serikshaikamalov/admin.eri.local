@@ -12,6 +12,31 @@ return [
     'bootstrap' => ['log'],
     'timeZone' => 'Asia/Almaty',
     'controllerNamespace' => 'api\controllers',
+    'modules' => [
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+        ],
+        'filemanager' => [
+            'class' => 'dpodium\filemanager\Module',
+            'storage' => ['local'],
+            // This configuration will be used in 'filemanager/files/upload'
+            // To support dynamic multiple upload
+            // Default multiple upload is true, max file to upload is 10
+            // If multiple set to true and maxFileCount is not set, unlimited multiple upload
+            'filesUpload' => [
+                'multiple' => true,
+                'maxFileCount' => 30
+            ],
+            // in mime type format
+            'acceptedFilesType' => [
+                '*',
+            ],
+            // MB
+            'maxFileSize' => 8,
+            // [width, height], suggested thumbnail size is 120X120
+            'thumbnailSize' => [120,120]
+        ]
+    ],
     'components' => [
         'request' => [
             'baseUrl' => '',

@@ -19,7 +19,7 @@ use common\entities\Status;
  * @property int $LanguageId
  * @property string $CreatedDate
  * @property int $Hits
- * @property int $FileId
+ * @property string $FileId
  * @property int $PublicationMainTagId
  *
  * @property string $ImageSrc

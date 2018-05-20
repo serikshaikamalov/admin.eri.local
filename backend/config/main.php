@@ -13,7 +13,7 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => 'ERI: Admin Panel',
-    'language' => '1',
+    'language' => 'en',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -46,11 +46,37 @@ return [
             'layout' => 'left-menu',
             'mainLayout' => '@backend/views/layouts/main.php',
         ],
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+        ],
+        'filemanager' => [
+            'class' => 'dpodium\filemanager\Module',
+            'storage' => ['local'],
+            // This configuration will be used in 'filemanager/files/upload'
+            // To support dynamic multiple upload
+            // Default multiple upload is true, max file to upload is 10
+            // If multiple set to true and maxFileCount is not set, unlimited multiple upload
+            'filesUpload' => [
+                'multiple' => true,
+                'maxFileCount' => 30
+            ],
+            // in mime type format
+            'acceptedFilesType' => [
+                '*',
+            ],
+            // MB
+            'maxFileSize' => 8,
+            // [width, height], suggested thumbnail size is 120X120
+            'thumbnailSize' => [120,120]
+        ]
     ],
     'components' => [
         'request' => [
             'baseUrl' => '',
             'cookieValidationKey' => 'Serik',
+        ],
+        'response' => [
+            'class' => 'yii\web\Response',
         ],
         'user' => [
             'identityClass' => 'common\entities\User',

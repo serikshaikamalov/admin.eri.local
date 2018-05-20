@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dpodium\filemanager\widgets\FileBrowse;
 
 /* @var $this yii\web\View */
 /* @var $model common\entities\publication */
@@ -72,12 +73,34 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($vm->model, 'LanguageId')->dropDownList($vm->languages) ?>
 
-    <?= $form->field($vm->model, 'FileId')->textInput() ?>
+
+    <!-- Created Date -->
+    <?
+    echo $form->field($vm->model, 'CreatedDate')->input('date')
+    ?>
+
+
+    <? # echo $form->field($vm->model, 'FileId')->textInput() ?>
+
+    <!-- File -->
+    <?php
+        echo $form->field($vm->model, 'FileId')->widget(FileBrowse::className(), [
+            'multiple' => false, // allow multiple upload
+            'folderId' => 1 // set a folder to be uploaded to.
+        ]);
+    ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+
+    <?php
+        // !important: modal must be rendered after form
+        echo FileBrowse::renderModal();
+    ?>
 
 </div>
