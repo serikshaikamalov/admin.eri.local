@@ -44,6 +44,7 @@ AppAsset::register($this);
         ['label' => 'Photo Manager', 'url' => ['/imagemanager/manager']],
         ['label' => 'File Manager', 'url' => ['/filemanager/files']],
         ['label' => 'Video Manager', 'url' => ['']],
+        ['label' => 'Slider', 'url' => ['/slider']],
     ];
 
     if( Yii::$app->user->isGuest ){

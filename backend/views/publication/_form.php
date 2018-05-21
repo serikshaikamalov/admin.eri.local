@@ -33,7 +33,7 @@ use dpodium\filemanager\widgets\FileBrowse;
         echo $form->field($vm->model, 'PublicationCategoryId')->dropDownList($vm->publicationCategoryList)
     ?>
 
-    <?= $form->field($vm->model, 'StaffId')->dropDownList($vm->staffList) ?>
+    <?= $form->field($vm->model, 'StaffId')->dropDownList($vm->staffList, ['prompt'=>'Select Author']) ?>
 
     <?= $form->field($vm->model, 'IsFeatured')->checkbox( ) ?>
 
