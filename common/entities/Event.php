@@ -32,7 +32,7 @@ class Event extends ActiveRecord
     {
         return [
             [['Title', 'StartDate', 'LanguageId', 'EventCategoryId'], 'required'],
-            [['Description', 'Address', 'Link', 'StartDate'], 'string'],
+            [['ShortDescription', 'FullDescription', 'Address', 'Link', 'StartDate'], 'string'],
             [['EventCategoryId', 'LanguageId', 'CreatedBy', 'StatusId', 'ImageId'], 'integer'],
             [['Title', 'SpeakerFullName'], 'string', 'max' => 255],
         ];

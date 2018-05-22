@@ -65,13 +65,18 @@ class PostController extends AdminBaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $vm = new PostFormViewModel();
+        $vm->model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->Id]);
+        // Dictionaries
+        $vm->languages = Language::getLanguageList();
+
+        // POST
+        if ($vm->model->load(Yii::$app->request->post()) && $vm->model->save()) {
+            return $this->redirect(['view', 'id' => $vm->model->Id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'vm' => $vm,
             ]);
         }
     }
