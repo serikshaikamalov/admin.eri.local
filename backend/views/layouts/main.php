@@ -76,6 +76,11 @@ AppAsset::register($this);
                       'items' => [
                             // not just as 'controller' even if default action is used.
                             [
+                               'label' => 'Neutral',
+                               'url' => ['/language-switcher/set-language?languageId=0'],
+                               'active'=> function() { return  Yii::$app->language == 0; },
+                            ],
+                            [
                                 'label' => 'English',
                                 'url' => ['/language-switcher/set-language?languageId=1'],
                                 'active'=> function() { return  Yii::$app->language == 1; },

@@ -95,10 +95,15 @@ class EventRepository
             ->with('eventCategory')
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'LanguageId' => $languageId,
+                'LanguageId' => [$languageId, 0],
             ]  )
             ->offset($offset)
             ->limit($limit);
+
+            /**
+             *  Neutral Language
+             */
+            #$query->andWhere(['LanguageId' => 0]);
 
 
             /**

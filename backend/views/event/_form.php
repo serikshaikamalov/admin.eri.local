@@ -49,7 +49,7 @@ use yii\helpers\ArrayHelper;
     <!-- Languages -->
     <?
         echo $form->field($eventFormViewModel->model, 'LanguageId')
-                            ->dropDownList( ArrayHelper::map($eventFormViewModel->languages,'Id','Title'), ['prompt' => 'Select Language'] )
+                            ->dropDownList( $eventFormViewModel->languages )
     ?>
 
     <!-- Speaker -->

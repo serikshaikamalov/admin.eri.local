@@ -2,6 +2,7 @@
 namespace backend\controllers;
 use Yii;
 use mdm\admin\models\User;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use common\entities\EventCategory;
 use common\entities\Language;
@@ -73,11 +74,18 @@ class EventController extends AdminBaseController
         $eventFormViewModel = new EventFormViewModel();
 
         $eventFormViewModel->model = new Event();
+
+        // Default Values
         $eventFormViewModel->model->LanguageId = Yii::$app->language;
+        $eventFormViewModel->model->StatusId = 1;
 
         // Dictionaries
         $eventFormViewModel->eventCategories = EventCategory::find()->where(['LanguageId' => \Yii::$app->language] )->all();
+
         $eventFormViewModel->languages = Language::find()->all();
+        $eventFormViewModel->languages[] = ["Id" => 0, "Title" => "Neutral Language"];
+        $eventFormViewModel->languages = ArrayHelper::map($eventFormViewModel->languages, 'Id', 'Title');
+
         $eventFormViewModel->statuses = Status::find()->all();
 
         // Post
@@ -107,12 +115,17 @@ class EventController extends AdminBaseController
     {
         $eventFormViewModel = new EventFormViewModel();
         $eventFormViewModel->model = $this->findModel($id);
-        $eventFormViewModel->model->LanguageId = Yii::$app->language;
+
+        #$eventFormViewModel->model->LanguageId = Yii::$app->language;
         $eventFormViewModel->model->StartDate = date('Y-m-d', strtotime($eventFormViewModel->model->StartDate));
 
         // Dictionaries
         $eventFormViewModel->eventCategories = EventCategory::find()->where(['LanguageId' => \Yii::$app->language] )->all();
+
         $eventFormViewModel->languages = Language::find()->all();
+        $eventFormViewModel->languages[] = ["Id" => 0, "Title" => "Neutral Language"];
+        $eventFormViewModel->languages = ArrayHelper::map($eventFormViewModel->languages, 'Id', 'Title');
+
         $eventFormViewModel->statuses = Status::find()->all();
 
         // POST
