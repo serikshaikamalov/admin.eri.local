@@ -43,7 +43,7 @@ AppAsset::register($this);
         ['label' => 'Daily Monitor', 'url' => ['/daily-monitor/']],
         ['label' => 'Photo Manager', 'url' => ['/imagemanager/manager']],
         ['label' => 'File Manager', 'url' => ['/filemanager/files']],
-        ['label' => 'Video Manager', 'url' => ['']],
+        ['label' => 'Video Manager', 'url' => ['/video/']],
         ['label' => 'Slider', 'url' => ['/slider/']],
     ];
 
