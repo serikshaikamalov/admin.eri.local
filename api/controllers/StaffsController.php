@@ -49,7 +49,7 @@ class StaffsController extends ApiBaseController
         $staffVMList->page = $this->pageNumber;
         $staffVMList->totalCount = $this->totalCount;
 
-        // REPO
+        # REPO
         $staffs = $this->repo->getAll( $languageId,
             $this->offset,
             $this->limit,
@@ -69,6 +69,7 @@ class StaffsController extends ApiBaseController
                 $staffVM->StatusId = $staff->StatusId;
                 $staffVM->StaffTypeId = $staff->StaffTypeId;
                 $staffVM->StaffPositionId = $staff->StaffPositionId;
+                $staffVM->OrderNumber = $staff->OrderNumber;
 
                 // Dictionaries
                 $staffVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($staff->ImageId, 400, 400,'inset');;

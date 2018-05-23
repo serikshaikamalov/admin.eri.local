@@ -19,6 +19,7 @@ use common\entities\Status;
  * @property int $StaffTypeId
  * @property int $StaffPositionId
  * @property string $ImageSrc
+ * @property int $OrderNumber
  *
  * @property Language $Language
  * @property Status $Status
@@ -38,6 +39,7 @@ class StaffVM
     public $StatusId;
     public $StaffTypeId;
     public $StaffPositionId;
+    public $OrderNumber;
 
     // Dictionaries
     public $ImageSrc;

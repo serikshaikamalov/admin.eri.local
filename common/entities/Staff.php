@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $StatusId
  * @property int $StaffTypeId
  * @property string $StaffPositionId
- *
+ * @property int $OrderNumber
  * @property $staffPosition
  * @property $staffType
  * @property $language
@@ -43,7 +43,8 @@ class Staff extends ActiveRecord
                     'PublicationMainTagId',
                     'LanguageId',
                     'StaffPositionId',
-                    'StaffTypeId'
+                    'StaffTypeId',
+                    'OrderNumber'
                 ],
                 'integer'
             ],
@@ -76,6 +77,7 @@ class Staff extends ActiveRecord
             'FullBiography' => 'Full Biography',
             'ImageId' => 'Image',
             'LanguageId' => 'Language',
+            'OrderNumber' => 'Order Number'
         ];
     }
 

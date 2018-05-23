@@ -17,6 +17,7 @@ use common\entities\Status;
  * @property int $StatusId
  * @property int $StaffTypeId
  * @property string $StaffPositionId
+ * @property int $OrderNumber
  *
  * @property StaffPosition $StaffPosition
  * @property StaffType $StaffType
@@ -37,8 +38,9 @@ class StaffViewModel {
     public $StatusId;
     public $StaffTypeId;
     public $StaffPositionId;
+    public $OrderNumber;
 
-    // Relations
+    # Relations
     public $StaffPosition;
     public $StaffType;
     public $Language;

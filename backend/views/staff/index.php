@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'filter' => \common\entities\Status::getStatusList()
                     ],
+                    'OrderNumber',
 
 
                     // 'ResearchGroupTitle',

@@ -50,7 +50,7 @@ class StaffController extends AdminBaseController
     {
         $model = $this->staffs->get($id);
 
-        // viewModel
+        # viewModel
         $vm = new StaffViewModel();
         $vm->Id = $model->Id;
         $vm->FullName = $model->FullName;
@@ -62,8 +62,9 @@ class StaffController extends AdminBaseController
         $vm->ImageId = $model->ImageId;
         $vm->LanguageId = $model->LanguageId;
         $vm->StatusId = $model->StatusId;
+        $vm->OrderNumber = $model->OrderNumber;
 
-        // Relations
+        # Relations
         $vm->StaffPosition = $model->staffPosition;
         $vm->Status = $model->status;
         $vm->PublicationMainTag = $model->publicationMainTag;
@@ -84,10 +85,11 @@ class StaffController extends AdminBaseController
         $vm = new StaffFormViewModel();
         $vm->model = new Staff();
 
-        # Static data (test)
+        # Default values
         $vm->model->LanguageId = Yii::$app->language;
         $vm->model->StatusId = Status::STATUS_PUBLISHED;
 
+        # DICTIONARIES
         $vm->statuses = Status::getStatusList();
         $vm->staffTypes = StaffType::getStaffTypeList();
         $vm->languages = Language::getLanguageList();
@@ -100,7 +102,6 @@ class StaffController extends AdminBaseController
             if( $vm->model->validate() ){
                 $vm->model->save();
 
-                #return $this->redirect(['view', 'id' => $vm->model->Id]);
                 return $this->redirect(['create?languageId='.$this->languageId]);
             }
         } else {
@@ -117,16 +118,15 @@ class StaffController extends AdminBaseController
     {
         $vm = new StaffFormViewModel();
         $vm->model = $this->findModel($id);
-        $vm->model->LanguageId = Yii::$app->language;
 
-        // DICTIONARIES
+        # DICTIONARIES
         $vm->languages = Language::getLanguageList();
         $vm->statuses = Status::getStatusList();
         $vm->staffTypes = StaffType::getStaffTypeList();
         $vm->staffPositions = StaffPosition::getStaffPositionList();
         $vm->publicationMainTags = PublicationMainTag::getPublicationMainTagParentList();
 
-        // POST
+        # POST
         if ($vm->model->load(Yii::$app->request->post()) && $vm->model->save()) {
             return $this->redirect(['view', 'id' => $vm->model->Id]);
         } else {

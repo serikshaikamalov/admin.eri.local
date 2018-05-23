@@ -24,8 +24,8 @@ class StaffSearch extends Staff
                     ->where(
                         [
                             'languageId' => \Yii::$app->language
-                        ]
-                    );
+                        ])
+                    ->orderBy(['Id' => SORT_ASC]);
                     #->with('staffPosition');
         
         $dataProvider = new ActiveDataProvider([

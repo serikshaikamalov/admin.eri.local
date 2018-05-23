@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $vm->FullName;
             'ResearchGroupId',
             'ShortBiography:ntext',
             'Image:image',
+            'OrderNumber'
         ],
     ]) ?>
 

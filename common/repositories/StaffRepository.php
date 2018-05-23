@@ -81,6 +81,7 @@ class StaffRepository
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
             ]  )
+            ->orderBy(['OrderNumber' => SORT_ASC])
             ->offset($offset)
             ->limit($limit);
 

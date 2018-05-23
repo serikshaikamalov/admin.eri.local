@@ -41,6 +41,9 @@ use yii\widgets\ActiveForm;
 
     <? echo $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
 
+    <!-- Order Number -->
+    <? echo $form->field($vm->model, 'OrderNumber')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton($vm->model->isNewRecord ? 'Create' : 'Update', ['class' => $vm->model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
