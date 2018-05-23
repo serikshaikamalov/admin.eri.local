@@ -9,23 +9,25 @@ class VideoRepository
     /**
      * VIDEO: ONE
      * @param int $Id
+     * @param int $LanguageId
      * @return Video
      */
-    public function get($Id): ActiveRecord {
+    public function get($Id = 0, $LanguageId = 1): ActiveRecord {
 
-        $video = Video::find()
+        $query = Video::find()
             ->with('language')
             ->with('status')
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'Id' => $Id
-            ])->one();
+                'LanguageId' => $LanguageId
+            ])
+            ->orderBy(['Id' => SORT_DESC ]);
 
-        if(!$video){
-            throw new \DomainException('Id not found!');
+        if( $Id != 0 ){
+            $query = $query->andWhere(['Id' => $Id]);
         }
 
-        return $video;
+        return $query->one();
     }
 
 
@@ -47,6 +49,7 @@ class VideoRepository
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId
             ]  )
+            ->orderBy(['Id' => SORT_DESC])
             ->offset($offset)
             ->limit($limit);
 

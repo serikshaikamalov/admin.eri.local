@@ -23,8 +23,8 @@ class VideoController extends ApiBaseController
         parent::__construct($id, $module, $config);
         $this->repo = $repo;
         $this->pageNumber = 1;
-        $this->limit = 10;
-        $this->offset = 10;
+        $this->limit = 8;
+        $this->offset = 8;
     }
 
     /**
@@ -35,6 +35,7 @@ class VideoController extends ApiBaseController
     public function actionIndex( int $languageId = 1,
                                  int $pageNumber = 1): VideoListVM
     {
+        #sleep(1);
         $vmList = new VideoListVM();
 
         // PAGINATION
@@ -75,11 +76,13 @@ class VideoController extends ApiBaseController
 
 
     /**
+     * @param int $Id
+     * @param int $languageId
      * @return VideoVM
      */
-    public function actionView( int $id ): VideoVM
+    public function actionView( int $id = 0, int $languageId = 1 ): VideoVM
     {
-        $video = $this->repo->get($id);
+        $video = $this->repo->get($id, $languageId);
         $oneVM = new VideoVM();
 
         if( $video ){
