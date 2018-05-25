@@ -11,7 +11,7 @@ class DailyMonitorSearch extends DailyMonitor
     {
         return [
             [['Id', 'LanguageId', 'ImageId', 'CreatedBy'], 'integer'],
-            [['Title', 'Description', 'Link', 'IsActive', 'CreatedDate'], 'safe'],
+            [['Title', 'Description', 'Link', 'StatusId', 'CreatedDate'], 'safe'],
         ];
     }
 
@@ -50,10 +50,7 @@ class DailyMonitorSearch extends DailyMonitor
             'CreatedDate' => $this->CreatedDate,
         ]);
 
-        $query->andFilterWhere(['like', 'Title', $this->Title])
-            //->andFilterWhere(['like', 'Description', $this->Description])
-            //->andFilterWhere(['like', 'Link', $this->Link])
-            ->andFilterWhere(['like', 'IsActive', $this->IsActive]);
+        $query->andFilterWhere(['like', 'Title', $this->Title]);
 
         return $dataProvider;
     }

@@ -45,6 +45,7 @@ AppAsset::register($this);
         ['label' => 'File Manager', 'url' => ['/filemanager/files']],
         ['label' => 'Video Manager', 'url' => ['/video/']],
         ['label' => 'Slider', 'url' => ['/slider/']],
+        ['label' => 'Asya Avrupa', 'url' => ['/asya-avrupa/']],
     ];
 
     if( Yii::$app->user->isGuest ){

@@ -65,7 +65,7 @@ return [
                 '*',
             ],
             // MB
-            'maxFileSize' => 8,
+            'maxFileSize' => 50,
             // [width, height], suggested thumbnail size is 120X120
             'thumbnailSize' => [120,120]
         ]

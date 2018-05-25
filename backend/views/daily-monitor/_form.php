@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($vm->model, 'Link')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($vm->model, 'IsActive')->checkbox($vm->statuses); ?>
+    <?= $form->field($vm->model, 'StatusId')->checkbox($vm->statuses); ?>
 
     <?= $form->field($vm->model, 'LanguageId')->dropDownList( $vm->languages ); ?>
 

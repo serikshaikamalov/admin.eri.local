@@ -54,7 +54,7 @@ class DailyMonitorController extends AdminBaseController
         $vm->Author = $model->user;
         $vm->CreatedDate = $model->CreatedDate;
         $vm->Link = $model->Link;
-        $vm->IsActive = $model->IsActive;
+        $vm->StatusId = $model->StatusId;
         $vm->Status = $model->status;
 
         
