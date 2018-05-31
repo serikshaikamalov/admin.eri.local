@@ -34,18 +34,22 @@ AppAsset::register($this);
 
     $menuItems = [
         ['label' => 'Dashboard', 'url' => ['/default']],
-        ['label' => 'Publications', 'url' => ['/publication/']],
-        ['label' => 'Research Group', 'url' => ['/research-group/']],
-        ['label' => 'Пользователи', 'url' => ['/rbac/default/index']],
-        ['label' => 'Staffs', 'url' => ['/staff/']],
-        ['label' => 'Статьи', 'url' => ['/post/']],
-        ['label' => 'Events', 'url' => ['/event/']],
-        ['label' => 'Daily Monitor', 'url' => ['/daily-monitor/']],
-        ['label' => 'Photo Manager', 'url' => ['/imagemanager/manager']],
-        ['label' => 'File Manager', 'url' => ['/filemanager/files']],
-        ['label' => 'Video Manager', 'url' => ['/video/']],
-        ['label' => 'Slider', 'url' => ['/slider/']],
-        ['label' => 'Asya Avrupa', 'url' => ['/asya-avrupa/']],
+        ['label' => 'Publications', 'url' => ['/publication/index']],
+        ['label' => 'Research Group', 'url' => ['/research-group/index']],
+        ['label' => 'Users', 'url' => ['/rbac/default/index']],
+        ['label' => 'Staffs', 'url' => ['/staffindex/']],
+        ['label' => 'Articles', 'url' => ['/post/index']],
+        ['label' => 'Events', 'url' => ['/event/index']],
+        ['label' => 'Daily Monitor', 'url' => ['/daily-monitor/index']],
+
+        ['label' => 'Photo Manager', 'url' => ['/imagemanager/manager/index']],
+        ['label' => 'File Manager', 'url' => ['/filemanager/files/index']],
+        ['label' => 'Folders', 'url' => ['/filemanager/folders/index']],
+
+        ['label' => 'Gallery', 'url' => ['/gallery/index']],
+        ['label' => 'Video', 'url' => ['/video/index']],
+        ['label' => 'Slider', 'url' => ['/slider/index']],
+        ['label' => 'Asya Avrupa', 'url' => ['/asya-avrupa/index']],
     ];
 
     if( Yii::$app->user->isGuest ){
@@ -64,7 +68,7 @@ AppAsset::register($this);
         ],
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav'],
         'items' => Helper::filter($menuItems)
     ]);
     NavBar::end();
@@ -77,7 +81,7 @@ AppAsset::register($this);
                       'items' => [
                             // not just as 'controller' even if default action is used.
                             [
-                               'label' => 'Neutral1',
+                               'label' => 'Neutral',
                                'url' => ['/language-switcher/set-language?languageId=0'],
                                'active'=> function() { return  Yii::$app->language == 0; },
                             ],
