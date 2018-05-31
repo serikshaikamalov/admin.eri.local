@@ -127,38 +127,3 @@
 
 </div>
 <HR/>
-
-<!-- ADMIN -->
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Admin: Modules</h1>
-    </div>
-</div>
-
-<!--<div class="row">-->
-<!---->
-<!--    <!-- GII -->-->
-<!--    <div class="col-md-4 mb-4">-->
-<!--        <div class="card h-100">-->
-<!--            <div class="card-body">-->
-<!--                <h2 class="card-title"><span class="glyphicon glyphicon-bookmark">GII</h2>-->
-<!--                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--                <a href="/gii" class="btn btn-primary">More Info</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!--    <div class="col-md-4 mb-4">-->
-<!--        <div class="card h-100">-->
-<!--            <div class="card-body">-->
-<!--                <h2 class="card-title"><span class="glyphicon glyphicon-bookmark">User Management</h2>-->
-<!--                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--                <a href="/rbac/default" class="btn btn-primary">More Info</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
