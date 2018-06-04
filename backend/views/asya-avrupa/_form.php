@@ -12,22 +12,22 @@ use dpodium\filemanager\widgets\FileBrowse;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($vm->model, 'Title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'TitleSecond')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($vm->model, 'TitleSecond')->textInput(['maxlength' => true]) ?>
 
     <? #echo $form->field($model, 'FileId')->textInput() ?>
 
 
-    <?= $form->field($model, 'InteractiveSrc')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($vm->model, 'InteractiveSrc')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'LanguageId')->textInput() ?>
+    <?= $form->field($vm->model, 'LanguageId')->dropDownList($vm->languages) ?>
 
-    <?= $form->field($model, 'StatusId')->textInput() ?>
+    <?= $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
 
     <!-- File -->
     <?php
-    echo $form->field($model, 'FileId')->widget(FileBrowse::className(), [
+    echo $form->field($vm->model, 'FileId')->widget(FileBrowse::className(), [
         'multiple' => false, // allow multiple upload
         'folderId' => 1 // set a folder to be uploaded to.
     ]);
@@ -35,14 +35,15 @@ use dpodium\filemanager\widgets\FileBrowse;
 
     <!-- Image -->
     <?=
-    $form->field($model, 'ImageId')->widget(\noam148\imagemanager\components\ImageManagerInputWidget::className(), [
+    $form->field($vm->model, 'ImageId')->widget(\noam148\imagemanager\components\ImageManagerInputWidget::className(), [
         'aspectRatio' => (16/9), //set the aspect ratio
         'cropViewMode' => 1, //crop mode, option info: https://github.com/fengyuanchen/cropper/#viewmode
         'showPreview' => true, //false to hide the preview
         'showDeletePickedImageConfirm' => false, //on true show warning before detach image
     ]);
-
     ?>
+
+    <?= $form->field($vm->model, 'CreatedDate')->input('date') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
