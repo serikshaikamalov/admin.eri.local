@@ -33,7 +33,8 @@ class GalleryController extends ApiBaseController
     /**
      * @param $languageId
      * @param $pageNumber
-     *
+     * @return mixed
+     * @throws \Exception
      */
     public function actionIndex( int $languageId = 1,
                                  int $pageNumber = 1)
@@ -45,7 +46,7 @@ class GalleryController extends ApiBaseController
         $this->totalCount = $this->repo->count( $languageId);
 
 
-        $VMList = new GalleryListVM();
+        $VMList = new \stdClass();
         $VMList->page = $this->pageNumber;
         $VMList->totalCount = $this->totalCount;
 
@@ -70,23 +71,84 @@ class GalleryController extends ApiBaseController
                 ### Get images
 
                 # Get Gallery's images
-                $galleryImages = ImageToGallery::find()
+                $galleryImage = ImageToGallery::find()
                     ->where(['GalleryId' => $galleryEntity->Id])
-                    ->all();
+                    ->one();
 
-                if( $galleryImages ){
-                    foreach ($galleryImages as $image){
-                        if( $image->ImageId ){
-                            $imageSource = FilemanagerHelper::getFile($image->ImageId, "file_identifier");
-                            $oneVM->images[] = FILE_SERVER . $imageSource['img_src'];
-                        }
-
+                if( $galleryImage ){
+                    if( $galleryImage->ImageId ){
+                        $imageSource = FilemanagerHelper::getFile($galleryImage->ImageId, "file_identifier");
+                        $oneVM->image = FILE_SERVER . $imageSource['img_src'];
                     }
+
+
                 }
 
 
                 $VMList->items[] = $oneVM;
 
+            }
+        }
+
+        return $VMList;
+    }
+
+
+    /**
+     * @param int $languageId
+     * @param int $pageNumber
+     * @return GalleryListVM
+     * @throws \Exception
+     */
+    public function actionGetLatestGalleryToHomePage( int $languageId = 1,
+                                 int $pageNumber = 1)
+    {
+        $this->pageNumber = $pageNumber;
+        $this->limit = 4;
+        $this->offset = $this->limit * ($this->pageNumber - 1);
+
+        # REPO
+        $this->totalCount = $this->repo->count( $languageId);
+
+
+        $VMList = new GalleryListVM();
+        $VMList->page = $this->pageNumber;
+        $VMList->totalCount = $this->totalCount;
+
+        # REPO
+        $galleryEntities = $this->repo->getAll( $languageId,
+            $this->offset,
+            $this->limit);
+
+        if( count($galleryEntities) > 0 ){
+            foreach ($galleryEntities as $galleryEntity){
+                $oneVM = new \stdClass();
+
+                $oneVM->Id = $galleryEntity->Id;
+                $oneVM->Title = $galleryEntity->Title;
+                $oneVM->Description = $galleryEntity->Description;
+                $oneVM->Hits = $galleryEntity->Hits;
+                $oneVM->StatusId = $galleryEntity->StatusId;
+                $oneVM->LanguageId = $galleryEntity->LanguageId;
+                $oneVM->CreatedDate = $galleryEntity->CreatedDate;
+
+
+                ### Get images
+
+                # Get Gallery's images
+                $galleryImage = ImageToGallery::find()
+                    ->where(['GalleryId' => $galleryEntity->Id])
+                    ->one();
+
+                if( $galleryImage ){
+
+                    if( $galleryImage->ImageId ){
+                        $imageSource = FilemanagerHelper::getFile($galleryImage->ImageId, "file_identifier");
+                        $oneVM->image = FILE_SERVER . $imageSource['img_src'];
+                     }
+                }
+
+                $VMList->items[] = $oneVM;
             }
         }
 
