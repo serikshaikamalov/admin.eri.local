@@ -68,6 +68,9 @@ class AsyaAvrupaSearch extends AsyaAvrupa
             ->andFilterWhere(['like', 'TitleSecond', $this->TitleSecond])
             ->andFilterWhere(['like', 'InteractiveSrc', $this->InteractiveSrc]);
 
+        # Order
+        $query->orderBy(['CreatedDate' => SORT_DESC]);
+
         return $dataProvider;
     }
 }

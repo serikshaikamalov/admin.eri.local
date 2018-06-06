@@ -25,7 +25,7 @@ class AsyaAvrupa extends ActiveRecord
     {
         return [
             [['LanguageId', 'StatusId', 'ImageId'], 'integer'],
-            [['FileId','Title', 'TitleSecond', 'InteractiveSrc'], 'string', 'max' => 50],
+            [['FileId','Title', 'TitleSecond', 'InteractiveSrc', 'CreatedDate'], 'string', 'max' => 50],
         ];
     }
 
@@ -39,7 +39,8 @@ class AsyaAvrupa extends ActiveRecord
             'InteractiveSrc' => 'Interactive Source',
             'LanguageId' => 'Language',
             'StatusId' => 'Status',
-            'ImageId' => 'Image'
+            'ImageId' => 'Image',
+            'CreatedDate' => 'Created Date'
         ];
     }
 }

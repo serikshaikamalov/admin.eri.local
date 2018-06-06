@@ -15,7 +15,7 @@ class AsyaAvrupaRepository
         $query = AsyaAvrupa::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'LanguageId' => $languageId
+                'LanguageId' => [$languageId, 0],
             ]  );
 
         return $query->count();
@@ -35,11 +35,14 @@ class AsyaAvrupaRepository
         $query = AsyaAvrupa::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'LanguageId' => $languageId
+                'LanguageId' => [$languageId, 0],
             ]  )
             ->offset($offset)
             ->limit($limit);
 
+
+        ### Order
+        $query->orderBy(['CreatedDate' => SORT_DESC]);
 
         return $query->all();
     }
