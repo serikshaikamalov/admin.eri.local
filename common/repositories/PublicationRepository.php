@@ -37,6 +37,7 @@ class PublicationRepository
      * @param int $staffId
      * @param array $mainTagIds
      * @param string $date
+     * @param string $searchQuery
      *
      * @return int Publication[] length
      */
@@ -45,7 +46,8 @@ class PublicationRepository
                            array $publicationCategoryIds = [],
                            int $staffId = 0,
                            array $mainTagIds = [],
-                           string $date = ""
+                           string $date = "",
+                           string $searchQuery = ""
                          ): int{
 
         $query =  Publication::find()
@@ -55,27 +57,28 @@ class PublicationRepository
                 'PublicationTypeId' => $publicationTypeId
             ]);
 
-        // Filter
+        # FILTER: Category
         if( count($publicationCategoryIds) > 0 ){
             $query->andWhere([
                 'PublicationCategoryId' => $publicationCategoryIds
             ]);
         }
 
-        // Filter By Publication MainTagIds
+        # FILTER: Tags
         if( count($mainTagIds) > 0 ){
             $query->andWhere([
                 'PublicationMainTagId' => $mainTagIds
             ]);
         }
 
+        # FILTER: Staffs
         if( $staffId != 0 ){
             $query->andWhere([
                 'StaffId' => $staffId
             ]);
         }
 
-        // Filter By Date
+        # FILTER: Date
         if( $date && $date != "" && $date != null ){
 
             $dateTime = new \DateTime(date('Y-m-d', strtotime($date)));
@@ -93,6 +96,11 @@ class PublicationRepository
             ]);
         }
 
+        # FILTER: Query
+        $query->andWhere([
+            'like','Title', $searchQuery
+        ]);
+
         return $query->count();
     }
 
@@ -107,6 +115,7 @@ class PublicationRepository
      * @param string $orderBy
      * @param array $mainTagIds
      * @param string $date
+     * @param string $searchQuery
      *
      * @return array Publications[]
      */
@@ -118,7 +127,8 @@ class PublicationRepository
                             int $staffId = 0,
                             string $orderBy = 'Id',
                             array $mainTagIds = [],
-                            string $date = ""
+                            string $date = "",
+                            string $searchQuery = ""
                           ): array
     {
         $query = Publication::find()
@@ -134,35 +144,40 @@ class PublicationRepository
             ->offset($offset)
             ->limit($limit);
 
-            // Filter By Publication CategoryIds
+            # FILTER: Query
+            $query->andWhere([
+                'like','Title', $searchQuery
+            ]);
+
+            # FILTER: Category
             if( count($publicationCategoryIds) > 0 ){
                 $query->andWhere([
                     'PublicationCategoryId' => $publicationCategoryIds
                 ]);
             }
 
-            // Filter By Publication TypeId
+            # FILTER: Type
             if( $publicationTypeId ){
                 $query->andWhere([
                     'PublicationTypeId' => $publicationTypeId
                 ]);
             }
 
-            // Filter By Publication StaffId
+            # FILTER: Staff
             if( $staffId != 0 ){
                 $query->andWhere([
                     'StaffId' => $staffId
                 ]);
             }
 
-            // Filter By Publication MainTagIds
+            # FILTER: Main Tag
             if( count($mainTagIds) > 0 ){
                 $query->andWhere([
                     'PublicationMainTagId' => $mainTagIds
                 ]);
             }
 
-            // Filter By Date
+            # FILTER: Date
             if( $date && $date != "" && $date != null ){
 
                  $dateTime = new \DateTime(date('Y-m-d', strtotime($date)));
@@ -180,9 +195,7 @@ class PublicationRepository
                 ]);
             }
 
-
-
-            // ORDER BY
+            # SORT
             switch( $orderBy ){
                 default:
                 case 'Id':
@@ -195,10 +208,62 @@ class PublicationRepository
                     $query->orderBy(['CreatedDate' => SORT_DESC]);
             }
 
-            //var_dump($query->prepare(\Yii::$app->db->queryBuilder)->createCommand()->rawSql); die();
 
             return $query->all();
     }
+
+
+    /**
+     * Publication: Search by query
+     *
+     * @param string $searchQuery
+     * @param int $publicationTypeId
+     * @param int $languageId
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array Publications[]
+     */
+    public function getAllByQuery(
+                            string $searchQuery = '',
+                            int $publicationTypeId = 1,
+                            int $languageId,
+                            int $offset,
+                            int $limit
+    ): array
+    {
+        $query = Publication::find()
+            ->with('language')
+            ->with('status')
+            ->with('publicationCategory')
+            ->with('publicationMainTag')
+            ->with('staff')
+            ->where([
+                'StatusId' => Status::STATUS_PUBLISHED,
+                'LanguageId' => $languageId,
+            ]  )
+            ->offset($offset)
+            ->limit($limit);
+
+        # QUERY
+        $query->andWhere([
+            'like','Title', $searchQuery
+        ]);
+
+
+        # FILTER:
+        if( $publicationTypeId ){
+            $query->andWhere([
+                'PublicationTypeId' => $publicationTypeId
+            ]);
+        }
+
+        # ORDER BY
+        $query->orderBy(['CreatedDate' => SORT_DESC]);
+
+        return $query->all();
+    }
+
 
 
     /**

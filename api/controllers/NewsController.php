@@ -36,6 +36,7 @@ class NewsController extends ApiBaseController
      * @param int $pageNumber
      * @param int $limit
      * @param string $orderBy
+     * @param string $query
      *
      * @return NewsListVM
      */
@@ -43,26 +44,32 @@ class NewsController extends ApiBaseController
                                  int $languageId = 1,
                                  int $pageNumber = 1,
                                  int $limit = 10,
-                                 string $orderBy = 'Id'
+                                 string $orderBy = 'Id',
+                                 string $query = ''
                                 ): NewsListVM
     {
 
+        $resultVMList = new NewsListVM();
+
+        # FILTER: Pagination
         $this->pageNumber = $pageNumber;
         $this->limit = $limit;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
-        $resultVMList = new NewsListVM();
-        $resultVMList->PageNumber = $this->pageNumber;
-        $resultVMList->TotalCount = $this->repo->count( $languageId);
 
-        // GET PUBLICATIONS FROM DB
+        # NEWS
         $all = $this->repo->getAll( $languageId,
                                     $this->offset,
                                     $this->limit,
-                                    $orderBy
+                                    $orderBy,
+                                    $query
                                     );
 
+        # View Models
         if( count($all) > 0 ){
+            $resultVMList->PageNumber = $this->pageNumber;
+            $resultVMList->TotalCount = $this->repo->count( $languageId);
+
             foreach ($all as $one){
 
                 $oneVM = new NewsVM();

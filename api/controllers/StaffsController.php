@@ -32,30 +32,40 @@ class StaffsController extends ApiBaseController
      * @param $languageId
      * @param $pageNumber
      * @param $staffTypeId
+     * @param $query
+     *
      * @return StaffListVM
      */
     public function actionIndex( int $languageId = 1,
                                  int $pageNumber = 1,
-                                 int $staffTypeId = 0 ): StaffListVM
+                                 int $staffTypeId = 0,
+                                 string $query
+    ): StaffListVM
     {
+        $staffVMList = new StaffListVM();
+
+        # FILTER: Pagination
         $this->pageNumber = $pageNumber;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
-        // REPO
+        # Staffs: Count
         $this->totalCount = $this->repo->count( $languageId,
-            $staffTypeId );
+            $staffTypeId,
+            $query
+            );
 
-        $staffVMList = new StaffListVM();
-        $staffVMList->page = $this->pageNumber;
-        $staffVMList->totalCount = $this->totalCount;
-
-        # REPO
+        # Staffs: List
         $staffs = $this->repo->getAll( $languageId,
             $this->offset,
             $this->limit,
-            $staffTypeId);
+            $staffTypeId,
+            $query);
 
+        # View Model
         if( count($staffs) > 0 ){
+            $staffVMList->page = $this->pageNumber;
+            $staffVMList->totalCount = $this->totalCount;
+
             foreach ($staffs as $staff){
 
                 $staffVM = new StaffVM();

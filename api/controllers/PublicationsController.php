@@ -53,6 +53,7 @@ class PublicationsController extends ApiBaseController
      * @param string $orderBy
      * @param int $publicationMainTagId
      * @param string $date - Format: 2018-02-01
+     * @param string $query
      *
      * @return PublicationListVM
      */
@@ -65,18 +66,20 @@ class PublicationsController extends ApiBaseController
                                  int $limit = 10,
                                  string $orderBy = 'Id',
                                  int $publicationMainTagId = 0,
-                                 string $date = ""
+                                 string $date = "",
+                                 string $query = ""
                                 ): PublicationListVM
     {
+        $publicationVMList = new PublicationListVM();
+
+
+        # FILTER: Pagination
         $this->pageNumber = $pageNumber;
         $this->limit = $limit;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
-        $publicationVMList = new PublicationListVM();
-        $publicationVMList->PageNumber = $this->pageNumber;
 
-
-        // Get publication categories
+        # FILTER: Category
         $ChildCategoryIds = [];
         if( $publicationCategoryId != 0 ){
             $ChildCategoryIds = $this->repoPublicationCategory->getChildren($publicationCategoryId);
@@ -84,7 +87,8 @@ class PublicationsController extends ApiBaseController
             $ChildCategoryIds[] = $publicationCategoryId;
         }
 
-        // Get publication main tags
+
+        # FILTER: Main Tag
         $childMainTagIds = [];
         if( $publicationMainTagId != 0 ){
             $childMainTagIds = $this->repoResearchGroup->getChildren($publicationMainTagId);
@@ -92,16 +96,19 @@ class PublicationsController extends ApiBaseController
             $childMainTagIds[] = $publicationMainTagId;
         }
 
+
+        # Total count
         $publicationVMList->TotalCount = $this->repo->count( $languageId,
                                                              $publicationTypeId,
                                                              $ChildCategoryIds,
                                                              $staffId,
                                                              $childMainTagIds,
-                                                             $date
+                                                             $date,
+                                                             $query
                                                             );
 
 
-        // GET PUBLICATIONS FROM DB
+        # PUBLICATIONS
         $publications = $this->repo->getAll( $publicationTypeId,
                                              $languageId,
                                              $this->offset,
@@ -110,9 +117,11 @@ class PublicationsController extends ApiBaseController
                                              $staffId,
                                              $orderBy,
                                              $childMainTagIds,
-                                             $date
+                                             $date,
+                                             $query
                                             );
 
+        # VIEW MODEL
         if( count($publications) > 0 ){
             foreach ($publications as $publication){
 
@@ -139,14 +148,18 @@ class PublicationsController extends ApiBaseController
                 $publicationVM->PublicationMainTag = $publication->publicationMainTag ? $publication->publicationMainTag : null;
                 $publicationVMList->PublicationList[] = $publicationVM;
             }
+
+            $publicationVMList->PageNumber = $this->pageNumber;
         }
 
         return $publicationVMList;
     }
 
 
-    /*
-     * @returns:  List of staffs
+    /**
+     * @param int $id
+     * @return mixed
+     * @throws \Exception
      */
     public function actionView( int $id )
     {

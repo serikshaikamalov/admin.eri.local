@@ -31,15 +31,24 @@ class NewsRepository
 
     /**
      * @param int $languageId
+     * @param string $searchQuery
      *
      * @return int Publication's total count
      */
-    public function count( int $languageId): int{
+    public function count(
+                        int $languageId,
+                        $searchQuery = '' ): int{
+
         $query =  News::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId,
             ]);
+
+        # Filter: Query
+        $query->andWhere([
+            'like','Title', $searchQuery
+        ]);
 
         return $query->count();
     }
@@ -50,13 +59,15 @@ class NewsRepository
      * @param int $offset
      * @param int $limit
      * @param string $orderBy
+     * @param string $searchQuery
      *
      * @return array Publications[]
      */
     public function getAll( int $languageId,
                             int $offset,
                             int $limit,
-                            string $orderBy = 'Id'
+                            string $orderBy = 'Id',
+                            string $searchQuery = ''
                           ): array
     {
         $query = News::find()
@@ -69,8 +80,12 @@ class NewsRepository
             ->offset($offset)
             ->limit($limit);
 
+            # FILTER: Query
+            $query->andWhere([
+                'like','Title', $searchQuery
+            ]);
 
-            // ORDER BY
+            # SORT
             switch( $orderBy ){
                 default:
                 case 'Id':

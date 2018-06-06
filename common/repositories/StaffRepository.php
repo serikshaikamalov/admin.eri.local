@@ -37,10 +37,13 @@ class StaffRepository
     /**
      * @param int $languageId
      * @param int $staffTypeId
+     * @param string $searchQuery
+     *
      * @return int
      */
     public function count(int $languageId,
-                          int $staffTypeId = 0): int{
+                          int $staffTypeId = 0,
+                          string $searchQuery = ''): int{
 
         $query = Staff::find()
             ->where([
@@ -48,7 +51,12 @@ class StaffRepository
                 'LanguageId' => $languageId
             ]  );
 
-        // FILTER BY: StaffTypeId
+        # FILTER: Query
+        $query->andWhere([
+            'like','FullName', $searchQuery
+        ]);
+
+        # Filter: Staff Type
         if( $staffTypeId != 0 ){
             $query->andWhere([
                 'StaffTypeId' => $staffTypeId
@@ -64,12 +72,15 @@ class StaffRepository
      * @param int $offset
      * @param int $limit
      * @param int $staffTypeId
+     * @param string $searchQuery
+     *
      * @return array
      */
     public function getAll( int $languageId = 1,
                             int $offset,
                             int $limit = 10,
-                            int $staffTypeId = 0): array
+                            int $staffTypeId = 0,
+                            string $searchQuery = ''): array
     {
         $query = Staff::find()
             ->with('language')
@@ -85,8 +96,13 @@ class StaffRepository
             ->offset($offset)
             ->limit($limit);
 
+        # FILTER: Query
+        $query->andWhere([
+            'like','FullName', $searchQuery
+        ]);
 
-        // FILTER BY: StaffTypeId
+
+        # FILTER: Staff Type
         if( $staffTypeId != 0 ){
             $query->andWhere([
                 'StaffTypeId' => $staffTypeId
