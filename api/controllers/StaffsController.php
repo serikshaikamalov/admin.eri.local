@@ -39,7 +39,7 @@ class StaffsController extends ApiBaseController
     public function actionIndex( int $languageId = 1,
                                  int $pageNumber = 1,
                                  int $staffTypeId = 0,
-                                 string $query
+                                 string $query = ''
     ): StaffListVM
     {
         $staffVMList = new StaffListVM();

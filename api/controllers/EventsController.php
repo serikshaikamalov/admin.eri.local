@@ -40,6 +40,7 @@ class EventsController extends ApiBaseController
      * @param int $eventCategoryId
      * @param int $pageNumber
      * @param int $limit
+     * @param string $query
      *
      * @return ItemListVM
      */
@@ -47,13 +48,18 @@ class EventsController extends ApiBaseController
                                 int $eventTypeId = 1,
                                 int $eventCategoryId = 0,
                                 int $pageNumber = 1,
-                                int $limit = 10 ): ItemListVM
+                                int $limit = 10,
+                                string $query = '' ): ItemListVM
     {
+        $resultVMList = new ItemListVM();
+
+
+        // FILTER: Pagination
         $this->pageNumber = $pageNumber;
         $this->limit = $limit;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
-        // Get publication categories
+        // FILTER: Category
         $childrenIds = [];
         if( $eventCategoryId != 0 ){
             $childrenIds = $this->eventCategoryRepo->getChildren($eventCategoryId);
@@ -61,14 +67,17 @@ class EventsController extends ApiBaseController
             $childrenIds[] = $eventCategoryId;
         }
 
+        // EVENT: List
         $all = $this->repo->getAll( $languageId,
                                     $eventTypeId,
                                     $childrenIds,
                                     $this->offset,
-                                    $this->limit );
+                                    $this->limit,
+                                    'Id',
+                                    $query );
 
-        $resultVMList = new ItemListVM();
 
+        // View Models
         if( count($all) > 0 ){
             foreach ($all as $one ){
                 $oneVM = new EventVM();
@@ -88,10 +97,11 @@ class EventsController extends ApiBaseController
             }
         }
 
-        // GET Total counts
+        // Event: Count
         $this->totalCount = $this->repo->count( $languageId,
                                                 $eventTypeId,
-                                                $childrenIds
+                                                $childrenIds,
+                                                $query
                                             );
         $resultVMList->TotalCount = $this->totalCount;
         $resultVMList->PageNumber = $this->pageNumber;

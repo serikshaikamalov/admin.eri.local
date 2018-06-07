@@ -20,6 +20,7 @@ use \yii\db\ActiveRecord;
  */
 class Event extends ActiveRecord
 {
+    const ALL_EVENTS = 0;
     const UPCOMING_EVENT = 1;
     const PAST_EVENT = 2;
 

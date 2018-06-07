@@ -32,11 +32,14 @@ class EventRepository
      * @param int $languageId
      * @param int $eventTypeId
      * @param array $eventCategoryIds
+     * @param string $searchQuery
+     *
      * @return int Publication's total count
      */
     public function count( int $languageId,
                            int $eventTypeId = 1,
-                           array $eventCategoryIds = [] ): int{
+                           array $eventCategoryIds = [],
+                           string $searchQuery = ''): int{
         $query =  Event::find()
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
@@ -44,9 +47,13 @@ class EventRepository
             ]);
 
 
-        /**
-         * FILTER
-         */
+        # FILTER: Query
+        $query->andWhere([
+            'like','Title', $searchQuery
+        ]);
+
+
+        # FILTER: Type
         $dateTime = new \DateTime('now');
         $dateTimeString = $dateTime->format('Y-m-d H:i');
 
@@ -60,7 +67,7 @@ class EventRepository
         }
 
 
-        // Event Category
+        # FILTER: Category
         if( count($eventCategoryIds) > 0 ){
             $query->andWhere([
                 'EventCategoryId' => $eventCategoryIds
@@ -78,6 +85,7 @@ class EventRepository
      * @param int $offset
      * @param int $limit
      * @param string $orderBy
+     * @param string $searchQuery
      *
      * @return array Publications[]
      */
@@ -86,7 +94,8 @@ class EventRepository
                             array $eventCategoryIds = [],
                             int $offset,
                             int $limit,
-                            string $orderBy = 'Id'
+                            string $orderBy = 'Id',
+                            string $searchQuery = ''
                           ): array
     {
         $query = Event::find()
@@ -100,20 +109,13 @@ class EventRepository
             ->offset($offset)
             ->limit($limit);
 
-            /**
-             *  Neutral Language
-             */
-            #$query->andWhere(['LanguageId' => 0]);
 
+            # FILTER: Query
+            $query->andWhere([
+                'like','Title', $searchQuery
+            ]);
 
-            /**
-             * FILTER
-             */
-
-            // Event Type
-            /**
-             * DateTime object
-             */
+            # FILTER: Event Type
             $dateTime = new \DateTime('now');
             $dateTimeString = $dateTime->format('Y-m-d H:i');
 
@@ -126,7 +128,7 @@ class EventRepository
                     break;
             }
 
-            // Event Category
+            # FILTER: Category
             if( count($eventCategoryIds) > 0 ){
                 $query->andWhere([
                     'EventCategoryId' => $eventCategoryIds
@@ -134,9 +136,7 @@ class EventRepository
             }
 
 
-            /**
-             * SORTING
-             */
+            # SORT
             switch( $orderBy ){
                 default:
                 case 'Id':
@@ -146,7 +146,7 @@ class EventRepository
                     $query->orderBy(['Hits' => SORT_DESC]);
                     break;
             }
-            //var_dump($query->prepare(\Yii::$app->db->queryBuilder)->createCommand()->rawSql); die();
+
             return $query->all();
     }
 
