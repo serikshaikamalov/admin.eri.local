@@ -14,8 +14,11 @@ class MenuController extends ApiBaseController
         $this->repo = $repo;
     }
 
-    /*
+    /**
      * Menu: List
+     * @param int $languageId
+     *
+     * @return mixed
      */
     public function actionIndex( int $languageId = 1 )
     {
@@ -38,7 +41,7 @@ class MenuController extends ApiBaseController
                 // Dictionaries
                 $menuVM->Language = $menu->language ? $menu->language : null;
                 $menuVM->Status = $menu->status ? $menu->status : null;
-                $menuVM->Children = $this->repo->getChildren( $languageId, $menu->ParentId );
+                $menuVM->Children = $this->repo->getChildren( $languageId, $menu->Id );
                 $menuVMList[] = $menuVM;
             }
         }

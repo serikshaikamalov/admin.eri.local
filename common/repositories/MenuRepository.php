@@ -12,7 +12,8 @@ class MenuRepository
             ->with('status')
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
-                'LanguageId' => $languageId
+                'LanguageId' => $languageId,
+                'ParentId' => 0
             ]  )
             ->all();
     }
