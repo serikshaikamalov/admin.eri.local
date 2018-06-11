@@ -57,4 +57,10 @@ class PublicationCategoriesController extends ApiBaseController
         }
         return $result;
     }
+
+
+    public function actionGetByLink( string $link = '' ){
+        $one = $this->repo->getByLink($link);
+        return $one->Id;
+    }
 }

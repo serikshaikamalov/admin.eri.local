@@ -40,6 +40,21 @@ class PublicationCategoryRepository
     }
 
 
+    public function getByLink( string $link = '' ): array {
+        if( !$link ){
+            throw new \DomainException('Tag is not found.');
+        }
+
+        $one = PublicationCategory::find()
+            ->where([
+                'Link' => $link,
+            ])
+            ->one();
+
+        return $one;
+    }
+
+
     /**
      * @param int $ParentId
      * @return array
