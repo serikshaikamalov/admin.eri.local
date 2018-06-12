@@ -1,6 +1,6 @@
 <?php
 namespace api\controllers;
-use api\viewmodels\MenuVM;
+use api\viewmodels\MenuItemVM;
 use common\repositories\MenuRepository;
 
 class MenuController extends ApiBaseController
@@ -22,31 +22,44 @@ class MenuController extends ApiBaseController
      */
     public function actionIndex( int $languageId = 1 )
     {
-        $menuVMList = array();
+        $menuVM = new \StdClass();
+
+        $optionalMenuList = array();
+        $mainMenuList = array();
+
         $menuList = $this->repo->getAll( $languageId );
 
         if( count($menuList) > 0 ){
             foreach ($menuList as $menu){
 
-                $menuVM = new MenuVM();
-                $menuVM->Id = $menu->Id;
-                $menuVM->Title = $menu->Title;
-                $menuVM->Link = $menu->Link;
-                $menuVM->LanguageId = $menu->LanguageId;
-                $menuVM->ParentId = $menu->ParentId;
-                $menuVM->MenuTypeId = $menu->MenuTypeId;
-                $menuVM->StatusId = $menu->StatusId;
-                $menuVM->IsDefault = $menu->IsDefault;
+                $menuItem = new MenuItemVM();
+                $menuItem->Id = $menu->Id;
+                $menuItem->Title = $menu->Title;
+                $menuItem->Link = $menu->Link;
+                $menuItem->LanguageId = $menu->LanguageId;
+                $menuItem->ParentId = $menu->ParentId;
+                $menuItem->MenuTypeId = $menu->MenuTypeId;
+                $menuItem->StatusId = $menu->StatusId;
+                $menuItem->IsDefault = $menu->IsDefault;
+                $menuItem->Icon = $menu->Icon;
 
                 // Dictionaries
-                $menuVM->Language = $menu->language ? $menu->language : null;
-                $menuVM->Status = $menu->status ? $menu->status : null;
-                $menuVM->Children = $this->repo->getChildren( $languageId, $menu->Id );
-                $menuVMList[] = $menuVM;
+                $menuItem->Language = $menu->language ? $menu->language : null;
+                $menuItem->Status = $menu->status ? $menu->status : null;
+                $menuItem->Children = $this->repo->getChildren( $languageId, $menu->Id );
+
+                if( $menu->IsOptional == true ){
+                    $optionalMenuList[] = $menuItem;
+                }else{
+                    $mainMenuList[] = $menuItem;
+                }
             }
         }
 
-        return $menuVMList;
+        $menuVM->OptionalMenu = $optionalMenuList;
+        $menuVM->MainMenu = $mainMenuList;
+
+        return $menuVM;
     }
 
 }

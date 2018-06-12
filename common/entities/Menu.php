@@ -12,6 +12,7 @@ use \yii\db\ActiveRecord;
  * @property int $MenuTypeId
  * @property int $StatusId
  * @property int $IsDefault
+ * @property string $Icon
  */
 class Menu extends ActiveRecord
 {
@@ -23,10 +24,11 @@ class Menu extends ActiveRecord
     public function rules()
     {
         return [
-            [['LanguageId', 'ParentId', 'MenuTypeId', 'StatusId'], 'integer'],
+            [['LanguageId', 'ParentId', 'MenuTypeId', 'StatusId', 'OrderNumber'], 'integer'],
             [['Title'], 'string', 'max' => 100],
             [['Link'], 'string', 'max' => 250],
-            [['IsDefault'], 'string', 'max' => 2],
+            [['Icon'], 'string'],
+            [['IsDefault', 'IsOptional'], 'string', 'max' => 2],
         ];
     }
 
@@ -36,11 +38,14 @@ class Menu extends ActiveRecord
             'Id' => 'ID',
             'Title' => 'Title',
             'Link' => 'Link',
-            'LanguageId' => 'Language ID',
-            'ParentId' => 'Parent ID',
-            'MenuTypeId' => 'Menu Type ID',
-            'StatusId' => 'Status ID',
-            'IsDefault' => 'Is Default',
+            'LanguageId' => 'Language',
+            'ParentId' => 'Parent',
+            'MenuTypeId' => 'Menu Type',
+            'StatusId' => 'Status',
+            'IsDefault' => 'Default',
+            'IsOptional' => 'Optional',
+            'Icon' => 'Icon',
+            'OrderNumber' => 'Order Number'
         ];
     }
 

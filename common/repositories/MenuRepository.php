@@ -37,6 +37,7 @@ class MenuRepository
                 'LanguageId' => $languageId,
                 'ParentId' => $parentId
             ]  )
+            ->orderBy(['OrderNumber' => SORT_ASC])
             ->all();
     }
 }
