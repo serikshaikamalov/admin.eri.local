@@ -68,10 +68,10 @@ class PostController extends AdminBaseController
         $vm = new PostFormViewModel();
         $vm->model = $this->findModel($id);
 
-        // Dictionaries
+        # Dictionaries
         $vm->languages = Language::getLanguageList();
 
-        // POST
+        # POST
         if ($vm->model->load(Yii::$app->request->post()) && $vm->model->save()) {
             return $this->redirect(['view', 'id' => $vm->model->Id]);
         } else {
