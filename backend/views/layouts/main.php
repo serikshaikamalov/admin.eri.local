@@ -34,23 +34,45 @@ AppAsset::register($this);
 
     $menuItems = [
         ['label' => 'Dashboard', 'url' => ['/default']],
-        ['label' => 'Publications', 'url' => ['/publication/index']],
-        ['label' => 'Research Group', 'url' => ['/research-group/index']],
-        ['label' => 'Users', 'url' => ['/rbac/default/index']],
-        ['label' => 'Staffs', 'url' => ['/staffindex/']],
-        ['label' => 'Articles', 'url' => ['/post/index']],
-        ['label' => 'Events', 'url' => ['/event/index']],
-        ['label' => 'News', 'url' => ['/news/index']],
-        ['label' => 'Daily Monitor', 'url' => ['/daily-monitor/index']],
+        [
+            'label' => 'About',
+            'url' => '',
+            'items' => [
+                ['label' => 'Articles', 'url' => ['/post/index']],
+                ['label' => 'News', 'url' => ['/news/index']],
+                ['label' => 'ERI In Press', 'url' => ['/eri-in-press/index']],
+                ['label' => 'Projects', 'url' => ''],
+                ['label' => 'Visiting Research Fellow', 'url' => ''],
+                ['label' => 'Postgraduate Research Fellowship', 'url' => ''],
+                ['label' => 'Vacancies', 'url' => ''],
+                ['label' => 'Slider', 'url' => ['/slider/index']],
+            ]
+        ],
+        [
+            'label' => 'Publications',
+            'url' => ['/publication/index'],
+            'items' => [
+                ['label' => 'Publications', 'url'=> ['/publication/index']],
+                ['label' => 'Asya Avrupa', 'url' => ['/asya-avrupa/index']],
+                ['label' => 'Research Group', 'url' => ['/research-group/index']],
+            ]
+        ],
 
+        ['label' => 'Events', 'url' => ['/event/index']],
+        ['label' => 'Staffs', 'url' => ['/staff/index/']],
+        ['label' => 'Daily Monitor', 'url' => ['/daily-monitor/index']],
         ['label' => 'Photo Manager', 'url' => ['/imagemanager/manager/index']],
         ['label' => 'File Manager', 'url' => ['/filemanager/files/index']],
         ['label' => 'Folders', 'url' => ['/filemanager/folders/index']],
-
         ['label' => 'Gallery', 'url' => ['/gallery/index']],
         ['label' => 'Video', 'url' => ['/video/index']],
-        ['label' => 'Slider', 'url' => ['/slider/index']],
-        ['label' => 'Asya Avrupa', 'url' => ['/asya-avrupa/index']],
+        [
+            'label' => 'Advanced',
+            'url' => '',
+            'items' => [
+                ['label' => 'Users', 'url' => ['/rbac/default/index']],
+            ]
+        ],
     ];
 
     if( Yii::$app->user->isGuest ){

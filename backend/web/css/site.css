@@ -128,3 +128,7 @@ a.desc:after {
     color: darkred;
     font-weight: bold;;
 }
+
+#w1{
+    float: right;
+}
