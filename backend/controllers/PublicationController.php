@@ -53,7 +53,7 @@ class PublicationController extends AdminBaseController
         $vm->model->StatusId = 1;
         $vm->model->LanguageId = Yii::$app->language;
 
-        // Dictionaries
+        # DICTIONARIES
         $vm->publicationTypeList = PublicationType::getPublicationTypeList();
         $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
         $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList();

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\entities\News */
+/* @var $model common\entities\ResearchFellow */
 
 $this->title = $model->Title;
-$this->params['breadcrumbs'][] = ['label' => 'News', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Research Fellows', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="news-view">
+<div class="research-fellow-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,15 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'Id',
+            'researchFellowType',
+            'researchFellowCategoryId',
             'Title',
-            'ShortDescription:html',
-            'FullDescription:html',
-            'NewsCategoryId',
+            'ShortDescription',
+            'FullDescription:ntext',
             'ImageId',
+            'FilePDFId',
+            'FileWordId',
             'CreatedDate',
-            'Hits',
-            'StatusId',
-            'LanguageId',
+            'CreatedBy',
         ],
     ]) ?>
 

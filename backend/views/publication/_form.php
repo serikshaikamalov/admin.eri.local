@@ -23,14 +23,14 @@ use dpodium\filemanager\widgets\FileBrowse;
         echo $form->field($vm->model, 'PublicationTypeId')->dropDownList($vm->publicationTypeList);
     ?>
 
+    <!--  Publication Category -->
+    <?
+    echo $form->field($vm->model, 'PublicationCategoryId')->dropDownList($vm->publicationCategoryList)
+    ?>
+
     <!--  Publication Main Tag -->
     <?
     echo $form->field($vm->model, 'PublicationMainTagId')->dropDownList($vm->publicationMainTagList);
-    ?>
-
-    <!--  Publication Category -->
-    <?
-        echo $form->field($vm->model, 'PublicationCategoryId')->dropDownList($vm->publicationCategoryList)
     ?>
 
     <?= $form->field($vm->model, 'StaffId')->dropDownList($vm->staffList, ['prompt'=>'Select Author']) ?>

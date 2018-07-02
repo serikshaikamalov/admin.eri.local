@@ -26,6 +26,14 @@ class PublicationCategory extends ActiveRecord
             ->where(['LanguageId' => \Yii::$app->language] )
             ->all();
 
+        foreach( $result as $item ){
+            if( $item->ParentId  != 0){
+                $item->Title = '--'.$item->Title;
+            }else if( $item->ParentId == 2 ){
+                $item->Title = '---'.$item->Title;
+            }
+        }
+
         return ArrayHelper::map($result, 'Id', 'Title');
     }
 

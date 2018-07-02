@@ -2,11 +2,7 @@
 namespace api\controllers;
 use api\viewmodels\EriInPressListVM;
 use api\viewmodels\EriInPressVM;
-use api\viewmodels\NewsListVM;
-use api\viewmodels\NewsVM;
 use common\repositories\EriInPressRepository;
-use common\repositories\NewsRepository;
-use common\repositories\PublicationCategoryRepository;
 use Yii;
 
 class EriInPressController extends ApiBaseController

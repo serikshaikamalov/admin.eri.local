@@ -25,10 +25,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'Id',
-            'Title',
+            //'Id',
+            //'Title',
+            [
+                'attribute' => 'Title',
+                'label' => 'Title',
+                'contentOptions' => ['style' => 'max-width: 600px, white-space: normal'],
+            ],
+            [
+                'attribute' => 'StatusId',
+                'label' => 'Status',
+                'value' => function( $item ){
+                    return $item->status->Title;
+                },
+                'filter' => \common\entities\Status::getStatusList()
+            ],
+            [
+                'attribute' => 'LanguageId',
+                'label' => 'Language',
+                'value' => function( $item ){
+                    return $item->language->Title;
+                },
+                'filter' => \common\entities\Language::getLanguageList()
+            ],
             //'ImageId',
-            //'CreatedDate',
+            'CreatedDate:date',
             //'Hits',
             //'StatusId',
             //'LanguageId',

@@ -42,8 +42,7 @@ AppAsset::register($this);
                 ['label' => 'News', 'url' => ['/news/index']],
                 ['label' => 'ERI In Press', 'url' => ['/eri-in-press/index']],
                 ['label' => 'Projects', 'url' => ''],
-                ['label' => 'Visiting Research Fellow', 'url' => ''],
-                ['label' => 'Postgraduate Research Fellowship', 'url' => ''],
+                ['label' => 'Research Fellow', 'url' => 'research-fellow'],
                 ['label' => 'Vacancies', 'url' => ''],
                 ['label' => 'Slider', 'url' => ['/slider/index']],
             ]

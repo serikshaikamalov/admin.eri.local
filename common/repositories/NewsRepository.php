@@ -66,7 +66,7 @@ class NewsRepository
     public function getAll( int $languageId,
                             int $offset,
                             int $limit,
-                            string $orderBy = 'Id',
+                            string $orderBy = 'CreatedDate',
                             string $searchQuery = ''
                           ): array
     {
@@ -93,6 +93,9 @@ class NewsRepository
                     break;
                 case 'Hits':
                     $query->orderBy(['Hits' => SORT_DESC]);
+                    break;
+                case 'CreatedDate':
+                    $query->orderBy(['CreatedDate' => SORT_DESC]);
                     break;
             }
             return $query->all();

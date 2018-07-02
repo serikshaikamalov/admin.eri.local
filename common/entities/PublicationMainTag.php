@@ -52,6 +52,13 @@ class PublicationMainTag extends ActiveRecord
         $result = PublicationMainTag::find()
             ->where(['LanguageId' => \Yii::$app->language] )
             ->all();
+
+        foreach( $result as $item ){
+            if( $item->ParentId  != 0){
+                $item->Title = '--'.$item->Title;
+            }
+        }
+
         return ArrayHelper::map($result, 'Id', 'Title');
     }
 

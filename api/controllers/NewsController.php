@@ -44,7 +44,7 @@ class NewsController extends ApiBaseController
                                  int $languageId = 1,
                                  int $pageNumber = 1,
                                  int $limit = 10,
-                                 string $orderBy = 'Id',
+                                 string $orderBy = 'CreatedDate',
                                  string $query = ''
                                 ): NewsListVM
     {

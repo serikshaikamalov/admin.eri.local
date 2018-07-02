@@ -77,7 +77,7 @@ a.desc:after {
 }
 
 .grid-view td {
-    white-space: nowrap;
+
 }
 
 .grid-view .filters input,
@@ -130,5 +130,14 @@ a.desc:after {
 }
 
 #w1{
-    float: right;
+    float: left;
+}
+
+
+.form-group{
+    overflow: hidden;
+}
+
+.file-input{
+
 }

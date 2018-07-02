@@ -1,21 +1,20 @@
 <?php
 namespace backend\controllers;
-use common\entities\Language;
-use common\entities\Status;
+use common\entities\ResearchFellowCategory;
+use common\entities\ResearchFellowType;
 use Yii;
-use common\entities\News;
-use common\entities\NewsSearch;
+use common\entities\ResearchFellow;
+use common\entities\ResearchFellowSearch;
 use yii\web\NotFoundHttpException;
 
-class NewsController extends AdminBaseController
+class ResearchFellowController extends AdminBaseController
 {
     /**
-     * News: List
-     * @return mixed
+     * RESEARCH FELLOW: LIST
      */
     public function actionIndex()
     {
-        $searchModel = new NewsSearch();
+        $searchModel = new ResearchFellowSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -25,7 +24,7 @@ class NewsController extends AdminBaseController
     }
 
     /**
-     * News: View
+     * RESEARCH FELLOW: View
      */
     public function actionView($id)
     {
@@ -35,21 +34,18 @@ class NewsController extends AdminBaseController
     }
 
     /**
-     * News: Create
+     * RESEARCH FELLOW: CREATE
      */
     public function actionCreate()
     {
         $vm = new \StdClass();
-        $vm->model = new News();
+        $vm->model = new ResearchFellow();
 
         # DEFAULTS
-        $vm->model->NewsCategoryId = 1;
-        $vm->model->StatusId = 1;
-        $vm->model->CreatedDate = date('Y-m-d');
 
         # DICTIONARY
-        $vm->statuses = Status::getStatusList();
-        $vm->languages = Language::getLanguageList();
+        $vm->types = ResearchFellowType::getResearchFellowTypeList();
+        $vm->categories = ResearchFellowCategory::getResearchFellowCategoryList();
 
         # POST
         if ($vm->model->load(Yii::$app->request->post())) {
@@ -63,33 +59,23 @@ class NewsController extends AdminBaseController
     }
 
     /**
-     * News: Update
+     * RESEARCH FELLOW: UPDATE
      */
     public function actionUpdate($id)
     {
-        $vm = new \StdClass();
-        $vm->model = $this->findModel($id);
+        $model = $this->findModel($id);
 
-        # DEFAULTS
-        $vm->model->NewsCategoryId = 1;
-
-        # DICTIONARY
-        $vm->statuses = Status::getStatusList();
-        $vm->languages = Language::getLanguageList();
-
-        # POST
-        if ($vm->model->load(Yii::$app->request->post())) {
-            $vm->model->save();
-            return $this->redirect(['view', 'id' => $vm->model->Id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->Id]);
         }
 
         return $this->render('update', [
-            'vm' => $vm,
+            'model' => $model,
         ]);
     }
 
     /**
-     * News: Delete
+     * RESEARCH FELLOW: DELETE
      */
     public function actionDelete($id)
     {
@@ -99,11 +85,11 @@ class NewsController extends AdminBaseController
     }
 
     /**
-     * News: FindOne
+     * RESEARCH FELLOW: FindModel
      */
     protected function findModel($id)
     {
-        if (($model = News::findOne($id)) !== null) {
+        if (($model = ResearchFellow::findOne($id)) !== null) {
             return $model;
         }
 
