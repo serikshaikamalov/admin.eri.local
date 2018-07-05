@@ -53,6 +53,11 @@ class VideoRepository
             ->offset($offset)
             ->limit($limit);
 
+
+        # ORDER BY
+        $query->orderBy(['CDate' => SORT_DESC]);
+
+
         return $query->all();
     }
 

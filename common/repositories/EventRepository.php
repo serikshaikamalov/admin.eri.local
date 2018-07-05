@@ -137,15 +137,17 @@ class EventRepository
 
 
             # SORT
-            switch( $orderBy ){
-                default:
-                case 'Id':
-                    $query->orderBy(['Id' => SORT_DESC]);
-                    break;
-                case 'Hits':
-                    $query->orderBy(['Hits' => SORT_DESC]);
-                    break;
-            }
+//            switch( $orderBy ){
+//                default:
+//                case 'Id':
+//                    $query->orderBy(['Id' => SORT_DESC]);
+//                    break;
+//                case 'Hits':
+//                    $query->orderBy(['Hits' => SORT_DESC]);
+//                    break;
+//            }
+
+            $query->orderBy(['StartDate' => SORT_DESC]);
 
             return $query->all();
     }

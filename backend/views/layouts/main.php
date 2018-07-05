@@ -65,6 +65,7 @@ AppAsset::register($this);
         ['label' => 'Folders', 'url' => ['/filemanager/folders/index']],
         ['label' => 'Gallery', 'url' => ['/gallery/index']],
         ['label' => 'Video', 'url' => ['/video/index']],
+        ['label' => 'Infographic', 'url' => ['/infographic/index']],
         [
             'label' => 'Advanced',
             'url' => '',
