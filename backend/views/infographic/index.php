@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'CreatedBy',
                 'label' => 'Author',
                 'value' => function( $item ){
-                    return \common\entities\User::find($item)->one()->username;
+                    return \common\entities\User::findIdentity($item)->username;
                 }
             ],
             'CreatedDate:date',
@@ -50,8 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => \common\entities\Language::getLanguageList()
             ],
-
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template'=>'{update} {delete}'],
         ],
     ]); ?>
 </div>

@@ -37,7 +37,7 @@ class InfographicController extends ApiBaseController
      * @return InfographicListVM
      * @throws
      */
-    public function actionIndex( int $languageId = 1,
+    public function actionIndex( int $languageId = 0,
                                  int $pageNumber = 1): InfographicListVM
     {
         $this->pageNumber = $pageNumber;

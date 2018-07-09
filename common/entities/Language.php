@@ -39,6 +39,7 @@ class Language extends ActiveRecord
 
     public static function getLanguageList(){
         $languages = Language::find()->all();
-        return ArrayHelper::map($languages, 'Id', 'Title');
+        $languages = ArrayHelper::map($languages, 'Id', 'Title');
+        return $languages;
     }
 }

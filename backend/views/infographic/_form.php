@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
     ?>
 
 
-    <?#= $form->field($vm->model, 'CreatedDate')->input('date') ?>
+    <?= $form->field($vm->model, 'CreatedDate')->input('date') ?>
 
     <!-- STATUS -->
     <? echo $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
