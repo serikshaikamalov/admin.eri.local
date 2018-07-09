@@ -67,7 +67,7 @@ AppAsset::register($this);
         ['label' => 'Video', 'url' => ['/video/index']],
         ['label' => 'Infographic', 'url' => ['/infographic/index']],
         [
-            'label' => 'Advanced',
+            'label' => 'More',
             'url' => '',
             'items' => [
                 ['label' => 'Users', 'url' => ['/rbac/default/index']],

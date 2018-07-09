@@ -73,7 +73,6 @@ class InfographicSearch extends Infographic
         $query->orderBy(['CreatedDate' => SORT_DESC]);
 
 
-
         return $dataProvider;
     }
 }

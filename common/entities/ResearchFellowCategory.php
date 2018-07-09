@@ -31,7 +31,7 @@ class ResearchFellowCategory extends ActiveRecord
     }
 
     public static function getResearchFellowCategoryList(){
-        $languages = ResearchFellowCategory::find()->all();
-        return ArrayHelper::map($languages, 'Id', 'Title');
+        $list = ResearchFellowCategory::find()->all();
+        return ArrayHelper::map($list, 'Id', 'Title');
     }
 }

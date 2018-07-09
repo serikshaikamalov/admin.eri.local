@@ -2,11 +2,12 @@
 namespace common\entities;
 use Yii;
 use \yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property int $Id
- * @property int $researchFellowTypeId
- * @property int $researchFellowCategoryId
+ * @property int $ResearchFellowTypeId
+ * @property int $ResearchFellowCategoryId
  * @property string $Title
  * @property string $ShortDescription
  * @property string $FullDescription
@@ -15,6 +16,8 @@ use \yii\db\ActiveRecord;
  * @property string $FileWordId
  * @property string $CreatedDate
  * @property int $CreatedBy
+ * @property int $LanguageId
+ * @property int $StatusId
  */
 class ResearchFellow extends ActiveRecord
 {
@@ -26,7 +29,7 @@ class ResearchFellow extends ActiveRecord
     public function rules()
     {
         return [
-            [['researchFellowTypeId', 'researchFellowCategoryId', 'ImageId', 'CreatedBy'], 'integer'],
+            [['ResearchFellowTypeId', 'ResearchFellowCategoryId', 'ImageId', 'CreatedBy', 'LanguageId', 'StatusId'], 'integer'],
             [['FullDescription', 'FilePDFId', 'FileWordId',], 'string'],
             [['Title'], 'string', 'max' => 100],
             [['ShortDescription'], 'string', 'max' => 300],
@@ -38,8 +41,8 @@ class ResearchFellow extends ActiveRecord
     {
         return [
             'Id' => 'ID',
-            'researchFellowTypeId' => 'Type',
-            'researchFellowCategoryId' => 'Category',
+            'ResearchFellowTypeId' => 'Type',
+            'ResearchFellowCategoryId' => 'Category',
             'Title' => 'Title',
             'ShortDescription' => 'Short Description',
             'FullDescription' => 'Full Description',
@@ -48,6 +51,28 @@ class ResearchFellow extends ActiveRecord
             'FileWordId' => 'File(Word)',
             'CreatedDate' => 'Created',
             'CreatedBy' => 'Author',
+            'LanguageId' => 'Language',
+            'StatusId' => 'Status'
         ];
+    }
+
+    /**
+     * RELATIONS
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResearchFellowType(){
+        return $this->hasOne( ResearchFellowType::className(), ['Id' => 'ResearchFellowTypeId'] );
+    }
+
+    public function getResearchFellowCategory(){
+        return $this->hasOne( ResearchFellowCategory::className(), ['Id' => 'ResearchFellowCategoryId'] );
+    }
+
+    public function getLanguage(){
+        return $this->hasOne( Language::className(), ['Id' => 'LanguageId'] );
+    }
+
+    public function getStatus(){
+        return $this->hasOne( Status::className(), ['Id' => 'StatusId'] );
     }
 }

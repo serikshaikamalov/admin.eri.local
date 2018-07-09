@@ -25,19 +25,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'Id',
-            'researchFellowType',
-            'researchFellowCategoryId',
+            [
+                'attribute' => 'researchFellowTypeId',
+                'label' => 'Type',
+                'value' => function( $item ){
+                    return $item->researchFellowType->Title;
+                },
+                'filter' => \common\entities\ResearchFellowType::getResearchFellowTypeList()
+            ],
+            [
+                'attribute' => 'researchFellowCategoryId',
+                'label' => 'Category',
+                'value' => function( $item ){
+                    return $item->researchFellowCategory->Title;
+                },
+                'filter' => \common\entities\ResearchFellowCategory::getResearchFellowCategoryList()
+            ],
             'Title',
-            'ShortDescription',
-            //'FullDescription:ntext',
-            //'ImageId',
-            //'FilePDFId',
-            //'FileWordId',
-            //'CreatedDate',
-            //'CreatedBy',
+            'CreatedDate:date',
+            [
+                'attribute' => 'CreatedBy',
+                'label' => 'Author',
+                'value' => function( $item ){
+                    return \common\entities\User::findIdentity($item)->username;
+                }
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template'=>'{update} {delete}'],
         ],
     ]); ?>
 </div>

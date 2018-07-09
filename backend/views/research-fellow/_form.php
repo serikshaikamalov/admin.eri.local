@@ -13,10 +13,10 @@ use dpodium\filemanager\widgets\FileBrowse;
     <?php $form = ActiveForm::begin(); ?>
 
     <!--  Types -->
-    <?= $form->field($vm->model, 'researchFellowTypeId')->dropDownList($vm->types); ?>
+    <?= $form->field($vm->model, 'ResearchFellowTypeId')->dropDownList($vm->types); ?>
 
     <!--  Category -->
-    <?= $form->field($vm->model, 'researchFellowCategoryId')->dropDownList($vm->categories); ?>
+    <?= $form->field($vm->model, 'ResearchFellowCategoryId')->dropDownList($vm->categories); ?>
 
     <?= $form->field($vm->model, 'Title')->textInput(['maxlength' => true]) ?>
 
@@ -62,7 +62,10 @@ use dpodium\filemanager\widgets\FileBrowse;
     ?>
 
     <!-- FILE: WORD -->
-    <?= $form->field($vm->model, 'FileWordId')->textInput() ?>
+    <?= $form->field($vm->model, 'FileWordId')->widget(FileBrowse::className(), [
+        'multiple' => false,
+        'folderId' => 1
+    ]); ?>
 
     <!-- CREATED Date -->
     <?= $form->field($vm->model, 'CreatedDate')->input('date') ?>

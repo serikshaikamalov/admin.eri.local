@@ -10,7 +10,7 @@ class ResearchFellowSearch extends ResearchFellow
     public function rules()
     {
         return [
-            [['Id', 'researchFellowType', 'researchFellowCategoryId', 'ImageId', 'FilePDFId', 'FileWordId', 'CreatedBy'], 'integer'],
+            [['Id', 'ResearchFellowTypeId', 'ResearchFellowCategoryId', 'ImageId', 'FilePDFId', 'FileWordId', 'CreatedBy'], 'integer'],
             [['Title', 'ShortDescription', 'FullDescription', 'CreatedDate'], 'safe'],
         ];
     }
@@ -23,9 +23,10 @@ class ResearchFellowSearch extends ResearchFellow
 
     public function search($params)
     {
-        $query = ResearchFellow::find();
+        $query = ResearchFellow::find()->with('researchFellowType');
 
         // add conditions that should always apply here
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,8 +43,8 @@ class ResearchFellowSearch extends ResearchFellow
         // grid filtering conditions
         $query->andFilterWhere([
             'Id' => $this->Id,
-            'researchFellowType' => $this->researchFellowType,
-            'researchFellowCategoryId' => $this->researchFellowCategoryId,
+            'ResearchFellowTypeId' => $this->ResearchFellowTypeId,
+            'ResearchFellowCategoryId' => $this->ResearchFellowCategoryId,
             'ImageId' => $this->ImageId,
             'FilePDFId' => $this->FilePDFId,
             'FileWordId' => $this->FileWordId,
@@ -54,6 +55,7 @@ class ResearchFellowSearch extends ResearchFellow
             ->andFilterWhere(['like', 'ShortDescription', $this->ShortDescription])
             ->andFilterWhere(['like', 'FullDescription', $this->FullDescription])
             ->andFilterWhere(['like', 'CreatedDate', $this->CreatedDate]);
+
 
         return $dataProvider;
     }

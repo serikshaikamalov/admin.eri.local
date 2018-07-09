@@ -24,16 +24,6 @@ class ResearchFellowController extends AdminBaseController
     }
 
     /**
-     * RESEARCH FELLOW: View
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * RESEARCH FELLOW: CREATE
      */
     public function actionCreate()
@@ -42,6 +32,8 @@ class ResearchFellowController extends AdminBaseController
         $vm->model = new ResearchFellow();
 
         # DEFAULTS
+        $vm->model->CreatedDate = date('Y-m-d');
+        $vm->model->CreatedBy = Yii::$app->user->id;
 
         # DICTIONARY
         $vm->types = ResearchFellowType::getResearchFellowTypeList();
@@ -50,7 +42,7 @@ class ResearchFellowController extends AdminBaseController
         # POST
         if ($vm->model->load(Yii::$app->request->post())) {
             $vm->model->save();
-            return $this->redirect(['view', 'id' => $vm->model->Id]);
+            return $this->redirect(['/research-fellow/index']);
         }
 
         return $this->render('create', [
@@ -63,14 +55,21 @@ class ResearchFellowController extends AdminBaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $vm = new \StdClass();
+        $vm->model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->Id]);
+        # DICTIONARY
+        $vm->types = ResearchFellowType::getResearchFellowTypeList();
+        $vm->categories = ResearchFellowCategory::getResearchFellowCategoryList();
+
+        # POST
+        if ($vm->model->load(Yii::$app->request->post())) {
+            $vm->model->save();
+            return $this->redirect(['/research-fellow/index']);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'vm' => $vm,
         ]);
     }
 
