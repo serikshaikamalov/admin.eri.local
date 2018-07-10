@@ -23,7 +23,9 @@
         "2amigos/yii2-ckeditor-widget": "^2.1",
         "2amigos/yii2-file-upload-widget": "~1.0",
         "kartik-v/yii2-grid": "@dev",
-        "dpodium/yii2-filemanager": "@dev"
+        "dpodium/yii2-filemanager": "@dev",
+        "gumlet/php-image-resize": "^1.9",
+        "serikshaikamalov/yii2-image-manager": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

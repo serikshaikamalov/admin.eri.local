@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "deae23726eb8b4e8df17c50d4370f811",
+    "content-hash": "30dcb59d8d8dc8d85eb3f6817e22a990",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -308,7 +308,7 @@
             "version": "v2.17.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/blueimp/Gallery.git",
+                "url": "git@github.com:blueimp/Gallery.git",
                 "reference": "8336bb5934cb623608808601129db3fbf9201a09"
             },
             "dist": {
@@ -378,7 +378,7 @@
             "version": "v1.35.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nakupanda/bootstrap3-dialog.git",
+                "url": "git@github.com:nakupanda/bootstrap3-dialog.git",
                 "reference": "3dd11d586f78de75356af418907ec6e3b347377c"
             },
             "dist": {
@@ -442,7 +442,7 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bestiejs/punycode.js.git",
+                "url": "git@github.com:bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -835,6 +835,61 @@
                 "icon"
             ],
             "time": "2016-10-24T15:52:54+00:00"
+        },
+        {
+            "name": "gumlet/php-image-resize",
+            "version": "1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gumlet/php-image-resize.git",
+                "reference": "2a38f3a49e2ee907f16064d8def6828c7902c0b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gumlet/php-image-resize/zipball/2a38f3a49e2ee907f16064d8def6828c7902c0b6",
+                "reference": "2a38f3a49e2ee907f16064d8def6828c7902c0b6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-gd": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "^4.1",
+                "ext-exif": "*",
+                "ext-gd": "*",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^4.8"
+            },
+            "suggest": {
+                "ext-exif": "Auto-rotate jpeg files"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gumlet\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aditya Patadia",
+                    "homepage": "http://aditya.patadia.org/"
+                }
+            ],
+            "description": "PHP class to re-size and scale images",
+            "homepage": "https://github.com/gumlet/php-image-resize",
+            "keywords": [
+                "image",
+                "php",
+                "resize",
+                "scale"
+            ],
+            "time": "2018-06-25T06:41:48+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2819,6 +2874,56 @@
                 "yii"
             ],
             "time": "2017-01-11T14:05:47+00:00"
+        },
+        {
+            "name": "serikshaikamalov/yii2-image-manager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serikshaikamalov/yii2-image-manager.git",
+                "reference": "df238a053db6ad49fa4b032649ad58d58178a77c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/serikshaikamalov/yii2-image-manager/zipball/df238a053db6ad49fa4b032649ad58d58178a77c",
+                "reference": "df238a053db6ad49fa4b032649ad58d58178a77c",
+                "shasum": ""
+            },
+            "require": {
+                "gumlet/php-image-resize": "^1.9",
+                "kartik-v/yii2-widget-fileinput": "@dev",
+                "noam148/yii2-image-resize": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "noam148\\imagemanager\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "serikshaikamalov",
+                    "homepage": "https://github.com/serikshaikamalov/"
+                }
+            ],
+            "description": "A Yii2 module/widget for upload and cropping images",
+            "homepage": "https://github.com/serikshaikamalov/yii2-image-manager",
+            "keywords": [
+                "crop",
+                "extension",
+                "image",
+                "manager",
+                "module",
+                "upload",
+                "widget",
+                "yii2"
+            ],
+            "time": "2018-07-09T18:06:15+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5617,7 +5722,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-grid": 20,
-        "dpodium/yii2-filemanager": 20
+        "dpodium/yii2-filemanager": 20,
+        "serikshaikamalov/yii2-image-manager": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
