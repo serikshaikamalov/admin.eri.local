@@ -7,10 +7,3 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 # Otherwise forward it to index.php
 RewriteRule . index.php
-
-
-php_flag display_startup_errors on
-php_flag display_errors on
-php_flag html_errors on
-php_flag  log_errors on
-php_value error_log  /home/path/public_html/domain/PHP_errors.log

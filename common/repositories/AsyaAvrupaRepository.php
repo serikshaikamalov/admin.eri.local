@@ -37,12 +37,12 @@ class AsyaAvrupaRepository
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => [$languageId, 0],
             ]  )
+            ->orderBy(['Id' => SORT_DESC])
             ->offset($offset)
             ->limit($limit);
 
 
         ### Order
-        $query->orderBy(['CreatedDate' => SORT_DESC]);
 
         return $query->all();
     }

@@ -1,7 +1,9 @@
 <?php
 namespace backend\controllers;
+use common\entities\Language;
 use common\entities\ResearchFellowCategory;
 use common\entities\ResearchFellowType;
+use common\entities\Status;
 use Yii;
 use common\entities\ResearchFellow;
 use common\entities\ResearchFellowSearch;
@@ -38,6 +40,8 @@ class ResearchFellowController extends AdminBaseController
         # DICTIONARY
         $vm->types = ResearchFellowType::getResearchFellowTypeList();
         $vm->categories = ResearchFellowCategory::getResearchFellowCategoryList();
+        $vm->statuses = Status::getStatusList();
+        $vm->languages = Language::getLanguageList();
 
         # POST
         if ($vm->model->load(Yii::$app->request->post())) {
@@ -61,6 +65,8 @@ class ResearchFellowController extends AdminBaseController
         # DICTIONARY
         $vm->types = ResearchFellowType::getResearchFellowTypeList();
         $vm->categories = ResearchFellowCategory::getResearchFellowCategoryList();
+        $vm->statuses = Status::getStatusList();
+        $vm->languages = Language::getLanguageList();
 
         # POST
         if ($vm->model->load(Yii::$app->request->post())) {

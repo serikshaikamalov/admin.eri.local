@@ -42,6 +42,11 @@ use dpodium\filemanager\widgets\FileBrowse;
     ]);
     ?>
 
+    <? echo $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
+
+    <!-- LANGUAGE --->
+    <? echo $form->field($vm->model, 'LanguageId')->dropDownList($vm->languages) ?>
+
     <!-- IMAGE -->
     <?=
     $form->field($vm->model, 'ImageId')->widget(\noam148\imagemanager\components\ImageManagerInputWidget::className(), [
