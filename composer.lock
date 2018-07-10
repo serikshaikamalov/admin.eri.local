@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "30dcb59d8d8dc8d85eb3f6817e22a990",
+    "content-hash": "2738e4a0eca770ae169f1cbece32c508",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -575,6 +575,54 @@
                 "wysiwyg"
             ],
             "time": "2017-09-13T13:09:47+00:00"
+        },
+        {
+            "name": "cornernote/yii2-linkall",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cornernote/yii2-linkall.git",
+                "reference": "19a44c911f9ddc303476964aa442b263056bf8a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cornernote/yii2-linkall/zipball/19a44c911f9ddc303476964aa442b263056bf8a0",
+                "reference": "19a44c911f9ddc303476964aa442b263056bf8a0",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "~1.0",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "cornernote\\linkall\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Brett O'Donnell",
+                    "email": "cornernote@gmail.com",
+                    "homepage": "http://mrphp.com.au/"
+                }
+            ],
+            "description": "Behavior to handle saving multiple many to many related records in Yii2.",
+            "keywords": [
+                "link",
+                "linkall",
+                "many to many",
+                "yii2"
+            ],
+            "time": "2015-06-20T08:36:12+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -2153,16 +2201,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "baaa8f8b8bbaed1ed0aea56fb0564c5ab340d7d3"
+                "reference": "d08a5b302fe04216bd04290f0e99e26386801a37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/baaa8f8b8bbaed1ed0aea56fb0564c5ab340d7d3",
-                "reference": "baaa8f8b8bbaed1ed0aea56fb0564c5ab340d7d3",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/d08a5b302fe04216bd04290f0e99e26386801a37",
+                "reference": "d08a5b302fe04216bd04290f0e99e26386801a37",
                 "shasum": ""
             },
             "require": {
@@ -2202,7 +2250,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-11-25T06:02:18+00:00"
+            "time": "2018-02-24T05:28:25+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
@@ -5723,7 +5771,8 @@
     "stability-flags": {
         "kartik-v/yii2-grid": 20,
         "dpodium/yii2-filemanager": 20,
-        "serikshaikamalov/yii2-image-manager": 20
+        "serikshaikamalov/yii2-image-manager": 20,
+        "kartik-v/yii2-widget-select2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

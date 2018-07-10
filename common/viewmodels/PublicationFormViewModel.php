@@ -10,6 +10,7 @@ namespace common\viewmodels;
  * @property $languages
  * @property $statuses
  * @property $staffList
+ * @property $tagIds
  */
 
 class PublicationFormViewModel

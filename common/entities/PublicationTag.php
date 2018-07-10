@@ -19,7 +19,12 @@ class PublicationTag extends ActiveRecord
     public function rules()
     {
         return [
-            [['Title', 'LanguageId', 'StatusId'], 'integer'],
+            [
+                ['Title'], 'string',
+            ],
+            [
+                ['LanguageId', 'StatusId'], 'integer'
+            ],
         ];
     }
 
@@ -31,5 +36,16 @@ class PublicationTag extends ActiveRecord
             'LanguageId' => 'Language ID',
             'StatusId' => 'Status ID',
         ];
+    }
+
+    public static function getTagByTitle( $tagTitle )
+    {
+        $tag = PublicationTag::find()->where(['Title' => $tagTitle])->one();
+        if (!$tag) {
+            $tag = new PublicationTag();
+            $tag->Title = $tagTitle;
+            $tag->save(false);
+        }
+        return $tag;
     }
 }

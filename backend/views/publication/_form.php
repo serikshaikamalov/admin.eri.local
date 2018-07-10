@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dpodium\filemanager\widgets\FileBrowse;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\entities\publication */
@@ -88,6 +90,18 @@ use dpodium\filemanager\widgets\FileBrowse;
             'multiple' => false, // allow multiple upload
             'folderId' => 1 // set a folder to be uploaded to.
         ]);
+    ?>
+
+    <!-- Tags -->
+    <?php
+        echo $form->field( $vm->model, 'tagIds' )->widget(Select2::className(), [
+            'model' => $vm->model,
+            'data' => ArrayHelper::map(\common\entities\PublicationTag::find()->all(), 'Id', 'Title'),
+            'options' => [
+                'multiple' => true,
+            ]
+        ]);
+
     ?>
 
 

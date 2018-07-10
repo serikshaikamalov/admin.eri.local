@@ -25,7 +25,9 @@
         "kartik-v/yii2-grid": "@dev",
         "dpodium/yii2-filemanager": "@dev",
         "gumlet/php-image-resize": "^1.9",
-        "serikshaikamalov/yii2-image-manager": "@dev"
+        "serikshaikamalov/yii2-image-manager": "@dev",
+        "cornernote/yii2-linkall": "*",
+        "kartik-v/yii2-widget-select2": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

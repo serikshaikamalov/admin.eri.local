@@ -10,6 +10,7 @@ use common\viewmodels\PublicationFormViewModel;
 use Yii;
 use common\entities\Publication;
 use common\entities\publicationSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 class PublicationController extends AdminBaseController
@@ -48,6 +49,10 @@ class PublicationController extends AdminBaseController
     {
         $vm = new PublicationFormViewModel();
         $vm->model = new Publication();
+        $vm->model->tagIds = ArrayHelper::map( $vm->model->publicationTag, 'Id', 'Title');
+
+        # DEFAULTS
+
 
         // For Test
         $vm->model->StatusId = 1;
@@ -81,9 +86,14 @@ class PublicationController extends AdminBaseController
     {
         $vm = new PublicationFormViewModel();
         $vm->model = $this->findModel($id);
-        $vm->model->LanguageId = Yii::$app->language;
 
-        // DICTIONARIES
+        # RELATIONS: Tags
+        //$vm->model->tagIds = ArrayHelper::map( $vm->model->publicationTag, 'Id', 'Title');
+        $vm->model->tagIds = $vm->model->publicationTag;
+
+        # DEFAULTS
+
+        # DICTIONARIES
         $vm->publicationTypeList = PublicationType::getPublicationTypeList();
         $vm->publicationCategoryList = PublicationCategory::getPublicationCategoryList();
         $vm->publicationMainTagList = PublicationMainTag::getPublicationMainTagList();
@@ -91,7 +101,7 @@ class PublicationController extends AdminBaseController
         $vm->languages = Language::getLanguageList();
         $vm->staffList = Staff::getStaffList();
 
-        // POST
+        # POST
         if ($vm->model->load(Yii::$app->request->post()))
         {
             $vm->model->save();

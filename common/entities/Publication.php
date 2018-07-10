@@ -1,5 +1,6 @@
 <?php
 namespace common\entities;
+use cornernote\linkall\LinkAllBehavior;
 use \yii\db\ActiveRecord;
 
 /**
@@ -28,10 +29,43 @@ use \yii\db\ActiveRecord;
  */
 class Publication extends ActiveRecord
 {
+
+    // All publication's tags
+    public $tagIds;
+
     public static function tableName()
     {
         return 'publication';
     }
+
+    public function behaviors()
+    {
+        return [
+            LinkAllBehavior::className(),
+        ];
+    }
+
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $tags = [];
+        foreach ($this->tagIds as $tag_name) {
+            //$tag = PublicationTag::getTagByTitle($tag_name);
+//            if ($tag) {
+//                $tags[] = $tag;
+//            }
+
+            //$this->link('publicationTag', $tag_name);
+
+            $rel = new PublicationToTag();
+            $rel->PublicationId = $this->Id;
+            $rel->TagId = $tag_name;
+            $rel->save();
+
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
 
     public function rules()
     {
@@ -58,7 +92,11 @@ class Publication extends ActiveRecord
             [
                 [
                     'Title'
-                ], 'string', 'max' => 250],
+                ], 'string', 'max' => 250
+            ],
+            [
+                ['tagIds'], 'required'
+            ]
         ];
     }
 
@@ -80,7 +118,8 @@ class Publication extends ActiveRecord
             'StatusId' => 'Status',
             'LanguageId' => 'Language',
             'FileId' => 'File',
-            'PublicationMainTagId' => 'Main Tag'
+            'PublicationMainTagId' => 'Main Tag',
+            'tagIds' => 'Tag IDs'
         ];
     }
 
@@ -107,5 +146,11 @@ class Publication extends ActiveRecord
 
     public function getPublicationMainTag(){
         return $this->hasOne( PublicationMainTag::className(), ['Id' => 'PublicationMainTagId'] );
+    }
+
+
+    public function getPublicationTag() {
+        return $this->hasMany(PublicationTag::className(), ['Id' => 'TagId'])
+            ->viaTable('publicationToTag', ['PublicationId' => 'Id']);
     }
 }
