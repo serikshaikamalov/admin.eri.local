@@ -12,11 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Title')->textInput() ?>
+    <?= $form->field($vm->model, 'Title')->textInput() ?>
 
-    <?= $form->field($model, 'LanguageId')->textInput() ?>
+    <?= $form->field($vm->model, 'TitleTR')->textInput() ?>
 
-    <?= $form->field($model, 'StatusId')->textInput() ?>
+    <?= $form->field($vm->model, 'TitleRU')->textInput() ?>
+
+    <?= $form->field($vm->model, 'TitleKZ')->textInput() ?>
+
+
+    <!-- STATUS -->
+    <? echo $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -25,3 +31,4 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+

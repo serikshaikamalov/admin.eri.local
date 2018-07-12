@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "2738e4a0eca770ae169f1cbece32c508",
@@ -2200,59 +2200,6 @@
             "time": "2017-11-18T12:24:51+00:00"
         },
         {
-            "name": "kartik-v/yii2-widget-select2",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "d08a5b302fe04216bd04290f0e99e26386801a37"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/d08a5b302fe04216bd04290f0e99e26386801a37",
-                "reference": "d08a5b302fe04216bd04290f0e99e26386801a37",
-                "shasum": ""
-            },
-            "require": {
-                "kartik-v/yii2-krajee-base": "~1.7"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "kartik\\select2\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "Enhanced Yii2 wrapper for the Select2 jQuery plugin (sub repo split from yii2-widgets).",
-            "homepage": "https://github.com/kartik-v/yii2-widget-select2",
-            "keywords": [
-                "dropdown",
-                "extension",
-                "form",
-                "jquery",
-                "plugin",
-                "select2",
-                "widget",
-                "yii2"
-            ],
-            "time": "2018-02-24T05:28:25+00:00"
-        },
-        {
             "name": "kartik-v/yii2-widget-sidenav",
             "version": "v1.0.0",
             "source": {
@@ -2929,12 +2876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serikshaikamalov/yii2-image-manager.git",
-                "reference": "df238a053db6ad49fa4b032649ad58d58178a77c"
+                "reference": "f7f06393f793c13c84e21cafebe2536d82b34e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serikshaikamalov/yii2-image-manager/zipball/df238a053db6ad49fa4b032649ad58d58178a77c",
-                "reference": "df238a053db6ad49fa4b032649ad58d58178a77c",
+                "url": "https://api.github.com/repos/serikshaikamalov/yii2-image-manager/zipball/f7f06393f793c13c84e21cafebe2536d82b34e41",
+                "reference": "f7f06393f793c13c84e21cafebe2536d82b34e41",
                 "shasum": ""
             },
             "require": {
@@ -2971,7 +2918,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-07-09T18:06:15+00:00"
+            "time": "2018-07-09T18:19:38+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -28,8 +28,8 @@ class MailController extends ApiBaseController {
             $body .= '<p>Text: '.$text.'</p>';
 
             Yii::$app->mail->compose()
-                ->setFrom('info@gosmart.kz')
-                ->setTo('serik.shaikamalov@gmail.com')
+                ->setFrom('info@eurasian-research.org')
+                ->setTo('info@eurasian-research.org')
                 ->setSubject( $subject )
                 ->setTextBody($body)
                 ->setHtmlBody($body)

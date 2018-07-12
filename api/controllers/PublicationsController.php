@@ -180,7 +180,7 @@ class PublicationsController extends ApiBaseController
             $publicationVM->PublicationMainTagId = $publication->PublicationMainTagId;
 
 
-            // Dictionaries
+            # Dictionaries
             $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');
             $publicationVM->Staff = $publication->staff ? $publication->staff : null;
             $publicationVM->Language = $publication->language ? $publication->language : null;
@@ -189,14 +189,18 @@ class PublicationsController extends ApiBaseController
             $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
 
 
-            // Update Hits
+            # Update Hits
             $this->repo->updateHits($publication->Id);
 
-            // File
+            # File
             if( $publication->FileId ){
                 $file = FilemanagerHelper::getFile($publication->FileId, "file_identifier");
                 $publicationVM->FileId = FILE_SERVER . $file['img_src'];
             }
+
+            # Tags
+            $publicationVM->PublicationTags = $publication->publicationTag;
+
         }
         return $publicationVM;
     }

@@ -12,6 +12,11 @@ use yii\helpers\ArrayHelper;
  */
 class Language extends ActiveRecord
 {
+    const LANGUAGE_ENGLISH = 1;
+    const LANGUAGE_TURKISH = 2;
+    const LANGUAGE_RUSSIAN = 3;
+    const LANGUAGE_KAZAKH = 4;
+
     public static function tableName()
     {
         return 'language';

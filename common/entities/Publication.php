@@ -26,6 +26,8 @@ use \yii\db\ActiveRecord;
  * @property Status $Status
  * @property Language $Language
  * @property PublicationMainTag $PublicationMainTag
+ *
+ * @property mixed publicationTag
  */
 class Publication extends ActiveRecord
 {

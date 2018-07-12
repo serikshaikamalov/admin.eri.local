@@ -6,7 +6,9 @@ use \yii\db\ActiveRecord;
  *
  * @property int $Id
  * @property int $Title
- * @property int $LanguageId
+ * @property int $TitleTR
+ * @property int $TitleRU
+ * @property int $TitleKZ
  * @property int $StatusId
  */
 class PublicationTag extends ActiveRecord
@@ -20,10 +22,10 @@ class PublicationTag extends ActiveRecord
     {
         return [
             [
-                ['Title'], 'string',
+                ['Title', 'TitleTR','TitleRU', 'TitleKZ'], 'string',
             ],
             [
-                ['LanguageId', 'StatusId'], 'integer'
+                ['StatusId'], 'integer'
             ],
         ];
     }
@@ -32,9 +34,11 @@ class PublicationTag extends ActiveRecord
     {
         return [
             'Id' => 'ID',
-            'Title' => 'Title',
-            'LanguageId' => 'Language ID',
-            'StatusId' => 'Status ID',
+            'Title' => 'Title(EN)',
+            'TitleTR' => 'Title(TR)',
+            'TitleRU' => 'Title(RU)',
+            'TitleKZ' => 'Title(KZ)',
+            'StatusId' => 'Status',
         ];
     }
 
@@ -47,5 +51,23 @@ class PublicationTag extends ActiveRecord
             $tag->save(false);
         }
         return $tag;
+    }
+
+    /**
+     * RELATIONS
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLanguage(){
+        return $this->hasOne( Language::className(), ['Id' => 'LanguageId'] );
+    }
+
+    public function getStatus(){
+        return $this->hasOne( Status::className(), ['Id' => 'StatusId'] );
+    }
+
+
+    public function getPublication() {
+        return $this->hasMany(Publication::className(), ['Id' => 'PublicationId'])
+            ->viaTable('publicationToTag', ['TagId' => 'Id']);
     }
 }

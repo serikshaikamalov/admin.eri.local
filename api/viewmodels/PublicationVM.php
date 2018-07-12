@@ -28,6 +28,7 @@ use common\entities\Status;
  * @property Status $Status
  * @property PublicationCategory $PublicationCategory
  * @property PublicationMainTag $PublicationMainTag
+ * @property mixed $PublicationTags
  *
  * */
 class PublicationVM
@@ -46,7 +47,7 @@ class PublicationVM
     public $FileId;
     public $PublicationMainTagId;
 
-    // Dictionaries
+    # Dictionaries
     public $ResearchGroup;
     public $ImageSrc;
     public $Staff;
@@ -54,4 +55,5 @@ class PublicationVM
     public $Status;
     public $PublicationCategory;
     public $PublicationMainTag;
+    public $PublicationTags;
 }

@@ -1,37 +1,18 @@
 <?php
-
 namespace backend\controllers;
 
+use common\entities\Language;
+use common\entities\Status;
 use Yii;
 use common\entities\PublicationTag;
 use common\entities\PublicationTagSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
-/**
- * PublicationTagController implements the CRUD actions for PublicationTag model.
- */
+
 class PublicationTagController extends AdminBaseController
 {
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Lists all PublicationTag models.
-     * @return mixed
+     * TAG: LIST
      */
     public function actionIndex()
     {
@@ -45,62 +26,58 @@ class PublicationTagController extends AdminBaseController
     }
 
     /**
-     * Displays a single PublicationTag model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new PublicationTag model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * TAG: CREATE
      */
     public function actionCreate()
     {
-        $model = new PublicationTag();
+        $vm = new \StdClass();
+        $vm->model = new PublicationTag();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->Id]);
+        # DEFAULT
+        $vm->model->StatusId = Status::STATUS_PUBLISHED;
+
+        # DICTIONARIES
+        $vm->statuses = Status::getStatusList();
+
+        # POST
+        if ($vm->model->load(Yii::$app->request->post())) {
+            $vm->model->save();
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'vm' => $vm,
         ]);
     }
 
     /**
-     * Updates an existing PublicationTag model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * TAG: Edit
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $vm = new \StdClass();
+        $vm->model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->Id]);
+        # DEFAULT
+
+        # DICTIONARIES
+        $vm->statuses = Status::getStatusList();
+
+        # TEST
+        $vm->publications = $vm->model->publication;
+
+        # POST
+        if ($vm->model->load(Yii::$app->request->post()) && $vm->model->save()) {
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'vm' => $vm,
         ]);
     }
 
     /**
-     * Deletes an existing PublicationTag model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * TAG: Delete
      */
     public function actionDelete($id)
     {
@@ -110,11 +87,7 @@ class PublicationTagController extends AdminBaseController
     }
 
     /**
-     * Finds the PublicationTag model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return PublicationTag the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * TAG: FindOne
      */
     protected function findModel($id)
     {
