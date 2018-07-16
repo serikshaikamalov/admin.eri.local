@@ -1,6 +1,7 @@
 <?php
 namespace api\controllers;
 use app\viewmodels\PublicationCategoryVM;
+use common\entities\Language;
 use common\repositories\PublicationCategoryRepository;
 
 class PublicationCategoriesController extends ApiBaseController
@@ -59,8 +60,8 @@ class PublicationCategoriesController extends ApiBaseController
     }
 
 
-    public function actionGetByLink( string $link = '' ){
-        $one = $this->repo->getByLink($link);
+    public function actionGetByLink( string $link = '', int $languageId = Language::LANGUAGE_ENGLISH ){
+        $one = $this->repo->getByLink($link, $languageId);
         return $one->Id;
     }
 }

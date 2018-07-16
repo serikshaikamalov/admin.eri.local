@@ -30,6 +30,7 @@ class PublicationTagSearch extends PublicationTag
             'TitleRU' => $this->TitleRU,
             'TitleKZ' => $this->TitleKZ,
             'StatusId' => $this->StatusId,
+            'Url' => $this->Url,
         ]);
 
         return $dataProvider;

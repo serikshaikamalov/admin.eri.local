@@ -26,6 +26,7 @@ class SearchController extends ApiBaseController
      * @param string $section
      * @param int $pageNumber
      * @param int $limit
+     * @param int $publicationTagId
      * 
      * @return SearchVM
      */
@@ -34,7 +35,8 @@ class SearchController extends ApiBaseController
         int $languageId = 1,
         string $section = 'all',
         int $pageNumber = 1,
-        int $limit = 10
+        int $limit = 10,
+        int $publicationTagId = 0
     ): SearchVM{
         
         $result = new SearchVM();
@@ -78,14 +80,17 @@ class SearchController extends ApiBaseController
                 case 'publications':
                     $offset = $limit * ($pageNumber - 1);
 
-                    # FIND Publications
+                    # PUBLICATIONS
                     $publications = $this->publicationRepo->getAllByQuery(
                         $query,
                         1,
                         $languageId,
                         $offset,
-                        $limit );
+                        $limit,
+                        $publicationTagId
+                        );
 
+                    // VIEW MODEL
                     $result->publications = new SearchEntityVM();
                     $result->publications->items = $publications;
                     $result->publications->pageNumber = $pageNumber;

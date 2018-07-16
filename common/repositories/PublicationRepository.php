@@ -1,7 +1,9 @@
 <?php
 namespace common\repositories;
 use common\entities\Publication;
+use common\entities\PublicationToTag;
 use common\entities\Status;
+use yii\helpers\ArrayHelper;
 
 class PublicationRepository
 {
@@ -39,6 +41,7 @@ class PublicationRepository
      * @param array $mainTagIds
      * @param string $date
      * @param string $searchQuery
+     * @param int $publicationTagId
      *
      * @return int Publication[] length
      */
@@ -48,7 +51,8 @@ class PublicationRepository
                            int $staffId = 0,
                            array $mainTagIds = [],
                            string $date = "",
-                           string $searchQuery = ""
+                           string $searchQuery = "",
+                           int $publicationTagId = 0
                          ): int{
 
         $query =  Publication::find()
@@ -102,6 +106,22 @@ class PublicationRepository
             'like','Title', $searchQuery
         ]);
 
+
+        # FILTER: Tag
+        if( $publicationTagId != 0 ){
+            $publicationIds = $this->getPublicationIdsByTag( $publicationTagId );
+
+            if( count($publicationIds) > 0 ){
+                $query->andWhere([
+                    'Id' => $publicationIds
+                ]);
+            }else{
+                $query->andWhere([
+                    'Id' => 0
+                ]);
+            }
+        }
+
         return $query->count();
     }
 
@@ -117,6 +137,7 @@ class PublicationRepository
      * @param array $mainTagIds
      * @param string $date
      * @param string $searchQuery
+     * @param int $publicationTagId
      *
      * @return array Publications[]
      */
@@ -129,7 +150,8 @@ class PublicationRepository
                             string $orderBy = 'Id',
                             array $mainTagIds = [],
                             string $date = "",
-                            string $searchQuery = ""
+                            string $searchQuery = "",
+                            int $publicationTagId = 0
                           ): array
     {
         $query = Publication::find()
@@ -141,7 +163,7 @@ class PublicationRepository
             ->where([
                 'StatusId' => Status::STATUS_PUBLISHED,
                 'LanguageId' => $languageId,
-            ]  )
+            ])
             ->offset($offset)
             ->limit($limit);
 
@@ -196,6 +218,22 @@ class PublicationRepository
                 ]);
             }
 
+            # FILTER: Tag
+            if( $publicationTagId != 0 ){
+                $publicationIds = $this->getPublicationIdsByTag( $publicationTagId );
+
+                if( count($publicationIds) > 0 ){
+                    $query->andWhere([
+                        'Id' => $publicationIds
+                    ]);
+                }else{
+                    $query->andWhere([
+                        'Id' => 0
+                    ]);
+                }
+            }
+
+
             # SORT
             switch( $orderBy ){
                 default:
@@ -222,6 +260,7 @@ class PublicationRepository
      * @param int $languageId
      * @param int $offset
      * @param int $limit
+     * @param int $publicationTagId
      *
      * @return array Publications[]
      */
@@ -230,7 +269,8 @@ class PublicationRepository
                             int $publicationTypeId = 1,
                             int $languageId,
                             int $offset,
-                            int $limit
+                            int $limit,
+                            int $publicationTagId = 0
     ): array
     {
         $query = Publication::find()
@@ -246,23 +286,59 @@ class PublicationRepository
             ->offset($offset)
             ->limit($limit);
 
-        # QUERY
+        # FILTER: QUERY
         $query->andWhere([
             'like','Title', $searchQuery
         ]);
 
 
-        # FILTER:
+        # FILTER: Publication Type
         if( $publicationTypeId ){
             $query->andWhere([
                 'PublicationTypeId' => $publicationTypeId
             ]);
         }
 
+        # FILTER: Tag
+        if( $publicationTagId != 0 ){
+            $publicationIds = $this->$this->getPublicationIdsByTag( $publicationTagId );
+
+            if( count($publicationIds) > 0 ){
+                $query->andWhere([
+                    'Id' => $publicationIds
+                ]);
+            }
+        }
+
+
         # ORDER BY
         $query->orderBy(['CreatedDate' => SORT_DESC]);
 
         return $query->all();
+    }
+
+    /**
+     * Find Publication(s) Ids by TagId
+     * @param int $tagId
+     *
+     * @return array
+     */
+    public function getPublicationIdsByTag( int $tagId ){
+
+        if( $tagId && $tagId > 0 ){
+
+            $result = [];
+
+            $publicationsByTag = PublicationToTag::find()
+                ->where(['TagId' => $tagId ])
+                ->all();
+
+            if( $publicationsByTag ){
+                $result = ArrayHelper::getColumn($publicationsByTag, 'PublicationId');
+            }
+
+            return $result;
+        }
     }
 
 

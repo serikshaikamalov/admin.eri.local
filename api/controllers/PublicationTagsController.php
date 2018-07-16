@@ -35,7 +35,7 @@ class PublicationTagsController extends ApiBaseController
     public function actionIndex( int $languageId = Language::LANGUAGE_ENGLISH,
                                  int $pageNumber = 1,
                                  string $searchQuery = ''
-)
+    )
     {
         # PAGINATION
         $this->pageNumber = $pageNumber;
@@ -87,5 +87,62 @@ class PublicationTagsController extends ApiBaseController
         }
 
         return $vmList;
+    }
+
+
+    /**
+     * TAG: One
+     * @param int $id
+     * @param int $languageId
+     *
+     * @return mixed
+     */
+    public function actionView( int $id,
+                                int $languageId = Language::LANGUAGE_ENGLISH )
+    {
+        # DATA
+        $one = $this->repo->get($id);
+
+
+        # VIEW MODELS
+        $oneVM = new \StdClass();
+
+        if( $one ){
+            $oneVM->Id = $one->Id;
+            $title = $this->repo->getTagTitle( $languageId );
+
+            $oneVM->Title = $one[$title];
+            $oneVM->URL = $one->Url ? $one->Url : '';
+
+        }
+        return $oneVM;
+    }
+
+
+    /**
+     * TAG: One
+     * @param string $url
+     * @param int $languageId
+     *
+     * @return mixed
+     */
+    public function actionGetByUrl( string $url,
+                                int $languageId = Language::LANGUAGE_ENGLISH )
+    {
+        # DATA
+        $one = $this->repo->getByUrl($url);
+
+
+        # VIEW MODELS
+        $oneVM = new \StdClass();
+
+        if( $one ){
+            $oneVM->Id = $one->Id;
+            $title = $this->repo->getTagTitle( $languageId );
+
+            $oneVM->Title = $one[$title];
+            $oneVM->URL = $one->Url ? $one->Url : '';
+        }
+        return $oneVM;
     }
 }

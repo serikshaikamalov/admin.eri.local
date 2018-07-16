@@ -5,11 +5,12 @@ use \yii\db\ActiveRecord;
 /**
  *
  * @property int $Id
- * @property int $Title
- * @property int $TitleTR
- * @property int $TitleRU
- * @property int $TitleKZ
+ * @property string $Title
+ * @property string $TitleTR
+ * @property string $TitleRU
+ * @property string $TitleKZ
  * @property int $StatusId
+ * @property string $Url
  */
 class PublicationTag extends ActiveRecord
 {
@@ -22,7 +23,7 @@ class PublicationTag extends ActiveRecord
     {
         return [
             [
-                ['Title', 'TitleTR','TitleRU', 'TitleKZ'], 'string',
+                ['Title', 'TitleTR','TitleRU', 'TitleKZ', 'Url'], 'string',
             ],
             [
                 ['StatusId'], 'integer'
@@ -39,6 +40,7 @@ class PublicationTag extends ActiveRecord
             'TitleRU' => 'Title(RU)',
             'TitleKZ' => 'Title(KZ)',
             'StatusId' => 'Status',
+            'Url' => 'URL',
         ];
     }
 

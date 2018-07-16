@@ -1,6 +1,7 @@
 <?php
 namespace common\repositories;
 use common\entities\PublicationCategory;
+use common\entities\Status;
 use common\forms\PublicationCategoryForm;
 
 class PublicationCategoryRepository
@@ -32,7 +33,8 @@ class PublicationCategoryRepository
             ->where([
                 'LanguageId' => $languageId,
                 'ParentId' => 0,
-                'PublicationTypeId' => $publicationTypeId
+                'PublicationTypeId' => $publicationTypeId,
+                'StatusId' => Status::STATUS_PUBLISHED
             ])
             ->all();
 
@@ -40,7 +42,7 @@ class PublicationCategoryRepository
     }
 
 
-    public function getByLink( string $link = '' ): array {
+    public function getByLink( string $link = '', int $languageId = 1 ) {
         if( !$link ){
             throw new \DomainException('Tag is not found.');
         }
@@ -48,6 +50,7 @@ class PublicationCategoryRepository
         $one = PublicationCategory::find()
             ->where([
                 'Link' => $link,
+                'LanguageId' => $languageId
             ])
             ->one();
 

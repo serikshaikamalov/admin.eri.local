@@ -4,6 +4,7 @@ use api\viewmodels\PublicationListVM;
 use api\viewmodels\PublicationVM;
 use api\viewmodels\StaffListVM;
 use api\viewmodels\StaffVM;
+use common\entities\Language;
 use common\repositories\PublicationCategoryRepository;
 use common\repositories\PublicationRepository;
 use common\repositories\PublicationMainTagRepository;
@@ -54,6 +55,7 @@ class PublicationsController extends ApiBaseController
      * @param int $publicationMainTagId
      * @param string $date - Format: 2018-02-01
      * @param string $query
+     * @param int $publicationTagId
      *
      * @return PublicationListVM
      */
@@ -67,7 +69,8 @@ class PublicationsController extends ApiBaseController
                                  string $orderBy = 'Id',
                                  int $publicationMainTagId = 0,
                                  string $date = "",
-                                 string $query = ""
+                                 string $query = "",
+                                 int $publicationTagId = 0
                                 ): PublicationListVM
     {
         $publicationVMList = new PublicationListVM();
@@ -104,7 +107,8 @@ class PublicationsController extends ApiBaseController
                                                              $staffId,
                                                              $childMainTagIds,
                                                              $date,
-                                                             $query
+                                                             $query,
+                                                             $publicationTagId
                                                             );
 
 
@@ -118,7 +122,8 @@ class PublicationsController extends ApiBaseController
                                              $orderBy,
                                              $childMainTagIds,
                                              $date,
-                                             $query
+                                             $query,
+                                             $publicationTagId
                                             );
 
         # VIEW MODEL
@@ -158,12 +163,18 @@ class PublicationsController extends ApiBaseController
 
     /**
      * @param int $id
+     * @param int $languageId
+     *
      * @return mixed
      * @throws \Exception
      */
-    public function actionView( int $id )
+    public function actionView( int $id,
+                                int $languageId = Language::LANGUAGE_ENGLISH )
     {
+        # MODEL
         $publication = $this->repo->get($id);
+
+        # VIEW MODEL
         $publicationVM = new PublicationVM();
 
         if( $publication ){
@@ -180,7 +191,7 @@ class PublicationsController extends ApiBaseController
             $publicationVM->PublicationMainTagId = $publication->PublicationMainTagId;
 
 
-            # Dictionaries
+            # DICTIONARIES
             $publicationVM->ImageSrc = IMAGE_SERVER . '/media/images/' . Yii::$app->imagemanager->getImageByUrl($publication->ImageId, 400, 400,'inset');
             $publicationVM->Staff = $publication->staff ? $publication->staff : null;
             $publicationVM->Language = $publication->language ? $publication->language : null;
@@ -189,19 +200,51 @@ class PublicationsController extends ApiBaseController
             $publicationVM->PublicationCategory = $publication->publicationCategory ? $publication->publicationCategory : null;
 
 
-            # Update Hits
+            # UPDATE: Hits
             $this->repo->updateHits($publication->Id);
 
-            # File
+            # FILE
             if( $publication->FileId ){
                 $file = FilemanagerHelper::getFile($publication->FileId, "file_identifier");
                 $publicationVM->FileId = FILE_SERVER . $file['img_src'];
             }
 
-            # Tags
-            $publicationVM->PublicationTags = $publication->publicationTag;
+            # TAGS
+            if( $publication->publicationTag ){
+
+                foreach ( $publication->publicationTag as $tag  ){
+
+                    $tagVM = new \StdClass();
+                    $tagVM->Id = $tag->Id;
+                    $tagVM->Status = $tag->StatusId;
+                    $tagVM->Url = $tag->Url;
+
+
+                    switch ( $languageId ){
+                        default:
+                        case Language::LANGUAGE_ENGLISH:
+                            $tagVM->Title = $tag->Title;
+                            break;
+                        case Language::LANGUAGE_TURKISH:
+                            $tagVM->Title = $tag->TitleTR;
+                            break;
+                        case Language::LANGUAGE_RUSSIAN:
+                            $tagVM->Title = $tag->TitleRU;
+                            break;
+                        case Language::LANGUAGE_KAZAKH:
+                            $tagVM->Title = $tag->TitleKZ;
+                            break;
+                    }
+
+                    $publicationVM->PublicationTags[] = $tagVM;
+                }
+
+
+            }
+
 
         }
+
         return $publicationVM;
     }
 

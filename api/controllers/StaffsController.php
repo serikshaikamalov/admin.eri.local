@@ -33,33 +33,39 @@ class StaffsController extends ApiBaseController
      * @param $pageNumber
      * @param $staffTypeId
      * @param $query
+     * @param $limit
+     * @param $publicationMainTagId
      *
      * @return StaffListVM
      */
     public function actionIndex( int $languageId = 1,
                                  int $pageNumber = 1,
                                  int $staffTypeId = 0,
-                                 string $query = ''
+                                 string $query = '',
+                                 int $limit = 10,
+                                 int $publicationMainTagId = 0
     ): StaffListVM
     {
         $staffVMList = new StaffListVM();
 
         # FILTER: Pagination
         $this->pageNumber = $pageNumber;
+        $this->limit = $limit;
         $this->offset = $this->limit * ($this->pageNumber - 1);
 
         # Staffs: Count
         $this->totalCount = $this->repo->count( $languageId,
             $staffTypeId,
-            $query
-            );
+            $query,
+            $publicationMainTagId );
 
         # Staffs: List
         $staffs = $this->repo->getAll( $languageId,
             $this->offset,
             $this->limit,
             $staffTypeId,
-            $query);
+            $query,
+            $publicationMainTagId );
 
         # View Model
         if( count($staffs) > 0 ){
@@ -96,7 +102,7 @@ class StaffsController extends ApiBaseController
     }
 
 
-    /*
+    /**
      * @returns:  List of staffs
      */
     public function actionView( int $id )

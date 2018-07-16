@@ -38,12 +38,14 @@ class StaffRepository
      * @param int $languageId
      * @param int $staffTypeId
      * @param string $searchQuery
+     * @param int $publicationMainTag
      *
      * @return int
      */
     public function count(int $languageId,
                           int $staffTypeId = 0,
-                          string $searchQuery = ''): int{
+                          string $searchQuery = '',
+                          int $publicationMainTag = 0): int{
 
         $query = Staff::find()
             ->where([
@@ -56,12 +58,18 @@ class StaffRepository
             'like','FullName', $searchQuery
         ]);
 
-        # Filter: Staff Type
+        # FILTER: Staff Type
         if( $staffTypeId != 0 ){
             $query->andWhere([
                 'StaffTypeId' => $staffTypeId
             ]);
         }
+
+        # FILTER: Publication Main Tag
+        if( $publicationMainTag != 0 ){
+            $query->andWhere([ 'PublicationMainTagId' => $publicationMainTag ]);
+        }
+
 
         return $query->count();
     }
@@ -73,6 +81,7 @@ class StaffRepository
      * @param int $limit
      * @param int $staffTypeId
      * @param string $searchQuery
+     * @param int $publicationMainTag
      *
      * @return array
      */
@@ -80,7 +89,8 @@ class StaffRepository
                             int $offset,
                             int $limit = 10,
                             int $staffTypeId = 0,
-                            string $searchQuery = ''): array
+                            string $searchQuery = '',
+                            int $publicationMainTag = 0 ): array
     {
         $query = Staff::find()
             ->with('language')
@@ -101,12 +111,16 @@ class StaffRepository
             'like','FullName', $searchQuery
         ]);
 
-
         # FILTER: Staff Type
         if( $staffTypeId != 0 ){
             $query->andWhere([
                 'StaffTypeId' => $staffTypeId
             ]);
+        }
+
+        # FILTER: Publication Main Tag
+        if( $publicationMainTag != 0 ){
+            $query->andWhere([ 'PublicationMainTagId' => $publicationMainTag ]);
         }
 
         return $query->all();

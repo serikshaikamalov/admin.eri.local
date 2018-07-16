@@ -21,6 +21,9 @@ use yii\widgets\ActiveForm;
     <?= $form->field($vm->model, 'TitleKZ')->textInput() ?>
 
 
+    <?= $form->field($vm->model, 'Url')->textInput() ?>
+
+
     <!-- STATUS -->
     <? echo $form->field($vm->model, 'StatusId')->checkbox( $vm->statuses ) ?>
 

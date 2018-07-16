@@ -101,4 +101,44 @@ class PublicationTagRepository
         return $title;
     }
 
+
+    /**
+     * @param int $Id
+     *
+     * @return PublicationTag | null
+     */
+    public function get($Id): PublicationTag {
+
+        $one = PublicationTag::find()
+            ->where([
+                'Id' => $Id
+            ])
+            ->one();
+
+        if(!$one){
+            throw new \DomainException('Id not found!');
+        }
+        return $one;
+    }
+
+
+    /**
+     * @param string $url
+     *
+     * @return PublicationTag
+     */
+    public function getByUrl(string $url = ''): PublicationTag {
+
+        $one = PublicationTag::find()
+            ->where([
+                'Url' => $url
+            ])
+            ->one();
+
+        if(!$one){
+            throw new \DomainException('Id not found!');
+        }
+        return $one;
+    }
+
 }
